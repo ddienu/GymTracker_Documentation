@@ -1,0 +1,96 @@
+body {
+    margin: 0;
+}
+.menu {
+    display: flex;
+    background-color: black;
+    padding: 0;
+    height: 7em;
+
+}
+
+.nav-list {
+    display: flex;
+    list-style-type: none;
+    padding: 10px;
+    justify-content: space-evenly;
+    padding: 10px;
+    flex-grow: 1;
+}
+
+.contenedor-logo {
+    width: 50px;
+    height: 50px;
+    align-self: center;
+    padding: 20px;
+}
+
+#logoSENA{
+    width: 50px;
+    height: 50px;
+    margin-left: 2em;
+}
+
+li {
+    align-self: center;
+}
+
+ul a {
+    color: #E6ED07;
+    font-size: x-large;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+ul a:hover {
+    color: #BA8E23;
+}
+
+.registerNav {
+    color: #E6ED07;
+    display: flex;
+    align-self: center;
+}
+
+.DivSignInButton {
+    border: solid white;
+    margin-right: 50px;
+    width: 100px;
+    border-radius: 15px;
+    cursor: pointer;
+    
+}
+
+.DivSignInButton li {
+    text-align: center;
+    font-weight: bold;
+}
+
+.DivSignInButton li:hover {
+    background-color: gray;
+    border-radius: 15px;
+    animation: mover 2s ease-in-out infinite;
+}
+
+.RegisterButton {
+    border: solid white;
+    border-radius: 15px;
+    width: 100px;
+    cursor: pointer;
+}
+
+.RegisterButton li {
+    text-align: center;
+    font-weight: bold;
+}
+
+.RegisterButton li:hover {
+    background-color: gray;
+    border-radius: 15px;
+    animation: mover 2s ease-in-out infinite;
+}
+
+
+
+
+
