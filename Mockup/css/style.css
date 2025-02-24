@@ -1,8 +1,8 @@
 @font-face {
-    font-family: 'BebasNeue'; /* Nombre que le darás a la fuente */
-    src: url('../fonts/BebasNeue-Regular.woff2') format('woff2'); /* Ruta al archivo .woff2 */
-    font-weight: normal; /* Estilo de la fuente (normal, bold, etc.) */
-    font-style: normal; /* Estilo de la fuente (normal, italic, etc.) */
+    font-family: 'BebasNeue';
+    src: url('../fonts/BebasNeue-Regular.woff2') format('woff2'); 
+    font-weight: normal; 
+    font-style: normal;
   }
 
 body {
@@ -119,7 +119,7 @@ body {
 
 .photoTitleContainer {
     display: flex;
-    margin: 7em 0 0 12em;
+    margin: 7em 0 7em 12em;
 }
 
 .gymDescription {
@@ -128,21 +128,67 @@ body {
 }
 
 .footerContainer {
-    align-items: center;
     display: flex;
     justify-content: center;
+    align-items: center; 
+    flex-wrap: wrap; 
     font-family: 'BebasNeue';
-    color:#E6ED07;
+    color: #E6ED07;
     background-color: black;
+    padding: 10px;
 }
 
-.aboutCompany {
-    text-align: -webkit-center;
+.infoCompanyContainer div {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
 }
 
-.aboutCompanyContainer {
-    width: 50%;
+.infoCompanyContainer div svg {
+    width: 20px;
+    height: 30px;
+    margin: 0 20px 0 0;
+}
+
+.socialMedia a {
+    text-decoration: none;
+    color: #E6ED07;
+}
+
+/*ABOUT PLANS STYLES*/
+
+.plansContainer {
+    margin: 2em 0 5em 0;
+}
+
+.aboutPlansTitle h1{
     text-align: center;
+    font-family: 'BebasNeue';
+    color: #E6ED07;
+    -webkit-text-stroke: 0.1px black;
+    font-size: 50px;
+}
+
+.plansDescription {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 2em 10em 0 10em;
+}
+
+.plan1, .plan2, .plan3{
+    border: solid black;
+    display: grid;
+    flex-grow: 1;
+    text-align: center;
+    margin: 0 2em 0 2em;
+}
+
+.plan1 img, .plan2 img, .plan3 img {
+    height: 200px;
+    align-items: center;
+    width: 80%;
+    margin: auto;
 }
 
 
