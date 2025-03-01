@@ -4,7 +4,6 @@ function loadSection(page) {
             response.text()
             )
         .then(html => {
-            console.log(html);
             document.getElementById("content").innerHTML = html;
         })
         .catch(error => console.error("Error al cargar la sección:", error));

@@ -157,11 +157,11 @@ body {
 
 /*ABOUT PLANS STYLES*/
 
-.plansContainer {
+.plansContainer, .aboutUsContainer {
     margin: 2em 0 5em 0;
 }
 
-.aboutPlansTitle h1{
+.aboutPlansTitle h1, .aboutUsTitle h1{
     text-align: center;
     font-family: 'BebasNeue';
     color: #E6ED07;
