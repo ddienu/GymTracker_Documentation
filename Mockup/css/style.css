@@ -119,7 +119,13 @@ body {
 
 .photoTitleContainer {
     display: flex;
-    margin: 7em 0 7em 12em;
+    justify-content: center;
+    margin: 7em 0 7em 0em;
+}
+
+#fotoGimnasio {
+    width: 600px;
+    height: 400px;
 }
 
 .gymDescription {
@@ -157,7 +163,7 @@ body {
 
 /*ABOUT PLANS STYLES*/
 
-.plansContainer, .aboutUsContainer {
+.plansContainer {
     margin: 2em 0 5em 0;
 }
 
@@ -191,6 +197,40 @@ body {
     margin: auto;
 }
 
+.aboutUsImageDescriptionContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10em 0 10em;
+}
+
+#aboutUsImage {
+    width: 600px;
+    height: 400px;
+    margin: 4em 5em 4em 0em;
+    align-content: baseline;
+    /* border: solid red */
+}
+
+.aboutUsDescriptionContainer {
+    text-align: justify;
+    align-content: center;
+    padding: 0 0 2em 0;
+}
+
+#titleDescription {
+    text-align: center;
+    font-family: 'BebasNeue';
+    font-weight: bold;
+    color: #E6ED07;
+    -webkit-text-stroke: 0.1px black;
+    font-size: 35px;
+    margin: 0.5em 0 0.5em 0;
+}
+
+#titlePrinciples{
+    font-weight: bold;
+}
 
 
 
