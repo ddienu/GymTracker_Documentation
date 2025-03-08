@@ -19,12 +19,23 @@ document.querySelectorAll('.nav-link').forEach(link => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-    const section = window.location.hash.substring(1) || 'inicio';
-    loadSection(section);
+    document.querySelectorAll('#SignInAncor').forEach(btn => {
+        btn.addEventListener('click', function(event)  {
+            event.preventDefault();
+            const section = this.getAttribute('href').substring(1);
+            loadSection(section)
+            window.history.pushState({}, "", `#${section}`); 
+        });
+    });
 });
 
+
+document.addEventListener("DOMContentLoaded", () => {
+    const section = window.location.hash.substring(1) || 'index';
+    loadSection(section);
+});
 window.addEventListener("popstate", () => {
-    const section = window.location.hash.substring(1) || 'inicio';
+    const section = window.location.hash.substring(1) || 'index';
     loadSection(section);
 });
 

@@ -36,6 +36,7 @@ a {
     width: 70px;
     height: 70px;
     margin-left: 4em;
+    --border-radius: 40px;
 }
 
 #list {
@@ -175,7 +176,7 @@ a {
     font-family: 'BebasNeue';
     color: #E6ED07;
     -webkit-text-stroke: 0.1px black;
-    font-size: 50px;
+    font-size: 35px;
 }
 
 .plansDescription {
@@ -185,16 +186,17 @@ a {
     margin: 2em 10em 0 10em;
 }
 
-.plan1, .plan2, .plan3{
+.plan{
     border: solid black;
     display: grid;
     flex-grow: 1;
+    width: 5em;
     text-align: center;
     margin: 0 2em 0 2em;
 }
 
-.plan1 img, .plan2 img, .plan3 img {
-    height: 200px;
+.plan img {
+    height: auto;
     align-items: center;
     width: 80%;
     margin: auto;
@@ -235,6 +237,7 @@ a {
     font-weight: bold;
 }
 
+
 /* STYLE SIGN IN FORM */
 
 .signInImage {
@@ -269,6 +272,7 @@ a {
     /* border-radius: 50px; */
     margin-bottom: 5em;
 }
+
 
 
 
