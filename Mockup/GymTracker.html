@@ -4,14 +4,22 @@
   <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="css/style.css" />
-    <script src="JavaScript/script.js"></script>
-    
+    <script src="JavaScript/script.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+      tailwind.config = {
+        corePlugins: {
+          preflight: false,
+        }
+      };
+    </script>    
   </head>
 
   <body>
     <nav class="menu">
       <div class="contenedor-logo">
-        <img id="logoGym" src="assets/Fuerza total.png" alt="Logo Gimnasio" />
+        <img id="logoGym" src="assets/HeaderIcon.svg" alt="Logo Gimnasio" />
       </div>
       <ul class="nav-list">
         <li id="list"><a id="listAncor" href="#index" class="nav-link">INICIO</a></li>
@@ -21,10 +29,10 @@
 
       <div class="registerNav">
         <div class="DivSignInButton">
-          <a id="SignInAncor" href="#signIn">Sign In</a>
+          <a id="SignInAncor" href="#signIn" class="hover:scale-105">Iniciar sesión</a>
         </div>
         <div class="RegisterButton">
-          <a id="RegisterAncor">Register</a>
+          <a id="RegisterAncor" href="#register" class="no-underline hover:scale-105">Registro</a>
         </div>
       </div>
     </nav>
