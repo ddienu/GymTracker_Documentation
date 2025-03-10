@@ -72,6 +72,13 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+function openPopup(){
+  window.open(
+    '../components/termsAndConditions.html', 
+    'Términos y condiciones', 
+    'width=600,height=400,top=100,left=100,resizable=no'
+  );
+}
 document.addEventListener("DOMContentLoaded", () => {
   const section = window.location.hash.substring(1) || "index";
   loadSection(section);
