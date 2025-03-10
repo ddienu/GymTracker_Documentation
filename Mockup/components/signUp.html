@@ -1,0 +1,51 @@
+<html>
+  <head>
+  <script src="JavaScript/script.js" defer></script>
+</head>
+
+<div class="contenedor">
+<div class="w-[50%] mx-auto font-[sans-serif]">
+  <div>
+    <h1 class="containerTitle">Crea tu cuenta</h1>
+  </div>
+
+  <form class="bg-white p-6 rounded-lg">
+    <div>
+      <img src="../assets/SignUpIcon.svg" alt="Icono crear cuenta" class="w-40 h-40 w-full text-center mb-4">
+    </div>
+    <div class="grid sm:grid-cols-2 gap-6">
+      <div>
+        <label class="text-gray-600 text-sm mb-2 block">Nombres</label>
+        <input name="name" type="text" class="bg-gray-100 w-[90%] text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-blue-500 transition-all" placeholder="Ingrese nombres" required/>
+      </div>
+      <div>
+        <label class="text-gray-600 text-sm mb-2 block">Apellidos</label>
+        <input name="lname" type="text" class="bg-gray-100 w-[90%] text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-blue-500 transition-all" placeholder="Ingrese apellidos" required/>
+      </div>
+      <div>
+        <label class="text-gray-600 text-sm mb-2 block">Correo electrónico</label>
+        <input name="email" type="text" class="bg-gray-100 w-[90%] text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-blue-500 transition-all" placeholder="cliente@correo.com" required/>
+      </div>
+      <div>
+        <label class="text-gray-600 text-sm mb-2 block">Número de teléfono</label>
+        <input name="number" type="number" class="bg-gray-100 w-[90%] text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-blue-500 transition-all" placeholder="Ingrese número de teléfono" required/>
+      </div>
+      <div>
+        <label class="text-gray-600 text-sm mb-2 block">Contraseña</label>
+        <input name="password" type="password" class="bg-gray-100 w-[90%] text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-blue-500 transition-all" placeholder="Ingrese contraseña" id="signup-password" required/>
+      </div>
+      <div>
+        <label class="text-gray-600 text-sm mb-2 block">Confirme contraseña</label>
+        <input name="cpassword" type="password" class="bg-gray-100 w-[90%] text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-blue-500 transition-all" placeholder="Repita la contraseña" id="confirmPassword" required/>
+      </div>
+    </div>
+
+    <div class="mt-10">
+      <button type="submit" class="mx-auto block py-3 px-6 text-sm tracking-wider rounded text-white bg-blue-500 hover:bg-blue-700 focus:outline-none cursor-pointer hover:scale-105" id="signup-button">
+        Crear cuenta
+      </button>
+    </div>
+  </form>
+</div>
+</div>
+</html>

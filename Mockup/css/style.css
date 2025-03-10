@@ -176,6 +176,8 @@ a {
     color: #E6ED07;
     -webkit-text-stroke: 0.1px black;
     font-size: 50px;
+    margin: 0;
+    padding-bottom: 1em;
 }
 
 .plansDescription {
@@ -274,8 +276,9 @@ a {
     background: url('../assets/backgroundGym.jpg') no-repeat center center fixed;
     background-size: cover;
     background-color: rgba(255, 255, 255, 0.1);
-    margin-top: -50px;
-    margin-bottom: -40px;
+    margin: 0;
+    padding-bottom: 40px;
+    padding-top: 40px;
 }
 
 
