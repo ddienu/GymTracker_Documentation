@@ -9,19 +9,15 @@ function loadSection(page) {
 }
 
 //Method to validate the passwords
-function validatePassword(password, confirmPassword){
-  if( password === confirmPassword) {
-    document.getElementById("signup-password").setCustomValidity("");
-    document.getElementById("confirmPassword").setCustomValidity("");
+function validatePassword(password, confirmPassword) {
+  if (password === confirmPassword) {
     return true;
-  }else{
-    document.getElementById("signup-password").setCustomValidity("Las contraseñas no coinciden");
-    document.getElementById("confirmPassword").setCustomValidity("Las contraseñas no coinciden");
+  } else {
     return false;
   }
-};
+}
 
-function sweetAlertSuccess(message, windowLocation){
+function sweetAlertSuccess(message, windowLocation) {
   Swal.fire({
     position: "center",
     icon: "success",
@@ -66,12 +62,16 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.querySelector("#content").addEventListener("input", function (event) {
+  document
+    .querySelector("#content")
+    .addEventListener("input", function (event) {
       const usernameElement = document.querySelector("#username");
       const passwordElement = document.querySelector("#password");
       if (usernameElement) {
         if (usernameElement.value.trim() === "") {
-          usernameElement.setCustomValidity("El campo de usuario no puede estar vacio");
+          usernameElement.setCustomValidity(
+            "El campo de usuario no puede estar vacio"
+          );
         } else {
           usernameElement.setCustomValidity("");
         }
@@ -79,14 +79,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (passwordElement) {
         if (passwordElement.value.trim() === "") {
-          passwordElement.setCustomValidity("El campo de contraseña no puede estar vacio");
+          passwordElement.setCustomValidity(
+            "El campo de contraseña no puede estar vacio"
+          );
         } else {
           passwordElement.setCustomValidity("");
         }
       }
 
       if (usernameElement && passwordElement) {
-        if (usernameElement.value.trim() != "" && passwordElement.value.trim() != "") {
+        if (
+          usernameElement.value.trim() != "" &&
+          passwordElement.value.trim() != ""
+        ) {
           if (event.target.matches("#js-sign-in-button")) {
             event.preventDefault();
             sweetAlertSuccess("Iniciando sesión", "#index");
@@ -95,29 +100,65 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     });
 });
-function openPopup(){
+function openPopup() {
   window.open(
-    '../components/termsAndConditions.html', 
-    'Términos y condiciones', 
-    'width=600,height=400,top=100,left=100,resizable=no'
+    "../components/termsAndConditions.html",
+    "Términos y condiciones",
+    "width=600,height=400,top=100,left=100,resizable=no"
   );
-};
+}
 
-// Event to validate passwords
-document.addEventListener('DOMContentLoaded', function() {
-  document.querySelector("#content").addEventListener('input', function(event) {
-    const signupPassword = document.querySelector("#signup-password").value;
-    const confirmPasswordElement = document.querySelector("#confirmPassword").value;
-    if( signupPassword && confirmPasswordElement){
-      if( validatePassword(signupPassword, confirmPasswordElement) ) { 
-        document.querySelector("#signup-button").addEventListener("click", function(event) {
+document.addEventListener("DOMContentLoaded", function () {
+  setTimeout(function () {
+    const signupPassword = document.querySelector("#signup-password");
+    const confirmPasswordElement = document.querySelector("#confirmPassword");
+    const signupButton = document.querySelector("#signup-button");
+    let patternValidation;
+    let equalsPasswords;
+
+    if (signupPassword) {
+      signupPassword.addEventListener("input", function (event) {
+        event.preventDefault();
+        const pattern =
+          /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+        const patternValidation = pattern.test(signupPassword.value);
+        signupPassword.setCustomValidity( patternValidation ? "" : "La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, un número y un carácter especial")
+      });
+    }
+
+    if (confirmPasswordElement) {
+      confirmPasswordElement.addEventListener("input", function (event) {
+        event.preventDefault();
+        const arePasswordsEquals = validatePassword(
+          signupPassword.value,
+          confirmPasswordElement.value
+        );
+        if (arePasswordsEquals) {
+          equalsPasswords = true;
+          confirmPasswordElement.setCustomValidity("");
+        } else {
+          equalsPasswords = false;
+          confirmPasswordElement.setCustomValidity(
+            "Las contraseñan no coinciden"
+          );
+        }
+      });
+    }
+
+    
+    signupButton.addEventListener("click", function () {
+      if (patternValidation === true && equalsPasswords === true) {
+        sweetAlertSuccess("Cuenta creada exitosamente", "#index");
+        document.querySelector("#signup-form").addEventListener("submit", function(event) {
           event.preventDefault();
-          sweetAlertSuccess("Cuenta creada exitosamente", '#index');
+          window.history.replaceState({}, document.title, window.location.pathname);
         })
       }
-    }
-    })
-  });
+    });
+    
+  }, 300);
+});
+
 document.addEventListener("DOMContentLoaded", () => {
   const section = window.location.hash.substring(1) || "index";
   loadSection(section);
