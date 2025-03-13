@@ -57,40 +57,49 @@ const observer = new MutationObserver(() => {
   attachEventListeners();
 });
 
-observer.observe(document.getElementById("content"), { childList: true, subtree: true });
+observer.observe(document.getElementById("content"), {
+  childList: true,
+  subtree: true,
+});
 
 // Función para asignar eventos a elementos dinámicos
 function attachEventListeners() {
   console.log("Eventos adjuntados");
 
   // Validación de contraseñas dentro del inicio de sesión
-  document.getElementById("content").addEventListener("input", function (event) {
-    const usernameElement = document.querySelector("#username");
-    const passwordElement = document.querySelector("#password");
-    let permitLogin;
-    if (usernameElement) {
-      usernameElement.setCustomValidity(
-        usernameElement.value.trim() === "" ? "El campo de usuario no puede estar vacío" : ""
-      );
-      permitLogin = usernameElement.value === "" ? false : true;
-    }
-    if (passwordElement) {
-      passwordElement.setCustomValidity(
-        passwordElement.value.trim() === "" ? "El campo de contraseña no puede estar vacío" : ""
-      );
-      permitLogin = passwordElement.value === "" ? false : true;
-    }
+  document
+    .getElementById("content")
+    .addEventListener("input", function (event) {
+      const usernameElement = document.querySelector("#username");
+      const passwordElement = document.querySelector("#password");
+      let permitLogin;
+      if (usernameElement) {
+        usernameElement.setCustomValidity(
+          usernameElement.value.trim() === ""
+            ? "El campo de usuario no puede estar vacío"
+            : ""
+        );
+        permitLogin = usernameElement.value === "" ? false : true;
+      }
+      if (passwordElement) {
+        passwordElement.setCustomValidity(
+          passwordElement.value.trim() === ""
+            ? "El campo de contraseña no puede estar vacío"
+            : ""
+        );
+        permitLogin = passwordElement.value === "" ? false : true;
+      }
 
-    //Manejo del evento del botón de inicio de sesión
-    const signInButton = document.querySelector("#js-sign-in-button");
-    if( signInButton ){
-    document.querySelector("#js-sign-in-button").addEventListener("click", function(e) {
-      if( permitLogin) {
-      sweetAlertSuccess("Iniciando sesión", "#index");
-    }
-    })
-    }
-  });
+      //Manejo del evento del botón de inicio de sesión
+      const signInButton = document.querySelector("#js-sign-in-button");
+      if (signInButton) {
+        signInButton.addEventListener("click", function (e) {
+          if (permitLogin) {
+            sweetAlertSuccess("Iniciando sesión", "#index");
+          }
+        });
+      }
+    });
 
   // Manejo del formulario de registro y validaciones de la contraseña
   const signupPassword = document.querySelector("#signup-password");
@@ -104,9 +113,11 @@ function attachEventListeners() {
       const pattern = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
       const patternValidation = pattern.test(signupPassword.value);
       signupPassword.setCustomValidity(
-        patternValidation ? "" : "La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, un número y un carácter especial"
+        patternValidation
+          ? ""
+          : "La contraseña debe tener al menos 8 caracteres, incluir una letra mayúscula, un número y un carácter especial"
       );
-      formElement.reportValidity();
+      // formElement.reportValidity();
     });
   }
 
@@ -129,45 +140,63 @@ function attachEventListeners() {
         formElement?.reportValidity();
       } else {
         event.preventDefault();
-        sweetAlertSuccess("Cuenta creada exitosamente", "#index");
-        window.history.replaceState({}, document.title, window.location.pathname);
+        sweetAlertSuccess("Cuenta creada exitosamente", "#profile");
+        window.history.replaceState({},document.title,window.location.pathname);
       }
     });
   }
 
   //Manejo de reinicio de contraseña
   const resetPassword = document.querySelector("#reset-password");
-  if( resetPassword ){
-    resetPassword.addEventListener("click", function(event) {
+  if (resetPassword) {
+    resetPassword.addEventListener("click", function (event) {
       event.preventDefault();
       const email = document.querySelector("#email").value;
       const forgotPasswordForm = document.querySelector("#forgotpassword-form");
-      if( forgotPasswordForm.reportValidity() ){
-        if( email === "noexiste@noexiste.com"){
-        sweetAlertFailed("El correo no existe", "#forgotPassword");
-        }else {
+      if (forgotPasswordForm.reportValidity()) {
+        if (email === "noexiste@noexiste.com") {
+          sweetAlertFailed("El correo no existe", "#forgotPassword");
+        } else {
           sweetAlertSuccess("Reiniciaste tu contraseña", "#index");
-          window.history.replaceState({}, document.title, window.location.pathname);
+          window.history.replaceState({},document.title,window.location.pathname);
         }
-      } 
-    })
+      }
+    });
   }
 
-  //Manejo del botón para mostra y ocultar contraseña en el registro.
+  //Manejo del botón para mostrar y ocultar contraseña en el registro.
   const showPasswordImage = document.querySelector("#lock-password");
   const passwordInput = document.querySelector("#signup-password");
-  console.log(showPasswordImage);
-  if( showPasswordImage ){
-    showPasswordImage.addEventListener("click", function(event) {
-      passwordInput.type = passwordInput.type === "password" ? "text" : "password";
-      if( showPasswordImage.src.endsWith("lockPassword.svg")){
+
+  if (showPasswordImage) {
+    showPasswordImage.addEventListener("click", function (event) {
+      passwordInput.type =
+        passwordInput.type === "password" ? "text" : "password";
+      if (showPasswordImage.src.endsWith("lockPassword.svg")) {
         showPasswordImage.src = "../assets/showPassword.svg";
         showPasswordImage.title = "Ocultar contraseña";
         showPasswordImage.id = "show-password";
-      }else{
+      } else {
         showPasswordImage.src = "../assets/lockPassword.svg";
         showPasswordImage.title = "Mostrar contraseña";
         showPasswordImage.id = "lock-password";
+      }
+    });
+  }
+
+  //Manejo del formulario de registro de perfil
+  const formButton = document.querySelector("#create-profile-button");
+  const profileForm = document.querySelector("#profile-form");
+
+  if(formButton) {
+    formButton.addEventListener("click", function(event) {
+      event.preventDefault();
+      if( profileForm.reportValidity()){
+        sweetAlertSuccess("Tu perfil ha sido creado exitosamente", "#GymTrackerAdmin");
+        window.history.replaceState({},document.title,window.location.pathname);
+        // window.location.href = "GymTrackerAdmin.html";
+      }else{
+        profileForm.reportValidity();
       }
     })
   }
@@ -193,5 +222,3 @@ window.addEventListener("popstate", () => {
   const section = window.location.hash.substring(1) || "index";
   loadSection(section);
 });
-
-

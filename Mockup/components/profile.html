@@ -1,0 +1,61 @@
+<div class="font-serif mb-10">
+    <div class="mt-10">
+        <h1 class="containerTitle">Creación de perfil</h1>
+    </div>
+
+    <div>
+        <form class="bg-white px-16" action="" id="profile-form">
+            <div>
+                <img src="../assets/profileIcon.svg" alt="Icono crear cuenta" class="w-40 h-40 w-full text-center mb-6">
+            </div>
+            <div class="grid sm:grid-cols-2 gap-4">
+                <div>
+                    <label class="text-gray-600 text-sm mb-2 block p-2 font-bold">Nombres</label>
+                    <input name="name" type="text" class="bg-gray-100 xl:w-[88%] max-xl:w-[87%] text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-blue-500 transition-all" placeholder="Nombres" required/>
+                </div>
+                <div>
+                    <label class="text-gray-600 text-sm mb-2 block p-2 font-bold">Apellidos</label>
+                    <input name="lastname" type="text" class="bg-gray-100 xl:w-[88%] max-xl:w-[87%] text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-blue-500 transition-all" placeholder="Apellidos" required/>
+                </div>
+                <div>
+                    <label class="text-gray-600 text-sm mb-2 block p-2 font-bold">Tipo de documento</label>
+                    <input name="documentType" type="text" class="bg-gray-100 xl:w-[88%] max-xl:w-[87%] text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-blue-500 transition-all" placeholder="Tipo documento" required/>
+                </div>
+                <div>
+                    <label class="text-gray-600 text-sm mb-2 block p-2 font-bold">Número de documento</label>
+                    <input name="documentNumber" type="number" class="bg-gray-100 xl:w-[88%] max-xl:w-[87%] text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-blue-500 transition-all" placeholder="Número de documento" required/>
+                </div>        
+                <div>
+                    <label class="text-gray-600 text-sm mb-2 block p-2 font-bold">Género</label>
+                    <div class="relative lg:w-[93%]">
+                        <select id="miDropdown" class="appearance-none bg-gray-100 text-gray-800 text-sm px-4 py-3 w-full rounded border-2 border-gray-600 focus:outline-blue-500">
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="NA">Prefiere no decirlo</option>
+                        </select>
+                        <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                            🔽
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label class="text-gray-600 text-sm mb-2 block p-2 font-bold">Numero telefónico</label>
+                    <input name="contactNumber1" type="number" class="bg-gray-100 xl:w-[88%] max-xl:w-[87%] text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-blue-500 transition-all" placeholder="Número telefónico" required/>
+                </div>
+                <div>
+                    <label class="text-gray-600 text-sm mb-2 block p-2 font-bold">Número telefónico alterno</label>
+                    <input name="contactNumber2" type="number" class="bg-gray-100 xl:w-[88%] max-xl:w-[87%] text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-blue-500 transition-all" placeholder="Número telefónico alterno" required/>
+                </div>
+                <div>
+                    <label class="text-gray-600 text-sm mb-2 block p-2 font-bold">Correo electrónico</label>
+                    <input name="email" type="email" class="bg-gray-100 xl:w-[88%] max-xl:w-[87%] text-gray-800 text-sm px-4 py-3 rounded focus:bg-transparent outline-blue-500 transition-all" placeholder="cliente@correo.com" required/>
+                </div>
+            </div>
+            <div class="mt-10">
+                <button type="submit" class="mx-auto block py-3 px-6 text-sm tracking-wider rounded text-white bg-blue-500 hover:bg-blue-700 focus:outline-none cursor-pointer hover:scale-105" id="create-profile-button">
+                    Crear perfil
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
