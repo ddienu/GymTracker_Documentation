@@ -1,166 +1,877 @@
-@font-face {
-    font-family: 'BebasNeue'; /* Nombre que le darás a la fuente */
-    src: url('../fonts/BebasNeue-Regular.woff2') format('woff2'); /* Ruta al archivo .woff2 */
-    font-weight: normal; /* Estilo de la fuente (normal, bold, etc.) */
-    font-style: normal; /* Estilo de la fuente (normal, italic, etc.) */
+/*
+* GymTracker - Hoja de estilos principal
+* Este archivo contiene los estilos globales y de componentes principales del sitio
+* Versión: 1.0
+*/
+
+/*--------------------------------------------------------------------------*
+* Tabla de contenidos:
+* 1. Variables y reset
+* 2. Tipografía 
+* 3. Layout y estructura
+* 4. Header y navegación
+* 5. Componentes principales
+* 6. Footer
+* 7. Utilidades y accesibilidad
+* 8. Media queries
+*--------------------------------------------------------------------------*/
+
+/*=====================================================
+* 1. VARIABLES Y RESET
+*=====================================================*/
+:root {
+    /* Colores principales */
+    --primary-color: #E6ED07;
+    --primary-dark: #d6dd00;
+    --primary-light: rgba(230, 237, 7, 0.1);
+    
+    /* Colores secundarios */
+    --secondary-color: #333;
+    --text-light: #fff;
+    --text-dark: #333;
+    --bg-dark: #222;
+    --bg-light: #f5f5f5;
+    --bg-white: #fff;
+    
+    /* Efectos */
+    --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.15);
+    --transition-normal: all 0.3s ease;
+    --transition-slow: all 0.5s ease;
+    
+    /* Bordes */
+    --border-radius-small: 5px;
+    --border-radius-medium: 10px;
+    --border-radius-large: 15px;
+    
+    /* Espaciado */
+    --spacing-xs: 5px;
+    --spacing-sm: 10px;
+    --spacing-md: 15px;
+    --spacing-lg: 20px;
+    --spacing-xl: 30px;
+    
+    /* Accesibilidad */
+    --focus-outline: 2px solid var(--primary-color);
+    --focus-outline-offset: 3px;
+}
+
+/* Reset básico */
+*, 
+*::before, 
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Ocultar contenido visualmente pero mantenerlo accesible para lectores de pantalla */
+.visually-hidden:not(:focus):not(:active) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
   }
 
 body {
-    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    line-height: 1.6;
+    color: var(--text-dark);
+    background-color: var(--bg-light);
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
+
+/* Enlace para saltar al contenido principal (accesibilidad) */
+.skip-to-content {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--primary-color);
+    color: var(--text-dark);
+    padding: var(--spacing-sm) var(--spacing-md);
+    z-index: 100;
+    transition: top 0.3s ease;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.skip-to-content:focus {
+    top: 0;
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+}
+
+/*=====================================================
+* 2. TIPOGRAFÍA
+*=====================================================*/
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Bebas Neue', sans-serif;
+    margin-bottom: var(--spacing-md);
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+h1 {
+    font-size: 3rem;
+    margin-top: 0;
+}
+
+h2 {
+    font-size: 2.5rem;
+}
+
+h3 {
+    font-size: 2rem;
+}
+
+h4 {
+    font-size: 1.5rem;
+}
+
+h5 {
+    font-size: 1.25rem;
+}
+
+h6 {
+    font-size: 1rem;
+}
+
+p {
+    margin-bottom: var(--spacing-md);
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition-normal);
+}
+
+a:hover, 
+a:focus {
+    color: var(--primary-dark);
+    text-decoration: underline;
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+}
+
+/*=====================================================
+* 3. LAYOUT Y ESTRUCTURA
+*=====================================================*/
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+}
+
+section {
+    padding: var(--spacing-xl) 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/*=====================================================
+* 4. HEADER Y NAVEGACIÓN
+*=====================================================*/
+/* Header unificado para todas las páginas */
 .menu {
     display: flex;
-    background-color: black;
-    padding: 0;
-    height: 7em;
-
+    background-color: var(--bg-dark);
+    padding: var(--spacing-sm) 0;
+    height: auto;
+    min-height: 50px;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 10;
 }
 
+/* Logo */
+.contenedor-logo {
+    align-self: center;
+    padding: 0 var(--spacing-md);
+}
+
+#logoGym {
+    max-height: 50px;
+    width: auto;
+}
+
+/* Navegación principal */
 .nav-list {
     display: flex;
     list-style-type: none;
     justify-content: space-evenly;
     flex-grow: 1;
-    font-family: 'BebasNeue';
-}
-
-.contenedor-logo {
-    align-self: center;
-}
-
-#logoGym{
-    width: 70px;
-    height: 70px;
-    margin-left: 4em;
-    --border-radius: 40px;
+    font-family: 'Bebas Neue', sans-serif;
+    margin: 0;
+    padding: 0;
+    align-items: center;
 }
 
 #list {
-    align-self: center;
+    padding: 0 var(--spacing-sm);
+    position: relative;
 }
 
 #list a {
-    color: #E6ED07;
-    font-size: x-large;
     text-decoration: none;
-    text-transform: uppercase;
+    color: var(--text-light);
+    font-weight: 400;
+    font-size: 1.1rem;
+    display: block;
+    padding: var(--spacing-sm) var(--spacing-md);
+    transition: var(--transition-normal);
 }
 
-#listAncor:hover {
-    color: orange;
+#listAncor:hover, 
+#listAncor:focus,
+#listAncor.active {
+    color: var(--primary-color);
+    outline: none;
 }
 
+/* Estilos mejorados para la navegación de registro e inicio de sesión */
 .registerNav {
-    color: #FAED27;
     display: flex;
-    align-self: center;
+    align-items: center;
+    gap: var(--spacing-md);
+    margin-right: var(--spacing-md);
 }
 
-.DivSignInButton {
-    border: solid white;
-    margin-right: 30px;
-    width: 100px;
-    border-radius: 15px;
-    cursor: pointer;
-    text-align: center;
-}
-
-.DivSignInButton a {
-    font-weight: bold;
-    text-decoration: none;
-    background-color: black;
-    width: 100px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: small;
-}
-
-#SignInAncor {
-    width: 100px;
-    height: 28px;
-    display: block;
-    border-radius: 15px;
-    align-content: center;
-}
-
-.DivSignInButton a:hover {
-    background-color: grey;
-    border-radius: 15px;
-    border-color: #FAED27;
-}
-
+/* Estilos modernos para botones de registro e inicio de sesión */
+.DivSignInButton, 
 .RegisterButton {
-    border: solid white;
-    border-radius: 15px;
-    width: 100px;
-    cursor: pointer;
-    text-align: center;
-    margin-right: 3em;
+    position: relative;
+    overflow: hidden;
 }
 
+.DivSignInButton a, 
 .RegisterButton a {
-    text-align: center;
-    font-weight: bold;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    font-size: small;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    text-decoration: none;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--border-radius-small);
+    transition: var(--transition-normal);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-.RegisterButton a:hover {
-    background-color: gray;
-    border-radius: 15px;
+/* Estilos específicos para botón de inicio de sesión */
+.DivSignInButton a {
+    background-color: transparent;
+    color: var(--text-light);
+    border: 1px solid var(--text-light);
 }
 
-#RegisterAncor {
+.DivSignInButton a:hover,
+.DivSignInButton a:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+    text-decoration: none;
+}
+
+/* Estilos específicos para botón de registro */
+.RegisterButton a {
+    background-color: var(--primary-color);
+    color: var(--text-dark);
+    border: 1px solid var(--primary-color);
+}
+
+.RegisterButton a:hover,
+.RegisterButton a:focus {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+    text-decoration: none;
+}
+
+/* Iconos en botones de autenticación */
+.DivSignInButton a i, 
+.RegisterButton a i {
+    margin-right: var(--spacing-sm);
+    font-size: 16px;
+}
+
+/* Animación suave al pasar el ratón */
+.DivSignInButton a, 
+.RegisterButton a {
+    position: relative;
+    z-index: 1;
+}
+
+.DivSignInButton a::before, 
+.RegisterButton a::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    transition: var(--transition-slow);
+}
+
+.DivSignInButton a::before {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.RegisterButton a::before {
+    background-color: var(--primary-dark);
+}
+
+.DivSignInButton a:hover::before, 
+.RegisterButton a:hover::before {
+    width: 100%;
+}
+
+/* Menú móvil */
+.navbar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 1.5rem;
+    padding: var(--spacing-sm);
+    cursor: pointer;
+    transition: var(--transition-normal);
+}
+
+.navbar-toggle:hover,
+.navbar-toggle:focus {
+    color: var(--primary-color);
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+}
+
+.navbar-toggle i {
+    pointer-events: none;
+}
+
+/* Efecto de ondas al hacer clic */
+.ripple-effect {
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 50%;
     width: 100px;
-    height: 28px;
-    display: block;
-    border-radius: 15px;
-    align-content: center;
+    height: 100px;
+    margin-top: -50px;
+    margin-left: -50px;
+    animation: ripple 0.6s linear;
+    transform: scale(0);
+    opacity: 1;
+    pointer-events: none;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(2.5);
+        opacity: 0;
+    }
+}
+
+/*=====================================================
+* 5. COMPONENTES PRINCIPALES
+*=====================================================*/
+/* Sección hero */
+.hero-section {
+    position: relative;
+    width: 100%;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
 }
 
 .photoTitleContainer {
     display: flex;
-    margin: 7em 0 0 12em;
+    flex-wrap: wrap;
+    align-items: center;
+    width: 100%;
+}
+
+.hero-image {
+    flex: 1 1 50%;
+    min-width: 300px;
+}
+
+.hero-image img {
+    width: 100%;
+    height: auto;
+    display: block;
 }
 
 .gymDescription {
-    align-self: center;
-    margin-left: 8em;
+    flex: 1 1 50%;
+    padding: var(--spacing-xl);
+    min-width: 300px;
+}
+
+/* Botones de llamada a la acción */
+.cta-buttons {
+    display: flex;
+    gap: var(--spacing-md);
+    margin-top: var(--spacing-lg);
+    flex-wrap: wrap;
+}
+
+.cta-button {
+    display: inline-block;
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--border-radius-small);
+    text-decoration: none;
+    font-weight: 500;
+    transition: var(--transition-normal);
+    text-align: center;
+    min-width: 180px;
+    border: 2px solid transparent;
+}
+
+.cta-button.primary {
+    background-color: var(--primary-color);
+    color: var(--text-dark);
+    border-color: var(--primary-color);
+}
+
+.cta-button.secondary {
+    background-color: transparent;
+    color: var(--text-light);
+    border-color: var(--text-light);
+}
+
+.cta-button:hover,
+.cta-button:focus {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+    text-decoration: none;
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+}
+
+.cta-button.primary:hover,
+.cta-button.primary:focus {
+    background-color: var(--primary-dark);
+    border-color: var(--primary-dark);
+}
+
+.cta-button.secondary:hover,
+.cta-button.secondary:focus {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+/* Títulos de sección */
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-xl);
+    color: var(--text-dark);
+    position: relative;
+    padding-bottom: var(--spacing-md);
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    width: 80px;
+    height: 3px;
+    background-color: var(--primary-color);
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* Tarjetas de características */
+.features-section {
+    padding: var(--spacing-xl) 0;
+    background-color: var(--bg-white);
+}
+
+.features-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-lg);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.feature-card {
+    flex: 1 1 200px;
+    max-width: 280px;
+    padding: var(--spacing-lg);
+    background-color: var(--bg-white);
+    border-radius: var(--border-radius-medium);
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: var(--transition-normal);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.feature-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-hover);
+}
+
+.feature-card i {
+    color: var(--primary-color);
+    margin-bottom: var(--spacing-md);
+}
+
+.feature-card h3 {
+    margin-bottom: var(--spacing-md);
+    font-size: 1.5rem;
+}
+
+/* Tarjetas de testimonios */
+.testimonials-section {
+    background-color: var(--bg-light);
+    padding: var(--spacing-xl) 0;
+}
+
+.testimonials-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--spacing-xl);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.testimonial-card {
+    flex: 1 1 300px;
+    max-width: 500px;
+    background-color: var(--bg-white);
+    border-radius: var(--border-radius-medium);
+    padding: var(--spacing-xl);
+    box-shadow: var(--shadow);
+}
+
+.testimonial-content {
+    position: relative;
+    font-style: italic;
+    margin-bottom: var(--spacing-md);
+}
+
+.testimonial-content::before {
+    content: '\201C';
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    font-size: 3rem;
+    color: var(--primary-color);
+    opacity: 0.5;
+    font-family: Georgia, serif;
+}
+
+.testimonial-author {
+    text-align: right;
+    font-size: 0.9rem;
+    font-style: normal;
+}
+
+/*=====================================================
+* 6. FOOTER
+*=====================================================*/
+footer {
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    padding: var(--spacing-xl) 0 0;
 }
 
 .footerContainer {
-    align-items: center;
     display: flex;
-    justify-content: center;
-    font-family: 'BebasNeue';
-    color:#E6ED07;
-    background-color: black;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
 }
 
-.aboutCompany {
-    text-align: -webkit-center;
+.contact-info {
+    flex: 1 1 300px;
+    margin-bottom: var(--spacing-lg);
+}
+
+.contact-info > div {
+    margin-bottom: var(--spacing-md);
+}
+
+.contact-info a {
+    color: var(--text-light);
+    text-decoration: none;
+    transition: var(--transition-normal);
+}
+
+.contact-info a:hover,
+.contact-info a:focus {
+    color: var(--primary-color);
+    text-decoration: underline;
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+}
+
+.social-media {
+    margin-top: var(--spacing-lg);
+}
+
+.social-media a {
+    color: var(--text-light);
+    margin-right: var(--spacing-md);
+    transition: var(--transition-normal);
+    display: inline-block;
+}
+
+.social-media a:hover,
+.social-media a:focus {
+    color: var(--primary-color);
+    transform: translateY(-3px);
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+}
+
+.aboutContainer {
+    flex: 1 1 300px;
+    margin-bottom: var(--spacing-lg);
 }
 
 .aboutCompanyContainer {
-    width: 50%;
-    text-align: center;
-}
-/* Estilos de nutricionista */
-
-.nutritionists {
-    text-align: center;
+    margin-top: var(--spacing-sm);
 }
 
-.nutrition-card {
-    display: inline-block; 
-    margin: 10px; 
-    padding: 20px; 
-    background-color: #ff0; 
-    border-radius: 25px; 
-    box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.2); 
-    width: 150px;
+.copyright {
     text-align: center;
+    padding: var(--spacing-md) 0;
+    margin-top: var(--spacing-lg);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
+/*=====================================================
+* 7. UTILIDADES Y ACCESIBILIDAD
+*=====================================================*/
+/* Estado de foco */
+:focus {
+    outline: var(--focus-outline);
+    outline-offset: var(--focus-outline-offset);
+}
 
+/* Útiles para accesibilidad */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+}
 
+/* Alto contraste */
+@media (prefers-contrast: more) {
+    :root {
+        --primary-color: #d1d700;
+        --text-light: #ffffff;
+        --text-dark: #000000;
+    }
+    
+    .feature-card,
+    .testimonial-card {
+        border: 1px solid #000;
+    }
+}
 
+/* Reducción de movimiento */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+    
+    .feature-card:hover,
+    .cta-button:hover,
+    .cta-button:focus {
+        transform: none;
+    }
+}
+
+/*=====================================================
+* 8. MEDIA QUERIES
+*=====================================================*/
+/* Escritorios y laptops */
+@media (max-width: 1024px) {
+    .section-title {
+        font-size: 2.2rem;
+    }
+    
+    .features-container, 
+    .testimonials-container {
+        padding: 0 var(--spacing-md);
+    }
+}
+
+/* Tablets */
+@media (max-width: 980px) {
+    h1 {
+        font-size: 2.5rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+    
+    .features-container, 
+    .feature-card, 
+    .testimonials-container, 
+    .testimonial-card {
+        padding: var(--spacing-md);
+    }
+    
+    .cta-buttons {
+        justify-content: center;
+    }
+    
+    .cta-button {
+        padding: var(--spacing-sm) var(--spacing-lg);
+    }
+    
+    /* Navegación móvil */
+    .navbar-toggle {
+        display: block;
+        order: 3;
+    }
+    
+    .nav-list {
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background-color: var(--bg-dark);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s ease;
+        order: 4;
+        z-index: 10;
+    }
+    
+    .nav-list.active {
+        max-height: 500px;
+        box-shadow: var(--shadow);
+    }
+    
+    #list {
+        width: 100%;
+    text-align: center;
+        padding: var(--spacing-xs) 0;
+    }
+    
+    #list a {
+        padding: var(--spacing-sm) var(--spacing-md);
+    }
+    
+    /* Botones de autenticación responsivos */
+    .registerNav {
+        margin-top: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+        width: 100%;
+        justify-content: center;
+        order: 5;
+    }
+    
+    .DivSignInButton a, 
+    .RegisterButton a {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 12px;
+    }
+}
+
+/* Teléfonos en paisaje */
+@media (max-width: 768px) {
+    .photoTitleContainer {
+        flex-direction: column;
+    }
+    
+    .gymDescription {
+        padding: var(--spacing-lg);
+        text-align: center;
+    } 
+    
+    .footerContainer {
+        flex-direction: column;
+    }
+    
+    .aboutContainer {
+        margin-top: var(--spacing-lg);
+    }
+    
+    .social-media {
+        text-align: center;
+    }
+    
+    .registerNav {
+        margin-right: 0;
+    }
+}
+
+/* Teléfonos en retrato */
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.8rem;
+    }
+    
+    h3 {
+        font-size: 1.5rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: var(--spacing-lg);
+    }
+    
+    .feature-card, 
+    .testimonial-card {
+        padding: var(--spacing-md);
+    }
+    
+    .footerContainer div {
+        width: 100%;
+        padding: 0 var(--spacing-md);
+    }
+    
+    .registerNav {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+}

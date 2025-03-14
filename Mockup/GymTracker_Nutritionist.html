@@ -1,90 +1,231 @@
 <!DOCTYPE html>
-<!-- tipo de documento -->
 <html lang="es">
-  <head>
+<head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nutrición - GymTracker</title>
     <link rel="stylesheet" href="css/style.css" />
-  </head>
+    <link rel="stylesheet" href="css_boostrap/bootstrap-grid.min.css">
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
 
-  <body>
+<body>
     <header>
         <nav class="menu">
             <div class="contenedor-logo">
                 <img id="logoGym" src="assets/Fuerza total.png" alt="Logo Gimnasio" />
             </div>
-                <ul class="nav-list">
-                    <li id="list"><a id="listAncor" href="#">Gestion clientes</a></li>
-                    <li id="list"><a id="listAncor" href="#">Entrenador</a></li>
-                    <li id="list"><a id="listAncor" href="#">Fisioterapia</a></li>
-                    <li id="list"><a id="listAncor" href="#">nutricion</a></li>
-                    <li id="list"><a id="listAncor" href="#">planes</a></li>
-                    <li id="list"><a id="listAncor" href="#">Admin</a></li>
+            <button class="navbar-toggle" id="navbar-toggle">
+                <i class="fa fa-bars"></i>
+            </button>
+            <ul class="nav-list" id="nav-list">
+                <li id="list"><a id="listAncor" href="index.html">INICIO</a></li>
+                <li id="list"><a id="listAncor" href="planes.html">PLANES</a></li>
+                <li id="list"><a id="listAncor" href="entrenadores.html">ENTRENADORES</a></li>
+                <li id="list"><a id="listAncor" href="GymTracker_Nutritionist.html" class="active">NUTRICIÓN</a></li>
+                <li id="list"><a id="listAncor" href="fisioterapia.html">FISIOTERAPIA</a></li>
+                <li id="list"><a id="listAncor" href="nosotros.html">SOBRE NOSOTROS</a></li>
+                <li id="list"><a id="listAncor" href="contacto.html">CONTACTO</a></li>
+            </ul>
 
-
-                
-                </ul>
-
-          
+            <div class="registerNav">
+                <div class="DivSignInButton">
+                    <a id="SignInAncor" href="login.html">Iniciar Sesión</a>
+                </div>
+                <div class="RegisterButton">
+                    <a id="RegisterAncor" href="registro.html">Registrarse</a>
+                </div>
             </div>
         </nav>
-    </header> 
-     <!-- Contenido principal -->
-     <main class="dashboard-main">
-        <section>
-            <h2 class="title-2">Nuestros Colaboradores</h2>
-            <img src="tu-imagen.jpg" alt="Nutricionista 1" class="nutrition-card-image">
-            <div class="nutritionists">
-                <div class="nutrition-card">
-                  <h3 itemprop="name">Nutricionista 1</h3>
-                </div>
-                <div class="nutrition-card">
-                  <h3 itemprop="name">Nutricionista 2</h3>                  
-                </div>
-                <div class="nutrition-card">
-                  <h3 itemprop="name">Nutricionista 3</h3>                
-                </div>
-                <div class="nutrition-card">
-                  <h3 itemprop="name">Nutricionista 4</h3>
-                </div>
-                <div class="nutrition-card">
-                  <h3 itemprop="name">Nutricionista 5</h3>                
-                </div>
-                <div class="nutrition-card">
-                  <h3 itemprop="name">Nutricionista 6</h3>                  
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1 class="title-2">Nutrición y Bienestar</h1>
+                <p class="subtitle">Conoce a nuestro equipo de nutricionistas profesionales</p>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <div class="container">
+                <div class="about-content">
+                    <div class="about-image">
+                        <img src="assets/food_plates.jpg" alt="Platos nutritivos">
+                    </div>
+                    <div class="about-text">
+                        <h2>Una nutrición adecuada es clave para el éxito</h2>
+                        <p>En GymTracker entendemos que una buena nutrición es fundamental para alcanzar tus objetivos fitness. Nuestro equipo de nutricionistas certificados trabaja de manera personalizada para crear planes alimenticios que complementen tu entrenamiento.</p>
+                        <p>Ya sea que busques perder peso, ganar masa muscular o mejorar tu rendimiento deportivo, nuestros especialistas te guiarán en cada paso del camino.</p>
+                    </div>
                 </div>
             </div>
-            
-            <button class="add-button" aria-label="Añadir nuevo nutricionista">
-                Nuevo nutricionista
-            </button>
+        </section>
+
+        <section class="trainers-section">
+            <div class="container">
+                <h2 class="section-title">Nuestros Nutricionistas</h2>
+                <div class="trainers-container">
+                    <div class="trainer-card">
+                        <div class="trainer-image">
+                            <img src="assets/nutritionist_grok.jpeg" alt="Nutricionista Ana Martínez">
+                            <div class="trainer-social">
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                            </div>
+                        </div>
+                        <div class="trainer-info">
+                            <h3>Ana Martínez</h3>
+                            <p class="trainer-speciality">Nutrición Deportiva</p>
+                            <p class="trainer-description">Especialista en nutrición para deportistas de alto rendimiento.</p>
+                            <a href="contacto.html" class="trainer-button">Agendar consulta</a>
+                        </div>
+                    </div>
+
+                    <div class="trainer-card">
+                        <div class="trainer-image">
+                            <img src="assets/nutritionist_grok.jpeg" alt="Nutricionista Carlos Gómez">
+                            <div class="trainer-social">
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                            </div>
+                        </div>
+                        <div class="trainer-info">
+                            <h3>Carlos Gómez</h3>
+                            <p class="trainer-speciality">Pérdida de Peso</p>
+                            <p class="trainer-description">Experto en planes nutricionales para pérdida de peso saludable.</p>
+                            <a href="contacto.html" class="trainer-button">Agendar consulta</a>
+                        </div>
+                    </div>
+
+                    <div class="trainer-card">
+                        <div class="trainer-image">
+                            <img src="assets/nutritionist_grok.jpeg" alt="Nutricionista Lucía Rodríguez">
+                            <div class="trainer-social">
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                            </div>
+                        </div>
+                        <div class="trainer-info">
+                            <h3>Lucía Rodríguez</h3>
+                            <p class="trainer-speciality">Nutrición Clínica</p>
+                            <p class="trainer-description">Especializada en nutrición para condiciones médicas específicas.</p>
+                            <a href="contacto.html" class="trainer-button">Agendar consulta</a>
+                        </div>
+                    </div>
+
+                    <div class="trainer-card">
+                        <div class="trainer-image">
+                            <img src="assets/nutritionist_grok.jpeg" alt="Nutricionista Daniel Torres">
+                            <div class="trainer-social">
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                            </div>
+                        </div>
+                        <div class="trainer-info">
+                            <h3>Daniel Torres</h3>
+                            <p class="trainer-speciality">Ganancia Muscular</p>
+                            <p class="trainer-description">Especialista en nutrición para desarrollo muscular.</p>
+                            <a href="contacto.html" class="trainer-button">Agendar consulta</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="additional-services">
+            <div class="container">
+                <h2 class="section-title">Nuestros Servicios</h2>
+                <div class="services-container">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fa fa-cutlery fa-3x"></i>
+                        </div>
+                        <h3>Evaluación Nutricional</h3>
+                        <p>Análisis completo de tu estado nutricional y necesidades específicas.</p>
+                        <p class="service-price">Desde $40.000</p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fa fa-calendar fa-3x"></i>
+                        </div>
+                        <h3>Plan Personalizado</h3>
+                        <p>Diseño de plan nutricional adaptado a tus objetivos y preferencias.</p>
+                        <p class="service-price">Desde $60.000</p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fa fa-line-chart fa-3x"></i>
+                        </div>
+                        <h3>Seguimiento Mensual</h3>
+                        <p>Monitoreo de tu progreso y ajustes para garantizar resultados.</p>
+                        <p class="service-price">Desde $35.000</p>
+                    </div>
+
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fa fa-users fa-3x"></i>
+                        </div>
+                        <h3>Talleres Grupales</h3>
+                        <p>Sesiones educativas sobre nutrición y hábitos saludables.</p>
+                        <p class="service-price">Desde $25.000</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="trainer-cta">
+            <div class="container">
+                <div class="cta-content">
+                    <h2>Mejora tu nutrición, mejora tu rendimiento</h2>
+                    <p>Una buena alimentación es fundamental para alcanzar tus objetivos físicos.</p>
+                    <a href="contacto.html" class="cta-button primary">Agenda una consulta hoy</a>
+                </div>
+            </div>
         </section>
     </main>
-    <!-- Pie de página -->
+
     <footer>
-      <div class="footerContainer">
-        <div>
-          <div>
-            <p>Av. 1º de mayo # 6 - 54 Barrio: Velódromo.</p>
-            <p>Bogotá D.C, Colombia</p>
-          </div>
-          <div>
-            <p>+57 3213213212</p>
-          </div>
-          <div>
-            <p>gymtracker@gymtracker.com</p>
-          </div>
-        </div>
-        <div class="aboutContainer">
-            <h4>Acerca de la compañía</h4>
-            <div class="aboutCompanyContainer">
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipiscing elit gravida
-                malesuada, odio posuere nostra porta sociis leo tempus sapien
-                ac.
-              </p>
+        <div class="footerContainer">
+            <div class="contact-info">
+                <div>
+                    <p>Av. 1º de mayo # 6 - 54 Barrio: Velódromo.</p>
+                    <p>Bogotá D.C, Colombia</p>
+                </div>
+                <div>
+                    <p><i class="fa fa-phone"></i> +57 3213213212</p>
+                </div>
+                <div>
+                    <p><i class="fa fa-envelope"></i> gymtracker@gymtracker.com</p>
+                </div>
+                <div class="social-media">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-instagram fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter-square fa-2x"></i></a>
+                </div>
+            </div>
+            <div class="aboutContainer">
+                <h4>Acerca de la compañía</h4>
+                <div class="aboutCompanyContainer">
+                    <p>
+                        GymTracker es una plataforma integral diseñada para optimizar la gestión de gimnasios y el seguimiento del progreso de los usuarios.
+                    </p>
+                </div>
             </div>
         </div>
-      </div>
+        <div class="copyright">
+            <p>&copy; 2023 GymTracker. Todos los derechos reservados.</p>
+        </div>
     </footer>
-  </body>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
 </html>

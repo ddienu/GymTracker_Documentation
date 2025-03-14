@@ -1,0 +1,1885 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservas de Clases - GymTracker</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css_boostrap/bootstrap-grid.min.css">
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Estilos específicos para reservas */
+        .bookings-section {
+            padding: 40px 0;
+            background-color: #f5f5f5;
+        }
+        
+        .booking-tabs {
+            display: flex;
+            background-color: white;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            padding: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .booking-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        .booking-tab:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .booking-tab.active {
+            background-color: #E6ED07;
+            color: #000;
+        }
+        
+        .calendar-container {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .calendar-nav {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .calendar-nav button {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar-nav button:hover {
+            background: #e0e0e0;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+        
+        .calendar-weekday {
+            text-align: center;
+            font-weight: bold;
+            padding: 10px;
+            color: #666;
+        }
+        
+        .calendar-day {
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .calendar-day:hover {
+            background: #f0f0f0;
+        }
+        
+        .calendar-day.active {
+            background: #E6ED07;
+            color: #000;
+            font-weight: bold;
+        }
+        
+        .calendar-day.has-events::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #E6ED07;
+        }
+        
+        .calendar-day.active.has-events::after {
+            background: #000;
+        }
+        
+        .calendar-day.disabled {
+            color: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .calendar-day.other-month {
+            color: #aaa;
+        }
+        
+        .filters-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .filter-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .filter-select {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: white;
+            font-size: 14px;
+        }
+        
+        .search-input {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 250px;
+            font-size: 14px;
+        }
+        
+        .class-container {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .time-slots {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            overflow-x: auto;
+            gap: 10px;
+        }
+        
+        .time-slot {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #f0f0f0;
+            font-size: 14px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.3s ease;
+        }
+        
+        .time-slot:hover {
+            background: #e0e0e0;
+        }
+        
+        .time-slot.active {
+            background: #E6ED07;
+            color: #000;
+            font-weight: bold;
+        }
+        
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .class-card {
+            border: 1px solid #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .class-card:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+        }
+        
+        .class-header {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .class-time {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        
+        .class-duration {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .class-content {
+            padding: 15px;
+        }
+        
+        .class-title {
+            margin: 0 0 10px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .class-title i {
+            color: #E6ED07;
+            margin-right: 8px;
+        }
+        
+        .class-details {
+            margin-bottom: 15px;
+        }
+        
+        .class-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .class-detail i {
+            width: 20px;
+            margin-right: 8px;
+            color: #999;
+        }
+        
+        .class-capacity {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .capacity-bar {
+            flex-grow: 1;
+            height: 6px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            margin: 0 10px;
+            overflow: hidden;
+        }
+        
+        .capacity-fill {
+            height: 100%;
+            background: #E6ED07;
+            border-radius: 3px;
+        }
+        
+        .capacity-text {
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .class-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .book-button {
+            padding: 8px 16px;
+            background: #E6ED07;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            flex-grow: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .book-button:hover {
+            background: #d6dd00;
+        }
+        
+        .book-button.secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .book-button.secondary:hover {
+            background: #e0e0e0;
+        }
+        
+        .book-button.disabled {
+            background: #f0f0f0;
+            color: #999;
+            cursor: not-allowed;
+        }
+        
+        .my-bookings {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            margin: 0 0 20px;
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            color: #E6ED07;
+            margin-right: 10px;
+        }
+        
+        .booking-filters {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            flex-wrap: wrap;
+        }
+        
+        .filter-label {
+            margin-right: 15px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-option {
+            padding: 8px 16px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            background-color: white;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+        
+        .filter-option:hover {
+            background-color: #f6f6f6;
+        }
+        
+        .filter-option.active {
+            background-color: #E6ED07;
+            border-color: #E6ED07;
+            color: #000;
+            font-weight: 600;
+        }
+        
+        .booking-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+            padding: 0 10px;
+            position: relative;
+        }
+        
+        .stat-item:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 20%;
+            height: 60%;
+            width: 1px;
+            background-color: #eee;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .booking-list-container {
+            margin-bottom: 20px;
+        }
+        
+        .booking-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .booking-item {
+            display: flex;
+            align-items: stretch;
+            margin-bottom: 15px;
+            background-color: #fff;
+            border-radius: 10px;
+            border: 1px solid #eee;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .booking-item:hover, .booking-item:focus {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-color: #ddd;
+            outline: none;
+        }
+        
+        .booking-item:focus-visible {
+            box-shadow: 0 0 0 3px rgba(230, 237, 7, 0.5);
+        }
+        
+        .booking-item.past {
+            background-color: #f9f9f9;
+            border-color: #eee;
+        }
+        
+        .booking-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background-color: #E6ED07;
+            color: #000;
+            font-size: 24px;
+            min-width: 70px;
+        }
+        
+        .booking-info {
+            flex: 1;
+            padding: 15px;
+            border-right: 1px solid #eee;
+        }
+        
+        .booking-class {
+            margin: 0 0 10px 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .booking-meta {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+            gap: 15px;
+        }
+        
+        .booking-meta span {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .booking-meta i {
+            margin-right: 5px;
+            color: #999;
+        }
+        
+        .booking-status {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .status.confirmed {
+            background-color: #e3f7e8;
+            color: #1d8b4e;
+        }
+        
+        .status.pending {
+            background-color: #fff3e0;
+            color: #e88f1b;
+        }
+        
+        .status.completed {
+            background-color: #e8f0fe;
+            color: #1967d2;
+        }
+        
+        .booking-actions {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 15px;
+            gap: 10px;
+            min-width: 120px;
+        }
+        
+        .cancel-button, .reminder-button, .repeat-button {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+        
+        .cancel-button {
+            background-color: #f8f8f8;
+            color: #e53935;
+            border: 1px solid #f0f0f0;
+        }
+        
+        .cancel-button:hover, .cancel-button:focus {
+            background-color: #fee8e7;
+            border-color: #ffcdd2;
+        }
+        
+        .reminder-button {
+            background-color: #f0f0f0;
+            color: #424242;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .reminder-button:hover, .reminder-button:focus {
+            background-color: #e0e0e0;
+        }
+        
+        .repeat-button {
+            background-color: #e8f0fe;
+            color: #1967d2;
+            border: 1px solid #d2e3fc;
+        }
+        
+        .repeat-button:hover, .repeat-button:focus {
+            background-color: #d2e3fc;
+        }
+        
+        .calendar-btn, .pay-btn, .review-btn {
+            background: none;
+            border: none;
+            color: #1967d2;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+        
+        .calendar-btn:hover, .pay-btn:hover, .review-btn:hover,
+        .calendar-btn:focus, .pay-btn:focus, .review-btn:focus {
+            background-color: rgba(25, 103, 210, 0.1);
+        }
+        
+        .pay-btn {
+            color: #e88f1b;
+        }
+        
+        .pay-btn:hover, .pay-btn:focus {
+            background-color: rgba(232, 143, 27, 0.1);
+        }
+        
+        .review-btn {
+            color: #ffa000;
+        }
+        
+        .review-btn:hover, .review-btn:focus {
+            background-color: rgba(255, 160, 0, 0.1);
+        }
+        
+        .booking-controls {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .view-all-btn {
+            background: none;
+            border: none;
+            color: #1967d2;
+            cursor: pointer;
+            font-size: 15px;
+            padding: 10px 20px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .view-all-btn:hover, .view-all-btn:focus {
+            background-color: rgba(25, 103, 210, 0.1);
+        }
+        
+        /* Estilos para modales */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 10px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover, .close-modal:focus {
+            color: #333;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        /* Estilos para formularios en modales */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 15px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group select:focus, .form-group textarea:focus {
+            border-color: #E6ED07;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(230, 237, 7, 0.2);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .cancel-btn, .save-btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cancel-btn {
+            background-color: #f5f5f5;
+            color: #555;
+            border: 1px solid #ddd;
+        }
+        
+        .cancel-btn:hover, .cancel-btn:focus {
+            background-color: #e0e0e0;
+        }
+        
+        .save-btn {
+            background-color: #E6ED07;
+            color: #000;
+            border: 1px solid #E6ED07;
+        }
+        
+        .save-btn:hover, .save-btn:focus {
+            background-color: #d6dc07;
+        }
+        
+        /* Estilos para valoración de estrellas */
+        .star-rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+            gap: 5px;
+        }
+        
+        .star-rating input {
+            display: none;
+        }
+        
+        .star-rating label {
+            cursor: pointer;
+            font-size: 25px;
+            color: #ddd;
+            transition: color 0.3s ease;
+        }
+        
+        .star-rating label:hover,
+        .star-rating label:hover ~ label,
+        .star-rating input:checked ~ label {
+            color: #ffc107;
+        }
+        
+        /* Accesibilidad y preferencias de usuario */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            .my-bookings, .booking-tabs, .calendar-container, .modal-content {
+                background-color: #222;
+                color: #eee;
+            }
+            
+            .booking-item {
+                background-color: #333;
+                border-color: #444;
+            }
+            
+            .booking-item.past {
+                background-color: #2a2a2a;
+            }
+            
+            .booking-class {
+                color: #fff;
+            }
+            
+            .booking-meta span, .stat-label {
+                color: #bbb;
+            }
+            
+            .filter-option {
+                background-color: #333;
+                border-color: #444;
+                color: #eee;
+            }
+            
+            .filter-option:hover {
+                background-color: #444;
+            }
+            
+            .filter-option.active {
+                background-color: #E6ED07;
+                color: #000;
+            }
+            
+            .cancel-button {
+                background-color: #333;
+                border-color: #444;
+            }
+            
+            .cancel-button:hover, .cancel-button:focus {
+                background-color: #3e2a2a;
+            }
+            
+            .reminder-button, .repeat-button {
+                background-color: #333;
+                border-color: #444;
+                color: #eee;
+            }
+            
+            .form-group select, .form-group textarea {
+                background-color: #333;
+                border-color: #444;
+                color: #eee;
+            }
+            
+            .cancel-btn {
+                background-color: #333;
+                border-color: #444;
+                color: #eee;
+            }
+        }
+        
+        /* Mejoras para accesibilidad de foco */
+        :focus-visible {
+            outline: 3px solid #E6ED07;
+            outline-offset: 2px;
+        }
+        
+        /* Estilos responsivos */
+        @media (max-width: 768px) {
+            .booking-filters, .booking-stats, .booking-meta {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .booking-item {
+                flex-direction: column;
+            }
+            
+            .booking-icon {
+                width: 100%;
+                min-width: auto;
+                padding: 10px;
+            }
+            
+            .booking-info {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .booking-actions {
+                flex-direction: row;
+                width: 100%;
+                min-width: auto;
+            }
+            
+            .booking-stats .stat-item:not(:last-child)::after {
+                display: none;
+            }
+            
+            .stat-item {
+                margin-bottom: 15px;
+                padding-bottom: 15px;
+                border-bottom: 1px solid #eee;
+                width: 100%;
+            }
+            
+            .booking-status {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .filter-options {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="menu">
+            <div class="contenedor-logo">
+                <img id="logoGym" src="assets/Fuerza total.png" alt="Logo Gimnasio" />
+            </div>
+            <button class="navbar-toggle" id="navbar-toggle">
+                <i class="fa fa-bars"></i>
+            </button>
+            <ul class="nav-list" id="nav-list">
+                <li id="list"><a id="listAncor" href="index.html">INICIO</a></li>
+                <li id="list"><a id="listAncor" href="planes.html">PLANES</a></li>
+                <li id="list"><a id="listAncor" href="entrenadores.html">ENTRENADORES</a></li>
+                <li id="list"><a id="listAncor" href="GymTracker_Nutritionist.html">NUTRICIÓN</a></li>
+                <li id="list"><a id="listAncor" href="fisioterapia.html">FISIOTERAPIA</a></li>
+                <li id="list"><a id="listAncor" href="nosotros.html">SOBRE NOSOTROS</a></li>
+                <li id="list"><a id="listAncor" href="contacto.html">CONTACTO</a></li>
+            </ul>
+
+            <div class="registerNav">
+                <div class="DivSignInButton">
+                    <a id="SignInAncor" href="#">Laura Gómez <i class="fa fa-user"></i></a>
+                </div>
+                <div class="RegisterButton">
+                    <a id="RegisterAncor" href="index.html">Cerrar Sesión <i class="fa fa-sign-out"></i></a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1 class="title-2">Reservas de Clases</h1>
+                <p class="subtitle">Reserva tus clases y actividades favoritas</p>
+            </div>
+        </section>
+
+        <section class="bookings-section">
+            <div class="container">
+                <!-- Tabs principales -->
+                <div class="booking-tabs">
+                    <div class="booking-tab active">Clases Grupales</div>
+                    <div class="booking-tab">Entrenamiento Personal</div>
+                    <div class="booking-tab">Nutrición</div>
+                    <div class="booking-tab">Fisioterapia</div>
+                </div>
+                
+                <!-- Calendario -->
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <h2 class="calendar-title">Noviembre 2023</h2>
+                        <div class="calendar-nav">
+                            <button><i class="fa fa-chevron-left"></i></button>
+                            <button><i class="fa fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-grid">
+                        <!-- Días de la semana -->
+                        <div class="calendar-weekday">Lun</div>
+                        <div class="calendar-weekday">Mar</div>
+                        <div class="calendar-weekday">Mié</div>
+                        <div class="calendar-weekday">Jue</div>
+                        <div class="calendar-weekday">Vie</div>
+                        <div class="calendar-weekday">Sáb</div>
+                        <div class="calendar-weekday">Dom</div>
+                        
+                        <!-- Días del mes (ejemplo) -->
+                        <div class="calendar-day other-month">30</div>
+                        <div class="calendar-day other-month">31</div>
+                        <div class="calendar-day">1</div>
+                        <div class="calendar-day">2</div>
+                        <div class="calendar-day">3</div>
+                        <div class="calendar-day has-events">4</div>
+                        <div class="calendar-day">5</div>
+                        
+                        <div class="calendar-day">6</div>
+                        <div class="calendar-day has-events">7</div>
+                        <div class="calendar-day">8</div>
+                        <div class="calendar-day has-events">9</div>
+                        <div class="calendar-day">10</div>
+                        <div class="calendar-day">11</div>
+                        <div class="calendar-day">12</div>
+                        
+                        <div class="calendar-day">13</div>
+                        <div class="calendar-day has-events">14</div>
+                        <div class="calendar-day active">15</div>
+                        <div class="calendar-day has-events">16</div>
+                        <div class="calendar-day">17</div>
+                        <div class="calendar-day has-events">18</div>
+                        <div class="calendar-day">19</div>
+                        
+                        <div class="calendar-day">20</div>
+                        <div class="calendar-day has-events">21</div>
+                        <div class="calendar-day">22</div>
+                        <div class="calendar-day">23</div>
+                        <div class="calendar-day">24</div>
+                        <div class="calendar-day has-events">25</div>
+                        <div class="calendar-day">26</div>
+                        
+                        <div class="calendar-day">27</div>
+                        <div class="calendar-day">28</div>
+                        <div class="calendar-day has-events">29</div>
+                        <div class="calendar-day">30</div>
+                        <div class="calendar-day other-month">1</div>
+                        <div class="calendar-day other-month">2</div>
+                        <div class="calendar-day other-month">3</div>
+                    </div>
+                </div>
+                
+                <!-- Filtros y búsqueda -->
+                <div class="filters-bar">
+                    <div class="filter-group">
+                        <select class="filter-select">
+                            <option>Todas las categorías</option>
+                            <option>Cardio</option>
+                            <option>Fuerza</option>
+                            <option>Flexibilidad</option>
+                            <option>Combinado</option>
+                        </select>
+                        
+                        <select class="filter-select">
+                            <option>Todos los niveles</option>
+                            <option>Principiante</option>
+                            <option>Intermedio</option>
+                            <option>Avanzado</option>
+                        </select>
+                        
+                        <select class="filter-select">
+                            <option>Todos los instructores</option>
+                            <option>Daniel Torres</option>
+                            <option>María López</option>
+                            <option>Carlos Jiménez</option>
+                            <option>Sofía Pérez</option>
+                        </select>
+                    </div>
+                    
+                    <input type="text" class="search-input" placeholder="Buscar clases...">
+                </div>
+                
+                <!-- Clases disponibles para el día seleccionado -->
+                <div class="class-container">
+                    <div class="time-slots">
+                        <div class="time-slot">Todas</div>
+                        <div class="time-slot">06:00 - 08:00</div>
+                        <div class="time-slot">08:00 - 10:00</div>
+                        <div class="time-slot active">10:00 - 12:00</div>
+                        <div class="time-slot">12:00 - 14:00</div>
+                        <div class="time-slot">14:00 - 16:00</div>
+                        <div class="time-slot">16:00 - 18:00</div>
+                        <div class="time-slot">18:00 - 20:00</div>
+                        <div class="time-slot">20:00 - 22:00</div>
+                    </div>
+                    
+                    <div class="class-grid">
+                        <!-- Clase 1 -->
+                        <div class="class-card">
+                            <div class="class-header">
+                                <div class="class-time">10:00</div>
+                                <div class="class-duration">45 min</div>
+                            </div>
+                            <div class="class-content">
+                                <h3 class="class-title"><i class="fa fa-heartbeat"></i> HIIT Intenso</h3>
+                                <div class="class-details">
+                                    <div class="class-detail"><i class="fa fa-user"></i> Daniel Torres</div>
+                                    <div class="class-detail"><i class="fa fa-map-marker"></i> Sala 2</div>
+                                    <div class="class-detail"><i class="fa fa-signal"></i> Intermedio - Avanzado</div>
+                                </div>
+                                <div class="class-capacity">
+                                    <div class="capacity-bar">
+                                        <div class="capacity-fill" style="width: 75%;"></div>
+                                    </div>
+                                    <div class="capacity-text">15/20 plazas</div>
+                                </div>
+                                <div class="class-actions">
+                                    <button class="book-button secondary">Ver detalles</button>
+                                    <button class="book-button">Reservar</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Clase 2 -->
+                        <div class="class-card">
+                            <div class="class-header">
+                                <div class="class-time">10:30</div>
+                                <div class="class-duration">60 min</div>
+                            </div>
+                            <div class="class-content">
+                                <h3 class="class-title"><i class="fa fa-child"></i> Yoga Flow</h3>
+                                <div class="class-details">
+                                    <div class="class-detail"><i class="fa fa-user"></i> Sofía Pérez</div>
+                                    <div class="class-detail"><i class="fa fa-map-marker"></i> Sala 3</div>
+                                    <div class="class-detail"><i class="fa fa-signal"></i> Todos los niveles</div>
+                                </div>
+                                <div class="class-capacity">
+                                    <div class="capacity-bar">
+                                        <div class="capacity-fill" style="width: 40%;"></div>
+                                    </div>
+                                    <div class="capacity-text">8/20 plazas</div>
+                                </div>
+                                <div class="class-actions">
+                                    <button class="book-button secondary">Ver detalles</button>
+                                    <button class="book-button">Reservar</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Clase 3 -->
+                        <div class="class-card">
+                            <div class="class-header">
+                                <div class="class-time">11:00</div>
+                                <div class="class-duration">45 min</div>
+                            </div>
+                            <div class="class-content">
+                                <h3 class="class-title"><i class="fa fa-bicycle"></i> Spinning</h3>
+                                <div class="class-details">
+                                    <div class="class-detail"><i class="fa fa-user"></i> María López</div>
+                                    <div class="class-detail"><i class="fa fa-map-marker"></i> Sala Ciclo</div>
+                                    <div class="class-detail"><i class="fa fa-signal"></i> Todos los niveles</div>
+                                </div>
+                                <div class="class-capacity">
+                                    <div class="capacity-bar">
+                                        <div class="capacity-fill" style="width: 90%;"></div>
+                                    </div>
+                                    <div class="capacity-text">18/20 plazas</div>
+                                </div>
+                                <div class="class-actions">
+                                    <button class="book-button secondary">Ver detalles</button>
+                                    <button class="book-button">Reservar</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Clase 4 -->
+                        <div class="class-card">
+                            <div class="class-header">
+                                <div class="class-time">11:30</div>
+                                <div class="class-duration">50 min</div>
+                            </div>
+                            <div class="class-content">
+                                <h3 class="class-title"><i class="fa fa-dot-circle-o"></i> Body Pump</h3>
+                                <div class="class-details">
+                                    <div class="class-detail"><i class="fa fa-user"></i> Carlos Jiménez</div>
+                                    <div class="class-detail"><i class="fa fa-map-marker"></i> Sala 1</div>
+                                    <div class="class-detail"><i class="fa fa-signal"></i> Intermedio</div>
+                                </div>
+                                <div class="class-capacity">
+                                    <div class="capacity-bar">
+                                        <div class="capacity-fill" style="width: 100%;"></div>
+                                    </div>
+                                    <div class="capacity-text">20/20 plazas</div>
+                                </div>
+                                <div class="class-actions">
+                                    <button class="book-button secondary">Ver detalles</button>
+                                    <button class="book-button disabled">Completo</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mis reservas actuales -->
+                <div class="my-bookings">
+                    <h2 class="section-title" id="mis-reservas-titulo"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Mis Reservas</h2>
+                    
+                    <div class="booking-filters" role="toolbar" aria-label="Filtros de reservas">
+                        <div class="filter-label">
+                            <span id="filter-label">Filtrar por:</span>
+                        </div>
+                        <div class="filter-options">
+                            <button class="filter-option active" aria-pressed="true" aria-labelledby="filter-label">Todas</button>
+                            <button class="filter-option" aria-pressed="false" aria-labelledby="filter-label">Clases grupales</button>
+                            <button class="filter-option" aria-pressed="false" aria-labelledby="filter-label">Entrenamiento personal</button>
+                            <button class="filter-option" aria-pressed="false" aria-labelledby="filter-label">Nutrición</button>
+                            <button class="filter-option" aria-pressed="false" aria-labelledby="filter-label">Fisioterapia</button>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Reservas pendientes</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">12</span>
+                            <span class="stat-label">Clases este mes</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">80%</span>
+                            <span class="stat-label">Asistencia</span>
+                        </div>
+                    </div>
+                    
+                    <div class="booking-list-container" role="region" aria-labelledby="mis-reservas-titulo">
+                        <ul class="booking-list">
+                            <li class="booking-item" tabindex="0">
+                                <div class="booking-icon" aria-hidden="true">
+                                    <i class="fa fa-bicycle"></i>
+                                </div>
+                                <div class="booking-info">
+                                    <h3 class="booking-class">Spinning</h3>
+                                    <div class="booking-meta">
+                                        <span><i class="fa fa-calendar" aria-hidden="true"></i> <span>Miércoles, 15 Nov</span></span>
+                                        <span><i class="fa fa-clock-o" aria-hidden="true"></i> <span>11:00 - 11:45</span></span>
+                                        <span><i class="fa fa-user" aria-hidden="true"></i> <span>María López</span></span>
+                                        <span><i class="fa fa-map-marker" aria-hidden="true"></i> <span>Sala Ciclo</span></span>
+                                    </div>
+                                    <div class="booking-status">
+                                        <span class="status confirmed">Confirmada</span>
+                                        <span class="add-calendar">
+                                            <button class="calendar-btn" aria-label="Añadir a calendario">
+                                                <i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Añadir a calendario
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="booking-actions">
+                                    <button class="reminder-button" aria-label="Establecer recordatorio para Spinning">
+                                        <i class="fa fa-bell" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="cancel-button" aria-label="Cancelar reserva de Spinning">Cancelar</button>
+                                </div>
+                            </li>
+                            
+                            <li class="booking-item" tabindex="0">
+                                <div class="booking-icon" aria-hidden="true">
+                                    <i class="fa fa-cutlery"></i>
+                                </div>
+                                <div class="booking-info">
+                                    <h3 class="booking-class">Consulta Nutricional</h3>
+                                    <div class="booking-meta">
+                                        <span><i class="fa fa-calendar" aria-hidden="true"></i> <span>Viernes, 17 Nov</span></span>
+                                        <span><i class="fa fa-clock-o" aria-hidden="true"></i> <span>16:30 - 17:30</span></span>
+                                        <span><i class="fa fa-user" aria-hidden="true"></i> <span>Ana Martínez</span></span>
+                                        <span><i class="fa fa-map-marker" aria-hidden="true"></i> <span>Consultorio 2</span></span>
+                                    </div>
+                                    <div class="booking-status">
+                                        <span class="status pending">Pendiente de pago</span>
+                                        <button class="pay-btn" aria-label="Completar pago de consulta nutricional">
+                                            <i class="fa fa-credit-card" aria-hidden="true"></i> Completar pago
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="booking-actions">
+                                    <button class="reminder-button" aria-label="Establecer recordatorio para Consulta Nutricional">
+                                        <i class="fa fa-bell" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="cancel-button" aria-label="Cancelar reserva de Consulta Nutricional">Cancelar</button>
+                                </div>
+                            </li>
+                            
+                            <li class="booking-item" tabindex="0">
+                                <div class="booking-icon" aria-hidden="true">
+                                    <i class="fa fa-child"></i>
+                                </div>
+                                <div class="booking-info">
+                                    <h3 class="booking-class">Yoga Flow</h3>
+                                    <div class="booking-meta">
+                                        <span><i class="fa fa-calendar" aria-hidden="true"></i> <span>Sábado, 18 Nov</span></span>
+                                        <span><i class="fa fa-clock-o" aria-hidden="true"></i> <span>09:00 - 10:00</span></span>
+                                        <span><i class="fa fa-user" aria-hidden="true"></i> <span>Sofía Pérez</span></span>
+                                        <span><i class="fa fa-map-marker" aria-hidden="true"></i> <span>Sala 3</span></span>
+                                    </div>
+                                    <div class="booking-status">
+                                        <span class="status confirmed">Confirmada</span>
+                                        <span class="add-calendar">
+                                            <button class="calendar-btn" aria-label="Añadir a calendario">
+                                                <i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Añadir a calendario
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="booking-actions">
+                                    <button class="reminder-button" aria-label="Establecer recordatorio para Yoga Flow">
+                                        <i class="fa fa-bell" aria-hidden="true"></i>
+                                    </button>
+                                    <button class="cancel-button" aria-label="Cancelar reserva de Yoga Flow">Cancelar</button>
+                                </div>
+                            </li>
+                            
+                            <li class="booking-item past" tabindex="0">
+                                <div class="booking-icon" aria-hidden="true">
+                                    <i class="fa fa-heartbeat"></i>
+                                </div>
+                                <div class="booking-info">
+                                    <h3 class="booking-class">HIIT</h3>
+                                    <div class="booking-meta">
+                                        <span><i class="fa fa-calendar" aria-hidden="true"></i> <span>Lunes, 13 Nov</span></span>
+                                        <span><i class="fa fa-clock-o" aria-hidden="true"></i> <span>19:00 - 20:00</span></span>
+                                        <span><i class="fa fa-user" aria-hidden="true"></i> <span>Roberto Sánchez</span></span>
+                                        <span><i class="fa fa-map-marker" aria-hidden="true"></i> <span>Sala 2</span></span>
+                                    </div>
+                                    <div class="booking-status">
+                                        <span class="status completed">Completada</span>
+                                        <button class="review-btn" aria-label="Valorar clase de HIIT">
+                                            <i class="fa fa-star" aria-hidden="true"></i> Valorar clase
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="booking-actions">
+                                    <button class="repeat-button" aria-label="Repetir reserva de HIIT">
+                                        <i class="fa fa-repeat" aria-hidden="true"></i> Repetir
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
+                        
+                        <div class="booking-controls">
+                            <button class="view-all-btn" aria-expanded="false">
+                                Ver historial completo <i class="fa fa-angle-down" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Modal para gestionar recordatorios -->
+                    <div id="reminder-modal" class="modal" role="dialog" aria-labelledby="reminder-title" aria-hidden="true">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 id="reminder-title">Establecer recordatorio</h3>
+                                <button class="close-modal" aria-label="Cerrar modal">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="reminder-form">
+                                    <div class="form-group">
+                                        <label for="reminder-time">¿Cuándo quieres recibir el recordatorio?</label>
+                                        <select id="reminder-time" name="reminder-time">
+                                            <option value="15">15 minutos antes</option>
+                                            <option value="30">30 minutos antes</option>
+                                            <option value="60">1 hora antes</option>
+                                            <option value="120">2 horas antes</option>
+                                            <option value="1440">1 día antes</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="reminder-method">Método de notificación</label>
+                                        <div class="checkbox-group">
+                                            <label>
+                                                <input type="checkbox" name="reminder-email" id="reminder-email" checked> Email
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" name="reminder-sms" id="reminder-sms"> SMS
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" name="reminder-app" id="reminder-app" checked> Notificación App
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="button" class="cancel-btn">Cancelar</button>
+                                        <button type="submit" class="save-btn">Guardar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Modal para valorar clases -->
+                    <div id="review-modal" class="modal" role="dialog" aria-labelledby="review-title" aria-hidden="true">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3 id="review-title">Valorar clase</h3>
+                                <button class="close-modal" aria-label="Cerrar modal">
+                                    <i class="fa fa-times" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="review-form">
+                                    <div class="form-group">
+                                        <label for="rating">¿Cómo puntuarías esta clase?</label>
+                                        <div class="star-rating">
+                                            <input type="radio" id="star5" name="rating" value="5" aria-label="5 estrellas, excelente">
+                                            <label for="star5"><i class="fa fa-star" aria-hidden="true"></i></label>
+                                            <input type="radio" id="star4" name="rating" value="4" aria-label="4 estrellas, muy bueno">
+                                            <label for="star4"><i class="fa fa-star" aria-hidden="true"></i></label>
+                                            <input type="radio" id="star3" name="rating" value="3" aria-label="3 estrellas, bueno">
+                                            <label for="star3"><i class="fa fa-star" aria-hidden="true"></i></label>
+                                            <input type="radio" id="star2" name="rating" value="2" aria-label="2 estrellas, regular">
+                                            <label for="star2"><i class="fa fa-star" aria-hidden="true"></i></label>
+                                            <input type="radio" id="star1" name="rating" value="1" aria-label="1 estrella, malo">
+                                            <label for="star1"><i class="fa fa-star" aria-hidden="true"></i></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="review-comment">Comentarios (opcional)</label>
+                                        <textarea id="review-comment" name="comment" rows="4" 
+                                        placeholder="Comparte tu experiencia en esta clase..."></textarea>
+                                    </div>
+                                    <div class="form-actions">
+                                        <button type="button" class="cancel-btn">Cancelar</button>
+                                        <button type="submit" class="save-btn">Enviar valoración</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footerContainer">
+            <div class="contact-info">
+                <div>
+                    <p>Av. 1º de mayo # 6 - 54 Barrio: Velódromo.</p>
+                    <p>Bogotá D.C, Colombia</p>
+                </div>
+                <div>
+                    <p><i class="fa fa-phone"></i> +57 3213213212</p>
+                </div>
+                <div>
+                    <p><i class="fa fa-envelope"></i> gymtracker@gymtracker.com</p>
+                </div>
+                <div class="social-media">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-instagram fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter-square fa-2x"></i></a>
+                </div>
+            </div>
+            <div class="aboutContainer">
+                <h4>Acerca de la compañía</h4>
+                <div class="aboutCompanyContainer">
+                    <p>
+                        GymTracker es una plataforma integral diseñada para optimizar la gestión de gimnasios y el seguimiento del progreso de los usuarios.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 GymTracker. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gestión de tabs
+            const bookingTabs = document.querySelectorAll('.booking-tab');
+            
+            bookingTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    bookingTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    // Aquí se cargarían los datos específicos de cada tab
+                });
+            });
+            
+            // Gestión del calendario
+            const calendarDays = document.querySelectorAll('.calendar-day:not(.other-month):not(.disabled)');
+            
+            calendarDays.forEach(day => {
+                day.addEventListener('click', function() {
+                    calendarDays.forEach(d => d.classList.remove('active'));
+                    this.classList.add('active');
+                    // Aquí se cargarían las clases para el día seleccionado
+                });
+            });
+            
+            // Gestión de franjas horarias
+            const timeSlots = document.querySelectorAll('.time-slot');
+            
+            timeSlots.forEach(slot => {
+                slot.addEventListener('click', function() {
+                    timeSlots.forEach(s => s.classList.remove('active'));
+                    this.classList.add('active');
+                    // Aquí se filtrarían las clases por franja horaria
+                });
+            });
+            
+            // Botones de reserva
+            const bookButtons = document.querySelectorAll('.book-button:not(.disabled):not(.secondary)');
+            
+            bookButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    alert('Reserva realizada con éxito. Revisa tu correo electrónico para confirmación.');
+                });
+            });
+            
+            // Botones de cancelación
+            const cancelButtons = document.querySelectorAll('.cancel-button');
+            
+            cancelButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (confirm('¿Estás seguro de que deseas cancelar esta reserva?')) {
+                        // En una implementación real, aquí se procesaría la cancelación
+                        const bookingItem = this.closest('.booking-item');
+                        bookingItem.style.opacity = '0.5';
+                        bookingItem.style.pointerEvents = 'none';
+                        
+                        // Simular un mensaje de éxito
+                        setTimeout(() => {
+                            bookingItem.remove();
+                            alert('Reserva cancelada correctamente.');
+                        }, 1000);
+                    }
+                });
+            });
+            
+            // Nuevas funcionalidades para la sección "Mis Reservas"
+            
+            // 1. Filtros de reservas
+            const filterOptions = document.querySelectorAll('.filter-option');
+            
+            filterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Actualizar estado visual y ARIA
+                    filterOptions.forEach(opt => {
+                        opt.classList.remove('active');
+                        opt.setAttribute('aria-pressed', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-pressed', 'true');
+                    
+                    // Tipo de filtro seleccionado
+                    const filterType = this.textContent.trim().toLowerCase();
+                    
+                    // Filtrar las reservas (simulación)
+                    const bookingItems = document.querySelectorAll('.booking-item');
+                    
+                    bookingItems.forEach(item => {
+                        if (filterType === 'todas') {
+                            item.style.display = '';
+                        } else {
+                            // En una implementación real, cada reserva tendría una categoría
+                            // Aquí solo simulamos el filtrado para demostración
+                            const classes = {
+                                'spinning': 'clases grupales',
+                                'yoga flow': 'clases grupales',
+                                'hiit': 'clases grupales',
+                                'consulta nutricional': 'nutrición'
+                            };
+                            
+                            const className = item.querySelector('.booking-class').textContent.trim().toLowerCase();
+                            const category = classes[className] || 'clases grupales';
+                            
+                            item.style.display = category === filterType ? '' : 'none';
+                        }
+                    });
+                });
+            });
+            
+            // 2. Gestión del modal de recordatorio
+            const reminderButtons = document.querySelectorAll('.reminder-button');
+            const reminderModal = document.getElementById('reminder-modal');
+            const reminderForm = document.getElementById('reminder-form');
+            
+            reminderButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Obtener datos de la reserva para personalizar el modal
+                    const bookingItem = this.closest('.booking-item');
+                    const className = bookingItem.querySelector('.booking-class').textContent;
+                    
+                    // Personalizar título del modal
+                    document.getElementById('reminder-title').textContent = `Recordatorio: ${className}`;
+                    
+                    // Mostrar el modal
+                    reminderModal.classList.add('show');
+                    
+                    // Enfocar el primer campo del formulario
+                    setTimeout(() => {
+                        document.getElementById('reminder-time').focus();
+                    }, 100);
+                });
+            });
+            
+            // 3. Gestión del modal de valoración
+            const reviewButtons = document.querySelectorAll('.review-btn');
+            const reviewModal = document.getElementById('review-modal');
+            
+            reviewButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Obtener datos de la clase para personalizar el modal
+                    const bookingItem = this.closest('.booking-item');
+                    const className = bookingItem.querySelector('.booking-class').textContent;
+                    
+                    // Personalizar título del modal
+                    document.getElementById('review-title').textContent = `Valorar: ${className}`;
+                    
+                    // Mostrar el modal
+                    reviewModal.classList.add('show');
+                    
+                    // Enfocar el primer elemento interactivo
+                    setTimeout(() => {
+                        document.getElementById('star5').focus();
+                    }, 100);
+                });
+            });
+            
+            // 4. Cerrar modales
+            const closeButtons = document.querySelectorAll('.close-modal, .cancel-btn');
+            
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.modal');
+                    modal.classList.remove('show');
+                    
+                    // Devolver el foco al elemento que abrió el modal
+                    if (modal.id === 'reminder-modal') {
+                        document.querySelector('.reminder-button[aria-expanded="true"]')?.focus();
+                    } else if (modal.id === 'review-modal') {
+                        document.querySelector('.review-btn[aria-expanded="true"]')?.focus();
+                    }
+                });
+            });
+            
+            // Cerrar modal con tecla ESC
+            document.addEventListener('keydown', function(event) {
+                if (event.key === 'Escape') {
+                    const openModals = document.querySelectorAll('.modal.show');
+                    openModals.forEach(modal => {
+                        modal.classList.remove('show');
+                    });
+                }
+            });
+            
+            // 5. Enviar formularios de modales
+            if (reminderForm) {
+                reminderForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    
+                    // Simulación de envío
+                    reminderModal.classList.remove('show');
+                    alert('Recordatorio configurado correctamente');
+                });
+            }
+            
+            const reviewForm = document.getElementById('review-form');
+            if (reviewForm) {
+                reviewForm.addEventListener('submit', function(event) {
+                    event.preventDefault();
+                    
+                    // Obtener la valoración seleccionada
+                    const rating = document.querySelector('input[name="rating"]:checked')?.value || '0';
+                    const comment = document.getElementById('review-comment').value;
+                    
+                    // Simulación de envío
+                    reviewModal.classList.remove('show');
+                    alert(`Gracias por tu valoración de ${rating} estrellas.`);
+                });
+            }
+            
+            // 6. Botón para añadir a calendario
+            const calendarButtons = document.querySelectorAll('.calendar-btn');
+            
+            calendarButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const bookingItem = this.closest('.booking-item');
+                    const className = bookingItem.querySelector('.booking-class').textContent;
+                    const dateText = bookingItem.querySelector('.fa-calendar').nextElementSibling.textContent;
+                    const timeText = bookingItem.querySelector('.fa-clock-o').nextElementSibling.textContent;
+                    
+                    alert(`Se ha añadido "${className}" (${dateText}, ${timeText}) a tu calendario.`);
+                });
+            });
+            
+            // 7. Botón para completar pago
+            const payButtons = document.querySelectorAll('.pay-btn');
+            
+            payButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // En una implementación real, esto abriría una pasarela de pago
+                    const bookingItem = this.closest('.booking-item');
+                    const className = bookingItem.querySelector('.booking-class').textContent;
+                    
+                    // Simulación de pago
+                    if (confirm(`¿Deseas proceder al pago para ${className}?`)) {
+                        const statusBadge = bookingItem.querySelector('.status');
+                        statusBadge.textContent = 'Confirmada';
+                        statusBadge.classList.remove('pending');
+                        statusBadge.classList.add('confirmed');
+                        
+                        // Reemplazar el botón de pago por el de añadir al calendario
+                        const payButton = this;
+                        const paymentStatus = this.closest('.booking-status');
+                        
+                        payButton.remove();
+                        
+                        const calendarButton = document.createElement('span');
+                        calendarButton.className = 'add-calendar';
+                        calendarButton.innerHTML = `
+                            <button class="calendar-btn" aria-label="Añadir a calendario">
+                                <i class="fa fa-calendar-plus-o" aria-hidden="true"></i> Añadir a calendario
+                            </button>
+                        `;
+                        
+                        paymentStatus.appendChild(calendarButton);
+                        
+                        // Añadir evento al nuevo botón
+                        const newCalendarBtn = calendarButton.querySelector('.calendar-btn');
+                        newCalendarBtn.addEventListener('click', function() {
+                            alert(`Se ha añadido "${className}" a tu calendario.`);
+                        });
+                        
+                        alert('Pago procesado correctamente. La reserva ha sido confirmada.');
+                    }
+                });
+            });
+            
+            // 8. Ver historial completo
+            const viewAllButton = document.querySelector('.view-all-btn');
+            
+            if (viewAllButton) {
+                viewAllButton.addEventListener('click', function() {
+                    const isExpanded = this.getAttribute('aria-expanded') === 'true';
+                    
+                    if (!isExpanded) {
+                        // Simular carga de más reservas pasadas
+                        const bookingList = document.querySelector('.booking-list');
+                        
+                        // Crear nuevos elementos para historial
+                        for (let i = 0; i < 3; i++) {
+                            const pastBooking = document.createElement('li');
+                            pastBooking.className = 'booking-item past';
+                            pastBooking.tabIndex = 0;
+                            
+                            const classes = ['Body Pump', 'Pilates', 'Boxeo'];
+                            const dates = ['Martes, 7 Nov', 'Viernes, 3 Nov', 'Lunes, 30 Oct'];
+                            const icons = ['fa-dumbbell', 'fa-balance-scale', 'fa-hand-rock-o'];
+                            
+                            pastBooking.innerHTML = `
+                                <div class="booking-icon" aria-hidden="true">
+                                    <i class="fa ${icons[i]}"></i>
+                                </div>
+                                <div class="booking-info">
+                                    <h3 class="booking-class">${classes[i]}</h3>
+                                    <div class="booking-meta">
+                                        <span><i class="fa fa-calendar" aria-hidden="true"></i> <span>${dates[i]}</span></span>
+                                        <span><i class="fa fa-clock-o" aria-hidden="true"></i> <span>18:00 - 19:00</span></span>
+                                        <span><i class="fa fa-user" aria-hidden="true"></i> <span>Carlos Rodríguez</span></span>
+                                        <span><i class="fa fa-map-marker" aria-hidden="true"></i> <span>Sala 2</span></span>
+                                    </div>
+                                    <div class="booking-status">
+                                        <span class="status completed">Completada</span>
+                                        <button class="review-btn" aria-label="Valorar clase de ${classes[i]}">
+                                            <i class="fa fa-star" aria-hidden="true"></i> Valorar clase
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="booking-actions">
+                                    <button class="repeat-button" aria-label="Repetir reserva de ${classes[i]}">
+                                        <i class="fa fa-repeat" aria-hidden="true"></i> Repetir
+                                    </button>
+                                </div>
+                            `;
+                            
+                            bookingList.appendChild(pastBooking);
+                        }
+                        
+                        // Actualizar botón
+                        this.innerHTML = 'Mostrar menos <i class="fa fa-angle-up" aria-hidden="true"></i>';
+                        this.setAttribute('aria-expanded', 'true');
+                        
+                        // Agregar eventos a los nuevos botones
+                        document.querySelectorAll('.review-btn:not([data-initialized])').forEach(btn => {
+                            btn.setAttribute('data-initialized', 'true');
+                            btn.addEventListener('click', function() {
+                                const bookingItem = this.closest('.booking-item');
+                                const className = bookingItem.querySelector('.booking-class').textContent;
+                                
+                                document.getElementById('review-title').textContent = `Valorar: ${className}`;
+                                reviewModal.classList.add('show');
+                            });
+                        });
+                        
+                        document.querySelectorAll('.repeat-button:not([data-initialized])').forEach(btn => {
+                            btn.setAttribute('data-initialized', 'true');
+                            btn.addEventListener('click', function() {
+                                const bookingItem = this.closest('.booking-item');
+                                const className = bookingItem.querySelector('.booking-class').textContent;
+                                
+                                alert(`Has solicitado repetir la reserva de ${className}. Te redirigiremos a la página de reservas.`);
+                            });
+                        });
+                    } else {
+                        // Ocultar historial
+                        const pastBookings = document.querySelectorAll('.booking-item.past:not(:first-child)');
+                        pastBookings.forEach(booking => {
+                            booking.remove();
+                        });
+                        
+                        // Actualizar botón
+                        this.innerHTML = 'Ver historial completo <i class="fa fa-angle-down" aria-hidden="true"></i>';
+                        this.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+            
+            // 9. Navegación por teclado para reservas
+            document.querySelectorAll('.booking-item').forEach(item => {
+                item.addEventListener('keydown', function(event) {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        // Expandir/Contraer detalles (en una implementación real)
+                        // O activar la primera acción (como ver detalles)
+                        this.querySelector('button')?.click();
+                    }
+                });
+            });
+            
+            // 10. Implementar trampas de foco para modales
+            function trapFocus(modal) {
+                const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                const firstElement = focusableElements[0];
+                const lastElement = focusableElements[focusableElements.length - 1];
+                
+                modal.addEventListener('keydown', function(event) {
+                    if (event.key === 'Tab') {
+                        // Si se presiona Tab
+                        if (event.shiftKey && document.activeElement === firstElement) {
+                            // Si se presiona Shift+Tab y estamos en el primer elemento
+                            event.preventDefault();
+                            lastElement.focus();
+                        } else if (!event.shiftKey && document.activeElement === lastElement) {
+                            // Si se presiona Tab y estamos en el último elemento
+                            event.preventDefault();
+                            firstElement.focus();
+                        }
+                    }
+                });
+            }
+            
+            // Aplicar trampas de foco a modales
+            const modals = document.querySelectorAll('.modal');
+            modals.forEach(trapFocus);
+        });
+    </script>
+</body>
+</html>

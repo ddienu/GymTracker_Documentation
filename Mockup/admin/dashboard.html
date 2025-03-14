@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Panel de administración para gimnasios - GymTracker. Gestiona usuarios, clases, estadísticas y más.">
+    <title>Panel de Administración - GymTracker</title>
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <!-- Fuentes e iconos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Metadata adicional -->
+    <meta name="author" content="GymTracker">
+    <meta name="theme-color" content="#E6ED07">
+</head>
+<body>
+    <a class="skip-to-admin" href="#admin-content">Saltar al contenido principal</a>
+    
+    <div class="admin-layout">
+        <!-- Barra lateral de navegación -->
+        <aside class="admin-sidebar" role="navigation" aria-label="Navegación principal de administración">
+            <div class="admin-logo">
+                <h2>GymTracker Admin</h2>
+            </div>
+            <nav>
+                <ul class="admin-nav" role="menu">
+                    <li class="admin-nav-item" role="none">
+                        <a href="#" class="admin-nav-link active" role="menuitem" aria-current="page">
+                            <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="admin-nav-item" role="none">
+                        <a href="usuarios.html" class="admin-nav-link" role="menuitem">
+                            <i class="fas fa-users" aria-hidden="true"></i>
+                            <span>Usuarios</span>
+                        </a>
+                    </li>
+                    <li class="admin-nav-item" role="none">
+                        <a href="clases.html" class="admin-nav-link" role="menuitem">
+                            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                            <span>Clases</span>
+                        </a>
+                    </li>
+                    <li class="admin-nav-item" role="none">
+                        <a href="rutinas.html" class="admin-nav-link" role="menuitem">
+                            <i class="fas fa-dumbbell" aria-hidden="true"></i>
+                            <span>Rutinas</span>
+                        </a>
+                    </li>
+                    <li class="admin-nav-item" role="none">
+                        <a href="pagos.html" class="admin-nav-link" role="menuitem">
+                            <i class="fas fa-credit-card" aria-hidden="true"></i>
+                            <span>Pagos</span>
+                        </a>
+                    </li>
+                    <li class="admin-nav-item" role="none">
+                        <a href="estadisticas.html" class="admin-nav-link" role="menuitem">
+                            <i class="fas fa-chart-line" aria-hidden="true"></i>
+                            <span>Estadísticas</span>
+                        </a>
+                    </li>
+                    <li class="admin-nav-item" role="none">
+                        <a href="entrenadores.html" class="admin-nav-link" role="menuitem">
+                            <i class="fas fa-user-tie" aria-hidden="true"></i>
+                            <span>Entrenadores</span>
+                        </a>
+                    </li>
+                    <li class="admin-nav-item" role="none">
+                        <a href="nutricionistas.html" class="admin-nav-link" role="menuitem">
+                            <i class="fas fa-apple-alt" aria-hidden="true"></i>
+                            <span>Nutricionistas</span>
+                        </a>
+                    </li>
+                    <li class="admin-nav-item" role="none">
+                        <a href="fisioterapeutas.html" class="admin-nav-link" role="menuitem">
+                            <i class="fas fa-notes-medical" aria-hidden="true"></i>
+                            <span>Fisioterapeutas</span>
+                        </a>
+                    </li>
+                    <li class="admin-nav-item" role="none">
+                        <a href="configuracion.html" class="admin-nav-link" role="menuitem">
+                            <i class="fas fa-cog" aria-hidden="true"></i>
+                            <span>Configuración</span>
+                        </a>
+                    </li>
+                    <li class="admin-nav-item" role="none">
+                        <a href="../index.html" class="admin-nav-link" role="menuitem">
+                            <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                            <span>Salir</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Contenido principal -->
+        <main id="admin-content" class="admin-content" role="main">
+            <header class="admin-header">
+                <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="admin-sidebar" type="button">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+                <h1 class="admin-title">Dashboard</h1>
+                <div class="admin-user" aria-label="Usuario actual">
+                    <div class="admin-user-info">
+                        <p class="admin-user-name">Carlos García</p>
+                        <p class="admin-user-role">Administrador</p>
+                    </div>
+                    <div class="admin-avatar" aria-label="Avatar de Carlos García">CG</div>
+                </div>
+            </header>
+
+            <!-- Sección de estadísticas rápidas -->
+            <section class="stats-container" aria-labelledby="stats-title">
+                <h2 id="stats-title" class="sr-only">Estadísticas Generales</h2>
+                <article class="stat-card">
+                    <div class="stat-header">
+                        <h3 class="stat-title">Usuarios Activos</h3>
+                        <div class="stat-icon bg-purple">
+                            <i class="fas fa-users" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <p class="stat-value">248</p>
+                    <div class="stat-trend trend-up">
+                        <i class="fas fa-arrow-up" aria-hidden="true"></i> 12% respecto al mes anterior
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-header">
+                        <h3 class="stat-title">Ingresos Mensuales</h3>
+                        <div class="stat-icon bg-green">
+                            <i class="fas fa-euro-sign" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <p class="stat-value">€6,520</p>
+                    <div class="stat-trend trend-up">
+                        <i class="fas fa-arrow-up" aria-hidden="true"></i> 8% respecto al mes anterior
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-header">
+                        <h3 class="stat-title">Clases Impartidas</h3>
+                        <div class="stat-icon bg-orange">
+                            <i class="fas fa-calendar-check" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <p class="stat-value">124</p>
+                    <div class="stat-trend trend-up">
+                        <i class="fas fa-arrow-up" aria-hidden="true"></i> 5% respecto al mes anterior
+                    </div>
+                </article>
+
+                <article class="stat-card">
+                    <div class="stat-header">
+                        <h3 class="stat-title">Reservas Actuales</h3>
+                        <div class="stat-icon bg-blue">
+                            <i class="fas fa-bookmark" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <p class="stat-value">86</p>
+                    <div class="stat-trend trend-down">
+                        <i class="fas fa-arrow-down" aria-hidden="true"></i> 3% respecto al mes anterior
+                    </div>
+                </article>
+            </section>
+
+            <!-- Sección de usuarios recientes -->
+            <section class="admin-section" aria-labelledby="usuarios-recientes-title">
+                <header class="section-header">
+                    <h2 id="usuarios-recientes-title" class="section-title">Usuarios Recientes</h2>
+                    <div class="section-actions">
+                        <button type="button" class="admin-btn secondary" aria-label="Filtrar usuarios">
+                            <i class="fas fa-filter" aria-hidden="true"></i> Filtrar
+                        </button>
+                        <button type="button" class="admin-btn" aria-label="Añadir nuevo usuario">
+                            <i class="fas fa-plus" aria-hidden="true"></i> Añadir Usuario
+                        </button>
+                    </div>
+                </header>
+                
+                <div class="table-responsive">
+                    <table class="admin-table" aria-label="Tabla de usuarios recientes">
+                        <caption class="sr-only">Lista de usuarios registrados recientemente en el sistema</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col">Usuario</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Plan</th>
+                                <th scope="col">Fecha de Registro</th>
+                                <th scope="col">Estado</th>
+                                <th scope="col">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="user-info">
+                                        <div class="user-avatar" aria-label="Avatar de Laura Martínez">LM</div>
+                                        <div>Laura Martínez</div>
+                                    </div>
+                                </td>
+                                <td><a href="mailto:laura.martinez@example.com">laura.martinez@example.com</a></td>
+                                <td><span class="user-plan plan-premium">Premium</span></td>
+                                <td><time datetime="2023-10-12">12 Oct 2023</time></td>
+                                <td><span class="user-status status-active" aria-label="Usuario activo"></span> Activo</td>
+                                <td class="action-buttons">
+                                    <a href="#" aria-label="Ver perfil de Laura Martínez"><i class="fas fa-eye" aria-hidden="true"></i></a>
+                                    <a href="#" aria-label="Editar perfil de Laura Martínez"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                    <a href="#" aria-label="Eliminar perfil de Laura Martínez"><i class="fas fa-trash" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="user-info">
+                                        <div class="user-avatar" aria-label="Avatar de David Rodríguez">DR</div>
+                                        <div>David Rodríguez</div>
+                                    </div>
+                                </td>
+                                <td><a href="mailto:david.rodriguez@example.com">david.rodriguez@example.com</a></td>
+                                <td><span class="user-plan plan-basic">Básico</span></td>
+                                <td><time datetime="2023-10-05">05 Oct 2023</time></td>
+                                <td><span class="user-status status-active" aria-label="Usuario activo"></span> Activo</td>
+                                <td class="action-buttons">
+                                    <a href="#" aria-label="Ver perfil de David Rodríguez"><i class="fas fa-eye" aria-hidden="true"></i></a>
+                                    <a href="#" aria-label="Editar perfil de David Rodríguez"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                    <a href="#" aria-label="Eliminar perfil de David Rodríguez"><i class="fas fa-trash" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="user-info">
+                                        <div class="user-avatar" aria-label="Avatar de Sandra Fernández">SF</div>
+                                        <div>Sandra Fernández</div>
+                                    </div>
+                                </td>
+                                <td><a href="mailto:sandra.fernandez@example.com">sandra.fernandez@example.com</a></td>
+                                <td><span class="user-plan plan-elite">Elite</span></td>
+                                <td><time datetime="2023-09-29">29 Sep 2023</time></td>
+                                <td><span class="user-status status-inactive" aria-label="Usuario inactivo"></span> Inactivo</td>
+                                <td class="action-buttons">
+                                    <a href="#" aria-label="Ver perfil de Sandra Fernández"><i class="fas fa-eye" aria-hidden="true"></i></a>
+                                    <a href="#" aria-label="Editar perfil de Sandra Fernández"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                    <a href="#" aria-label="Eliminar perfil de Sandra Fernández"><i class="fas fa-trash" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="user-info">
+                                        <div class="user-avatar" aria-label="Avatar de Javier González">JG</div>
+                                        <div>Javier González</div>
+                                    </div>
+                                </td>
+                                <td><a href="mailto:javier.gonzalez@example.com">javier.gonzalez@example.com</a></td>
+                                <td><span class="user-plan plan-premium">Premium</span></td>
+                                <td><time datetime="2023-09-18">18 Sep 2023</time></td>
+                                <td><span class="user-status status-active" aria-label="Usuario activo"></span> Activo</td>
+                                <td class="action-buttons">
+                                    <a href="#" aria-label="Ver perfil de Javier González"><i class="fas fa-eye" aria-hidden="true"></i></a>
+                                    <a href="#" aria-label="Editar perfil de Javier González"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                    <a href="#" aria-label="Eliminar perfil de Javier González"><i class="fas fa-trash" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="user-info">
+                                        <div class="user-avatar" aria-label="Avatar de María Pérez">MP</div>
+                                        <div>María Pérez</div>
+                                    </div>
+                                </td>
+                                <td><a href="mailto:maria.perez@example.com">maria.perez@example.com</a></td>
+                                <td><span class="user-plan plan-basic">Básico</span></td>
+                                <td><time datetime="2023-09-10">10 Sep 2023</time></td>
+                                <td><span class="user-status status-active" aria-label="Usuario activo"></span> Activo</td>
+                                <td class="action-buttons">
+                                    <a href="#" aria-label="Ver perfil de María Pérez"><i class="fas fa-eye" aria-hidden="true"></i></a>
+                                    <a href="#" aria-label="Editar perfil de María Pérez"><i class="fas fa-edit" aria-hidden="true"></i></a>
+                                    <a href="#" aria-label="Eliminar perfil de María Pérez"><i class="fas fa-trash" aria-hidden="true"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Sección de gráficos -->
+            <div class="charts-container">
+                <section class="admin-section" aria-labelledby="planes-chart-title">
+                    <header class="section-header">
+                        <h2 id="planes-chart-title" class="section-title">Distribución de Planes</h2>
+                    </header>
+                    <div class="chart-wrapper">
+                        <canvas id="planChart" aria-label="Gráfico de distribución de planes" role="img"></canvas>
+                        <div id="planChartNoData" class="no-data" hidden>No hay datos disponibles</div>
+                    </div>
+                </section>
+                
+                <section class="admin-section" aria-labelledby="asistencia-chart-title">
+                    <header class="section-header">
+                        <h2 id="asistencia-chart-title" class="section-title">Asistencia Mensual</h2>
+                    </header>
+                    <div class="chart-wrapper">
+                        <canvas id="attendanceChart" aria-label="Gráfico de asistencia mensual" role="img"></canvas>
+                        <div id="attendanceChartNoData" class="no-data" hidden>No hay datos disponibles</div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Sección de calendario de clases -->
+            <section class="admin-section" aria-labelledby="calendario-title">
+                <header class="section-header">
+                    <h2 id="calendario-title" class="section-title">Calendario de Clases</h2>
+                    <div class="section-actions">
+                        <button type="button" class="admin-btn" aria-label="Crear nueva clase">
+                            <i class="fas fa-plus" aria-hidden="true"></i> Nueva Clase
+                        </button>
+                    </div>
+                </header>
+                
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <div class="calendar-title" aria-live="polite">Octubre 2023</div>
+                        <div class="calendar-navigation">
+                            <button type="button" class="admin-btn secondary" aria-label="Mes anterior">
+                                <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                            </button>
+                            <button type="button" class="admin-btn secondary" aria-label="Mes siguiente">
+                                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="calendar-grid" role="grid" aria-label="Calendario mensual">
+                        <!-- Nombres de los días -->
+                        <div class="calendar-day" role="columnheader">Lun</div>
+                        <div class="calendar-day" role="columnheader">Mar</div>
+                        <div class="calendar-day" role="columnheader">Mié</div>
+                        <div class="calendar-day" role="columnheader">Jue</div>
+                        <div class="calendar-day" role="columnheader">Vie</div>
+                        <div class="calendar-day" role="columnheader">Sáb</div>
+                        <div class="calendar-day" role="columnheader">Dom</div>
+                        
+                        <!-- Días del calendario -->
+                        <div class="calendar-date" role="gridcell" tabindex="0" aria-label="2 de octubre, 2 eventos">
+                            <div class="date-header">
+                                <span class="date-number">2</span>
+                                <span class="date-indicator"></span>
+                            </div>
+                            <div class="date-event">Yoga 10:00</div>
+                            <div class="date-event">Spinning 18:00</div>
+                        </div>
+                        <div class="calendar-date" role="gridcell" tabindex="0" aria-label="3 de octubre, 1 evento">
+                            <div class="date-header">
+                                <span class="date-number">3</span>
+                                <span class="date-indicator"></span>
+                            </div>
+                            <div class="date-event">Crossfit 9:00</div>
+                        </div>
+                        <div class="calendar-date" role="gridcell" tabindex="0" aria-label="4 de octubre, 2 eventos">
+                            <div class="date-header">
+                                <span class="date-number">4</span>
+                                <span class="date-indicator"></span>
+                            </div>
+                            <div class="date-event">Zumba 17:00</div>
+                            <div class="date-event">Pilates 19:00</div>
+                        </div>
+                        <div class="calendar-date" role="gridcell" tabindex="0" aria-label="5 de octubre, sin eventos">
+                            <div class="date-header">
+                                <span class="date-number">5</span>
+                            </div>
+                        </div>
+                        <div class="calendar-date" role="gridcell" tabindex="0" aria-label="6 de octubre, 1 evento">
+                            <div class="date-header">
+                                <span class="date-number">6</span>
+                                <span class="date-indicator"></span>
+                            </div>
+                            <div class="date-event">Boxeo 18:00</div>
+                        </div>
+                        <div class="calendar-date" role="gridcell" tabindex="0" aria-label="7 de octubre, 1 evento">
+                            <div class="date-header">
+                                <span class="date-number">7</span>
+                                <span class="date-indicator"></span>
+                            </div>
+                            <div class="date-event">HIIT 11:00</div>
+                        </div>
+                        <div class="calendar-date" role="gridcell" tabindex="0" aria-label="8 de octubre, sin eventos">
+                            <div class="date-header">
+                                <span class="date-number">8</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/admin.js" defer></script>
+</body>
+</html> 

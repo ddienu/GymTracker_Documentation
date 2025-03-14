@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rutinas de Entrenamiento - GymTracker</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css_boostrap/bootstrap-grid.min.css">
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        /* Estilos específicos para rutinas */
+        .routines-section {
+            padding: 40px 0;
+            background-color: #f5f5f5;
+        }
+        
+        .routine-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .routine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .routine-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .routine-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .routine-card:hover .routine-image img {
+            transform: scale(1.05);
+        }
+        
+        .routine-content {
+            padding: 20px;
+        }
+        
+        .routine-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .routine-info {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+            margin-bottom: 5px;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .info-item i {
+            margin-right: 5px;
+            color: #E6ED07;
+        }
+        
+        .routine-description {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .routine-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            gap: 8px;
+        }
+        
+        .routine-tag {
+            background-color: #f0f0f0;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #333;
+        }
+        
+        .routine-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .routine-button {
+            padding: 8px 16px;
+            background-color: #E6ED07;
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .routine-button:hover {
+            background-color: #d6dd00;
+        }
+        
+        .routine-link {
+            color: #333;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+        
+        .routine-link:hover {
+            color: #E6ED07;
+        }
+        
+        .filters-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .filters-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .filters-title i {
+            margin-right: 10px;
+            color: #E6ED07;
+        }
+        
+        .filter-group {
+            margin-bottom: 20px;
+        }
+        
+        .filter-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .filter-option {
+            display: inline-block;
+            padding: 8px 12px;
+            background-color: #f0f0f0;
+            border-radius: 20px;
+            font-size: 14px;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .filter-option:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .filter-option.active {
+            background-color: #E6ED07;
+            color: #000;
+        }
+        
+        .filter-search {
+            position: relative;
+        }
+        
+        .filter-search input {
+            width: 100%;
+            padding: 10px;
+            padding-left: 35px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+        
+        .filter-search i {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .detailed-routine {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .routine-header {
+            margin-bottom: 25px;
+        }
+        
+        .routine-header h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        
+        .exercise {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .exercise:last-child {
+            border-bottom: none;
+        }
+        
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .exercise-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0;
+        }
+        
+        .exercise-metadata {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .exercise-meta-item {
+            background-color: #f5f5f5;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin-right: 10px;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .exercise-meta-item i {
+            color: #E6ED07;
+            margin-right: 5px;
+        }
+        
+        .exercise-description {
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .exercise-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .exercise-actions button {
+            padding: 8px 12px;
+            background-color: #f0f0f0;
+            border: none;
+            border-radius: 5px;
+            color: #333;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .exercise-actions button i {
+            margin-right: 5px;
+        }
+        
+        .exercise-actions button:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .exercise-actions button.primary {
+            background-color: #E6ED07;
+            color: #000;
+            font-weight: bold;
+        }
+        
+        .exercise-actions button.primary:hover {
+            background-color: #d6dd00;
+        }
+        
+        @media (max-width: 768px) {
+            .filters-section {
+                margin-bottom: 20px;
+            }
+            
+            .routine-info {
+                flex-direction: column;
+            }
+            
+            .info-item {
+                margin-bottom: 5px;
+                margin-right: 0;
+            }
+            
+            .exercise-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .exercise-metadata {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="menu">
+            <div class="contenedor-logo">
+                <img id="logoGym" src="assets/Fuerza total.png" alt="Logo Gimnasio" />
+            </div>
+            <button class="navbar-toggle" id="navbar-toggle">
+                <i class="fa fa-bars"></i>
+            </button>
+            <ul class="nav-list" id="nav-list">
+                <li id="list"><a id="listAncor" href="index.html">INICIO</a></li>
+                <li id="list"><a id="listAncor" href="planes.html">PLANES</a></li>
+                <li id="list"><a id="listAncor" href="entrenadores.html">ENTRENADORES</a></li>
+                <li id="list"><a id="listAncor" href="GymTracker_Nutritionist.html">NUTRICIÓN</a></li>
+                <li id="list"><a id="listAncor" href="fisioterapia.html">FISIOTERAPIA</a></li>
+                <li id="list"><a id="listAncor" href="nosotros.html">SOBRE NOSOTROS</a></li>
+                <li id="list"><a id="listAncor" href="contacto.html">CONTACTO</a></li>
+            </ul>
+
+            <div class="registerNav">
+                <div class="DivSignInButton">
+                    <a id="SignInAncor" href="login.html">INICIAR SESIÓN</a>
+                </div>
+                <div class="RegisterButton">
+                    <a id="RegisterAncor" href="registro.html">REGISTRARSE</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1 class="title-2">Rutinas de Entrenamiento</h1>
+                <p class="subtitle">Descubre rutinas personalizadas para alcanzar tus objetivos</p>
+            </div>
+        </section>
+
+        <section class="routines-section">
+            <div class="container">
+                <div class="row">
+                    <!-- Filtros -->
+                    <div class="col-lg-3 col-md-4">
+                        <div class="filters-section">
+                            <h3 class="filters-title"><i class="fa fa-filter"></i> Filtros</h3>
+                            
+                            <div class="filter-search">
+                                <i class="fa fa-search"></i>
+                                <input type="text" placeholder="Buscar rutinas...">
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label class="filter-label">Objetivo</label>
+                                <div class="filter-options">
+                                    <span class="filter-option active">Todos</span>
+                                    <span class="filter-option">Pérdida de peso</span>
+                                    <span class="filter-option">Hipertrofia</span>
+                                    <span class="filter-option">Resistencia</span>
+                                    <span class="filter-option">Fuerza</span>
+                                </div>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label class="filter-label">Nivel</label>
+                                <div class="filter-options">
+                                    <span class="filter-option active">Todos</span>
+                                    <span class="filter-option">Principiante</span>
+                                    <span class="filter-option">Intermedio</span>
+                                    <span class="filter-option">Avanzado</span>
+                                </div>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label class="filter-label">Duración</label>
+                                <div class="filter-options">
+                                    <span class="filter-option active">Todos</span>
+                                    <span class="filter-option">< 30 min</span>
+                                    <span class="filter-option">30-60 min</span>
+                                    <span class="filter-option">> 60 min</span>
+                                </div>
+                            </div>
+                            
+                            <div class="filter-group">
+                                <label class="filter-label">Equipo</label>
+                                <div class="filter-options">
+                                    <span class="filter-option active">Todos</span>
+                                    <span class="filter-option">Sin equipo</span>
+                                    <span class="filter-option">Mínimo</span>
+                                    <span class="filter-option">Completo</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Rutinas -->
+                    <div class="col-lg-9 col-md-8">
+                        <!-- Rutina detallada -->
+                        <div class="detailed-routine">
+                            <div class="routine-header">
+                                <h2>Rutina de fuerza para principiantes</h2>
+                                <div class="routine-info">
+                                    <div class="info-item"><i class="fa fa-clock-o"></i> 45 minutos</div>
+                                    <div class="info-item"><i class="fa fa-bolt"></i> Principiante</div>
+                                    <div class="info-item"><i class="fa fa-calendar"></i> 3 días/semana</div>
+                                    <div class="info-item"><i class="fa fa-dumbbell"></i> Equipo mínimo</div>
+                                </div>
+                                <p>Esta rutina está diseñada para principiantes que desean desarrollar fuerza y familiarizarse con los ejercicios básicos. Se enfoca en los principales grupos musculares con movimientos compuestos.</p>
+                            </div>
+                            
+                            <!-- Ejercicio 1 -->
+                            <div class="exercise">
+                                <div class="exercise-header">
+                                    <h3 class="exercise-title">Sentadillas con peso corporal</h3>
+                                    <div class="exercise-check">
+                                        <input type="checkbox" id="exercise1"> <label for="exercise1">Completado</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="exercise-metadata">
+                                    <span class="exercise-meta-item"><i class="fa fa-repeat"></i> 3 series</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-refresh"></i> 12-15 repeticiones</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-clock-o"></i> 60s descanso</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-dot-circle-o"></i> Piernas</span>
+                                </div>
+                                
+                                <p class="exercise-description">
+                                    Párate con los pies al ancho de los hombros. Baja la cadera como si fueras a sentarte, manteniendo el pecho elevado y las rodillas alineadas con los dedos de los pies. Regresa a la posición inicial.
+                                </p>
+                                
+                                <div class="exercise-actions">
+                                    <button><i class="fa fa-play-circle"></i> Ver técnica</button>
+                                    <button><i class="fa fa-exchange"></i> Alternativas</button>
+                                    <button class="primary"><i class="fa fa-check"></i> Marcar completado</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Ejercicio 2 -->
+                            <div class="exercise">
+                                <div class="exercise-header">
+                                    <h3 class="exercise-title">Flexiones de pecho modificadas</h3>
+                                    <div class="exercise-check">
+                                        <input type="checkbox" id="exercise2"> <label for="exercise2">Completado</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="exercise-metadata">
+                                    <span class="exercise-meta-item"><i class="fa fa-repeat"></i> 3 series</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-refresh"></i> 10-12 repeticiones</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-clock-o"></i> 60s descanso</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-dot-circle-o"></i> Pecho</span>
+                                </div>
+                                
+                                <p class="exercise-description">
+                                    Comienza con las rodillas en el suelo y las manos ligeramente más anchas que los hombros. Baja el pecho hacia el suelo manteniendo los codos cerca del cuerpo y luego empuja hacia arriba hasta la posición inicial.
+                                </p>
+                                
+                                <div class="exercise-actions">
+                                    <button><i class="fa fa-play-circle"></i> Ver técnica</button>
+                                    <button><i class="fa fa-exchange"></i> Alternativas</button>
+                                    <button class="primary"><i class="fa fa-check"></i> Marcar completado</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Ejercicio 3 -->
+                            <div class="exercise">
+                                <div class="exercise-header">
+                                    <h3 class="exercise-title">Plancha abdominal</h3>
+                                    <div class="exercise-check">
+                                        <input type="checkbox" id="exercise3"> <label for="exercise3">Completado</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="exercise-metadata">
+                                    <span class="exercise-meta-item"><i class="fa fa-repeat"></i> 3 series</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-clock-o"></i> 30 segundos</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-clock-o"></i> 45s descanso</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-dot-circle-o"></i> Core</span>
+                                </div>
+                                
+                                <p class="exercise-description">
+                                    Apoya los antebrazos en el suelo con los codos bajo los hombros y extiende las piernas hacia atrás. Mantén el cuerpo recto como una tabla, activando el core y sin dejar que las caderas se hundan o se eleven.
+                                </p>
+                                
+                                <div class="exercise-actions">
+                                    <button><i class="fa fa-play-circle"></i> Ver técnica</button>
+                                    <button><i class="fa fa-exchange"></i> Alternativas</button>
+                                    <button class="primary"><i class="fa fa-check"></i> Marcar completado</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Ejercicio 4 -->
+                            <div class="exercise">
+                                <div class="exercise-header">
+                                    <h3 class="exercise-title">Remo con mancuernas</h3>
+                                    <div class="exercise-check">
+                                        <input type="checkbox" id="exercise4"> <label for="exercise4">Completado</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="exercise-metadata">
+                                    <span class="exercise-meta-item"><i class="fa fa-repeat"></i> 3 series</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-refresh"></i> 10-12 repeticiones</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-clock-o"></i> 60s descanso</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-dot-circle-o"></i> Espalda</span>
+                                </div>
+                                
+                                <p class="exercise-description">
+                                    Con una mancuerna en cada mano, inclina el torso hacia adelante manteniendo la espalda recta. Lleva los codos hacia atrás, acercando las mancuernas al cuerpo y apretando las escápulas. Regresa a la posición inicial con control.
+                                </p>
+                                
+                                <div class="exercise-actions">
+                                    <button><i class="fa fa-play-circle"></i> Ver técnica</button>
+                                    <button><i class="fa fa-exchange"></i> Alternativas</button>
+                                    <button class="primary"><i class="fa fa-check"></i> Marcar completado</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Ejercicio 5 -->
+                            <div class="exercise">
+                                <div class="exercise-header">
+                                    <h3 class="exercise-title">Zancadas estáticas</h3>
+                                    <div class="exercise-check">
+                                        <input type="checkbox" id="exercise5"> <label for="exercise5">Completado</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="exercise-metadata">
+                                    <span class="exercise-meta-item"><i class="fa fa-repeat"></i> 3 series</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-refresh"></i> 10 repeticiones (cada lado)</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-clock-o"></i> 60s descanso</span>
+                                    <span class="exercise-meta-item"><i class="fa fa-dot-circle-o"></i> Piernas</span>
+                                </div>
+                                
+                                <p class="exercise-description">
+                                    Da un paso largo hacia adelante y baja el cuerpo flexionando ambas rodillas a 90 grados. La rodilla trasera debe quedar cerca del suelo sin tocarlo. Mantén el torso recto y regresa a la posición inicial empujando con el pie delantero.
+                                </p>
+                                
+                                <div class="exercise-actions">
+                                    <button><i class="fa fa-play-circle"></i> Ver técnica</button>
+                                    <button><i class="fa fa-exchange"></i> Alternativas</button>
+                                    <button class="primary"><i class="fa fa-check"></i> Marcar completado</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h3 class="section-title">Otras rutinas recomendadas</h3>
+                        
+                        <div class="row">
+                            <!-- Rutina 1 -->
+                            <div class="col-md-6">
+                                <div class="routine-card">
+                                    <div class="routine-image">
+                                        <img src="https://via.placeholder.com/500x300?text=Cardio+HIIT" alt="Rutina de cardio HIIT">
+                                    </div>
+                                    <div class="routine-content">
+                                        <h3 class="routine-title">Cardio HIIT intenso</h3>
+                                        <div class="routine-info">
+                                            <div class="info-item"><i class="fa fa-clock-o"></i> 30 min</div>
+                                            <div class="info-item"><i class="fa fa-bolt"></i> Avanzado</div>
+                                            <div class="info-item"><i class="fa fa-fire"></i> 350 kcal</div>
+                                        </div>
+                                        <p class="routine-description">Entrenamiento de alta intensidad por intervalos para maximizar la quema de calorías y mejorar la resistencia cardiovascular.</p>
+                                        <div class="routine-tags">
+                                            <span class="routine-tag">Cardio</span>
+                                            <span class="routine-tag">HIIT</span>
+                                            <span class="routine-tag">Pérdida de peso</span>
+                                        </div>
+                                        <div class="routine-actions">
+                                            <button class="routine-button">Ver rutina</button>
+                                            <a href="#" class="routine-link">Guardar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Rutina 2 -->
+                            <div class="col-md-6">
+                                <div class="routine-card">
+                                    <div class="routine-image">
+                                        <img src="https://via.placeholder.com/500x300?text=Yoga+Principiantes" alt="Yoga para principiantes">
+                                    </div>
+                                    <div class="routine-content">
+                                        <h3 class="routine-title">Yoga para principiantes</h3>
+                                        <div class="routine-info">
+                                            <div class="info-item"><i class="fa fa-clock-o"></i> 45 min</div>
+                                            <div class="info-item"><i class="fa fa-bolt"></i> Principiante</div>
+                                            <div class="info-item"><i class="fa fa-fire"></i> 150 kcal</div>
+                                        </div>
+                                        <p class="routine-description">Secuencia de yoga suave para mejorar la flexibilidad, reducir el estrés y fortalecer el cuerpo de manera integral.</p>
+                                        <div class="routine-tags">
+                                            <span class="routine-tag">Yoga</span>
+                                            <span class="routine-tag">Flexibilidad</span>
+                                            <span class="routine-tag">Relajación</span>
+                                        </div>
+                                        <div class="routine-actions">
+                                            <button class="routine-button">Ver rutina</button>
+                                            <a href="#" class="routine-link">Guardar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Rutina 3 -->
+                            <div class="col-md-6">
+                                <div class="routine-card">
+                                    <div class="routine-image">
+                                        <img src="https://via.placeholder.com/500x300?text=Core+Workout" alt="Entrenamiento de core">
+                                    </div>
+                                    <div class="routine-content">
+                                        <h3 class="routine-title">Power Core intensivo</h3>
+                                        <div class="routine-info">
+                                            <div class="info-item"><i class="fa fa-clock-o"></i> 20 min</div>
+                                            <div class="info-item"><i class="fa fa-bolt"></i> Intermedio</div>
+                                            <div class="info-item"><i class="fa fa-fire"></i> 200 kcal</div>
+                                        </div>
+                                        <p class="routine-description">Entrenamiento específico para fortalecer el core, definir abdominales y mejorar la estabilidad corporal.</p>
+                                        <div class="routine-tags">
+                                            <span class="routine-tag">Core</span>
+                                            <span class="routine-tag">Abdominales</span>
+                                            <span class="routine-tag">Definición</span>
+                                        </div>
+                                        <div class="routine-actions">
+                                            <button class="routine-button">Ver rutina</button>
+                                            <a href="#" class="routine-link">Guardar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Rutina 4 -->
+                            <div class="col-md-6">
+                                <div class="routine-card">
+                                    <div class="routine-image">
+                                        <img src="https://via.placeholder.com/500x300?text=Hipertrofia+Muscular" alt="Hipertrofia muscular">
+                                    </div>
+                                    <div class="routine-content">
+                                        <h3 class="routine-title">Hipertrofia total body</h3>
+                                        <div class="routine-info">
+                                            <div class="info-item"><i class="fa fa-clock-o"></i> 75 min</div>
+                                            <div class="info-item"><i class="fa fa-bolt"></i> Avanzado</div>
+                                            <div class="info-item"><i class="fa fa-fire"></i> 400 kcal</div>
+                                        </div>
+                                        <p class="routine-description">Entrenamiento enfocado en la ganancia de masa muscular trabajando todos los grupos musculares con alta intensidad.</p>
+                                        <div class="routine-tags">
+                                            <span class="routine-tag">Hipertrofia</span>
+                                            <span class="routine-tag">Volumen</span>
+                                            <span class="routine-tag">Musculación</span>
+                                        </div>
+                                        <div class="routine-actions">
+                                            <button class="routine-button">Ver rutina</button>
+                                            <a href="#" class="routine-link">Guardar</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footerContainer">
+            <div class="contact-info">
+                <div>
+                    <p>Av. 1º de mayo # 6 - 54 Barrio: Velódromo.</p>
+                    <p>Bogotá D.C, Colombia</p>
+                </div>
+                <div>
+                    <p><i class="fa fa-phone"></i> +57 3213213212</p>
+                </div>
+                <div>
+                    <p><i class="fa fa-envelope"></i> gymtracker@gymtracker.com</p>
+                </div>
+                <div class="social-media">
+                    <a href="#"><i class="fa fa-facebook-square fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-instagram fa-2x"></i></a>
+                    <a href="#"><i class="fa fa-twitter-square fa-2x"></i></a>
+                </div>
+            </div>
+            <div class="aboutContainer">
+                <h4>Acerca de la compañía</h4>
+                <div class="aboutCompanyContainer">
+                    <p>
+                        GymTracker es una plataforma integral diseñada para optimizar la gestión de gimnasios y el seguimiento del progreso de los usuarios.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 GymTracker. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+    <script>
+        // JavaScript para filtros
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterOptions = document.querySelectorAll('.filter-option');
+            
+            filterOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const parent = this.parentElement;
+                    const options = parent.querySelectorAll('.filter-option');
+                    
+                    options.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // En una implementación real, aquí iría la lógica para filtrar las rutinas
+                });
+            });
+            
+            // Botones de completado (ejercicios)
+            const completedButtons = document.querySelectorAll('.exercise-actions .primary');
+            const checkboxes = document.querySelectorAll('.exercise-check input');
+            
+            completedButtons.forEach((button, index) => {
+                button.addEventListener('click', function() {
+                    if (checkboxes[index]) {
+                        checkboxes[index].checked = !checkboxes[index].checked;
+                        
+                        if (checkboxes[index].checked) {
+                            this.innerHTML = '<i class="fa fa-check"></i> Completado';
+                            this.style.backgroundColor = '#4CAF50';
+                        } else {
+                            this.innerHTML = '<i class="fa fa-check"></i> Marcar completado';
+                            this.style.backgroundColor = '#E6ED07';
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

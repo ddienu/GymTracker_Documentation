@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GymTracker - Plataforma integral para gestión de gimnasios, seguimiento de progreso, rutinas personalizadas y asesoría nutricional">
+    <title>GymTracker - Tu gimnasio de confianza</title>
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css_boostrap/bootstrap-grid.min.css">
+    <!-- Fuentes e iconos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Metadata adicional -->
+    <meta name="author" content="GymTracker"> 
+    <meta name="theme-color" content="#E6ED07">
+    <link rel="canonical" href="https://www.gymtracker.com/">
+</head>
+
+<body>
+    <a class="skip-to-content" href="#main-content">Saltar al contenido principal</a>
+    
+    <header role="banner">
+        <nav class="menu" aria-label="Navegación principal">
+            <div class="contenedor-logo">
+                <a href="index.html" aria-label="GymTracker Inicio">
+                    <img id="logoGym" src="assets/Fuerza total.png" alt="Logo GymTracker">
+                </a>
+            </div>
+            
+            <button class="navbar-toggle" id="navbar-toggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav-list" type="button">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </button>
+            
+            <ul class="nav-list" id="nav-list" role="menubar">
+                <li id="list" role="none"><a id="listAncor" href="index.html" class="active" aria-current="page" role="menuitem">INICIO</a></li>
+                <li id="list" role="none"><a id="listAncor" href="planes.html" role="menuitem">PLANES</a></li>
+                <li id="list" role="none"><a id="listAncor" href="entrenadores.html" role="menuitem">ENTRENADORES</a></li>
+                <li id="list" role="none"><a id="listAncor" href="GymTracker_Nutritionist.html" role="menuitem">NUTRICIÓN</a></li>
+                <li id="list" role="none"><a id="listAncor" href="fisioterapia.html" role="menuitem">FISIOTERAPIA</a></li>
+                <li id="list" role="none"><a id="listAncor" href="nosotros.html" role="menuitem">SOBRE NOSOTROS</a></li>
+                <li id="list" role="none"><a id="listAncor" href="contacto.html" role="menuitem">CONTACTO</a></li>
+            </ul>
+
+            <div class="registerNav" aria-label="Autenticación">
+                <div class="DivSignInButton">
+                    <a id="SignInAncor" href="login.html">
+                        <i class="fa fa-sign-in" aria-hidden="true"></i>
+                        <span>Iniciar Sesión</span>
+                    </a>
+                </div>
+                <div class="RegisterButton">
+                    <a id="RegisterAncor" href="registro.html">
+                        <i class="fa fa-user-plus" aria-hidden="true"></i>
+                        <span>Registrarse</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main id="main-content" role="main">
+        <!-- Sección Hero -->
+        <section class="hero-section">
+            <div class="photoTitleContainer">
+                <div class="hero-image">
+                    <img id="fotoGimnasio" src="assets/GymImage.png" alt="Instalaciones modernas del gimnasio GymTracker" width="800" height="600" loading="eager">
+                </div>
+                <div class="gymDescription">
+                    <h1>Bienvenido a GymTracker</h1>
+                    <h2>Tu software de gestión de gimnasio de confianza</h2>
+                    <p>Transforma tu experiencia en el gimnasio con nuestra plataforma integral de seguimiento y gestión</p>
+                    <div class="cta-buttons">
+                        <a href="planes.html" class="cta-button primary">Ver planes</a>
+                        <a href="registro.html" class="cta-button secondary">Prueba gratuita</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de características -->
+        <section class="features-section">
+            <div class="container">
+                <h2 class="section-title">¿Por qué elegir GymTracker?</h2>
+                <div class="features-container">
+                    <article class="feature-card">
+                        <i class="fa fa-line-chart fa-3x" aria-hidden="true"></i>
+                        <h3>Seguimiento de progreso</h3>
+                        <p>Monitorea tu evolución con gráficos detallados y análisis personalizados.</p>
+                    </article>
+                    <article class="feature-card">
+                        <i class="fa fa-calendar-check-o fa-3x" aria-hidden="true"></i>
+                        <h3>Planificación de rutinas</h3>
+                        <p>Crea y personaliza tus rutinas de entrenamiento según tus objetivos.</p>
+                    </article>
+                    <article class="feature-card">
+                        <i class="fa fa-cutlery fa-3x" aria-hidden="true"></i>
+                        <h3>Asesoría nutricional</h3>
+                        <p>Recibe planes de alimentación diseñados por nutricionistas expertos.</p>
+                    </article>
+                    <article class="feature-card">
+                        <i class="fa fa-users fa-3x" aria-hidden="true"></i>
+                        <h3>Comunidad activa</h3>
+                        <p>Conéctate con otros miembros y comparte tu experiencia.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de testimonios -->
+        <section class="testimonials-section">
+            <div class="container">
+                <h2 class="section-title">Lo que dicen nuestros clientes</h2>
+                <div class="testimonials-container">
+                    <article class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"GymTracker ha transformado completamente mi experiencia en el gimnasio. Ahora puedo seguir mi progreso fácilmente y ver resultados reales."</p>
+                        </div>
+                        <footer class="testimonial-author">
+                            <p><strong>Juan Pérez</strong> - Miembro desde 2022</p>
+                        </footer>
+                    </article>
+                    <article class="testimonial-card">
+                        <div class="testimonial-content">
+                            <p>"Como entrenador personal, GymTracker me permite gestionar mejor a mis clientes y ofrecerles un seguimiento detallado de su progreso."</p>
+                        </div>
+                        <footer class="testimonial-author">
+                            <p><strong>María González</strong> - Entrenadora personal</p>
+                        </footer>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="footerContainer">
+            <div class="contact-info">
+                <div>
+                    <h4>Contacto</h4>
+                    <address>
+                        <p>Av. 1º de mayo # 6 - 54 Barrio: Velódromo.</p>
+                        <p>Bogotá D.C, Colombia</p>
+                        <p><i class="fa fa-phone" aria-hidden="true"></i> <a href="tel:+573213213212">+57 3213213212</a></p>
+                        <p><i class="fa fa-envelope" aria-hidden="true"></i> <a href="mailto:gymtracker@gymtracker.com">gymtracker@gymtracker.com</a></p>
+                    </address>
+                </div>
+                <div class="social-media" aria-label="Redes sociales">
+                    <a href="#" aria-label="Facebook"><i class="fa fa-facebook-square fa-2x" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa fa-twitter-square fa-2x" aria-hidden="true"></i></a>
+                </div>
+            </div>
+            <div class="aboutContainer">
+                <h4>Acerca de la compañía</h4>
+                <div class="aboutCompanyContainer">
+                    <p>
+                        GymTracker es una plataforma integral diseñada para optimizar la gestión de gimnasios y el seguimiento del progreso de los usuarios, facilitando el camino hacia un estilo de vida más saludable.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 GymTracker. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/bootstrap.bundle.min.js" defer></script>
+    <script src="js/main.js" defer></script>
+</body>
+</html> 

@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Gestión de alumnos para entrenadores de GymTracker - Monitorea progreso y asigna programas de entrenamiento">
+    <title>GymTracker - Mis Alumnos</title>
+    <!-- Hojas de estilo -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css_boostrap/bootstrap-grid.min.css">
+    <!-- Fuentes e iconos -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Metadata adicional -->
+    <meta name="author" content="GymTracker"> 
+    <meta name="theme-color" content="#E6ED07">
+    <link rel="canonical" href="https://www.gymtracker.com/entrenador-alumnos.html">
+    <style>
+        /* Estilos generales para el panel */
+        .dashboard-container {
+            display: flex;
+            min-height: calc(100vh - 150px);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 250px;
+            background-color: #333;
+            color: #fff;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            transition: all 0.3s;
+        }
+        
+        /* Añadir estado activo para el sidebar en móvil */
+        .sidebar.active {
+            width: 250px;
+            transform: translateX(0);
+        }
+        
+        .sidebar-header {
+            padding: 0 20px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+        
+        .sidebar-header img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #E6ED07;
+            margin-bottom: 10px;
+        }
+        
+        .sidebar-header h2 {
+            font-size: 1.2rem;
+            margin: 5px 0;
+        }
+        
+        .sidebar-header p {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.7);
+            margin: 0;
+        }
+        
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+        
+        .sidebar-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+            font-family: 'Bebas Neue', sans-serif;
+            letter-spacing: 0.5px;
+            font-size: 1.1rem;
+        }
+        
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background-color: #E6ED07;
+            color: #333;
+        }
+        
+        .sidebar-menu i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        /* Contenido principal */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background-color: #f8f9fa;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .dashboard-header h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            margin: 0;
+            color: #333;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .notification-bell {
+            position: relative;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        
+        .notification-bell i {
+            font-size: 1.5rem;
+            color: #555;
+        }
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #E6ED07;
+            color: #333;
+            font-size: 0.7rem;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .user-profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        /* Secciones del panel */
+        .panel-section {
+            background: #fff;
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .panel-section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .panel-section-header h2 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+        
+        .panel-section-header a {
+            color: #E6ED07;
+            text-decoration: none;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .panel-section-header a i {
+            margin-left: 5px;
+        }
+        
+        /* Estilos para la página de alumnos */
+        .filter-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-control {
+            padding: 8px 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .filter-control:hover, .filter-control.active {
+            background-color: #E6ED07;
+            border-color: #E6ED07;
+        }
+        
+        .search-box {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            width: 250px;
+            font-size: 0.9rem;
+        }
+        
+        .search-box:focus {
+            border-color: #E6ED07;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(230, 237, 7, 0.2);
+        }
+        
+        /* Tarjetas de alumnos destacados */
+        .student-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .student-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .student-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .student-card-header {
+            padding: 20px 20px 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .student-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 15px;
+            border: 3px solid #E6ED07;
+        }
+        
+        .student-info h3 {
+            margin: 0 0 5px;
+            font-size: 1.1rem;
+        }
+        
+        .student-plan {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .student-card-body {
+            padding: 10px 20px 20px;
+            flex: 1;
+        }
+        
+        .student-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .student-stat {
+            text-align: center;
+            font-size: 0.85rem;
+        }
+        
+        .student-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .student-progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.85rem;
+        }
+        
+        .student-progress-bar {
+            height: 8px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .student-progress-value {
+            height: 100%;
+            background-color: #E6ED07;
+        }
+        
+        .student-card-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .student-action-btn {
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: all 0.2s;
+        }
+        
+        .primary-action {
+            background-color: #E6ED07;
+            color: #333;
+        }
+        
+        .primary-action:hover {
+            background-color: #d4db06;
+        }
+        
+        .secondary-action {
+            background-color: #f8f9fa;
+            color: #555;
+        }
+        
+        .secondary-action:hover {
+            background-color: #e9ecef;
+        }
+        
+        /* Tabla de alumnos */
+        .students-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .students-table th, .students-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .students-table th {
+            font-weight: 600;
+            color: #555;
+            background-color: #f8f9fa;
+        }
+        
+        .students-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .student-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background-color: rgba(25, 135, 84, 0.1);
+            color: #198754;
+        }
+        
+        .status-inactive {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+        
+        .status-pending {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-value {
+            height: 100%;
+            background-color: #E6ED07;
+        }
+        
+        .progress-cell {
+            width: 150px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 991px) {
+            .sidebar {
+                width: 70px;
+                overflow: hidden;
+            }
+            
+            /* Cuando se colapsa el sidebar en móvil */
+            .sidebar:not(.active) {
+                width: 70px;
+            }
+            
+            .sidebar.active {
+                width: 250px;
+                box-shadow: 0 0 15px rgba(0,0,0,0.2);
+                z-index: 99;
+            }
+            
+            .sidebar.active .sidebar-header h2, 
+            .sidebar.active .sidebar-header p,
+            .sidebar.active .sidebar-menu a span {
+                display: block;
+            }
+            
+            .sidebar-header {
+                padding: 10px;
+            }
+            
+            .sidebar-header h2, .sidebar-header p {
+                display: none;
+            }
+            
+            .sidebar-menu a span {
+                display: none;
+            }
+            
+            .sidebar-menu i {
+                margin-right: 0;
+                font-size: 1.2rem;
+            }
+            
+            .main-content {
+                margin-left: 70px;
+            }
+            
+            .filter-controls {
+                flex-direction: column;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .student-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .user-actions {
+                margin-top: 15px;
+                width: 100%;
+                justify-content: flex-end;
+            }
+            
+            .students-table {
+                font-size: 0.85rem;
+            }
+            
+            .students-table th, .students-table td {
+                padding: 8px 10px;
+            }
+            
+            .progress-cell {
+                width: 100px;
+            }
+        }
+        
+        /* Toggle para mostrar/ocultar sidebar en móvil */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            left: 20px;
+            bottom: 20px;
+            width: 40px;
+            height: 40px;
+            background-color: #E6ED07;
+            color: #333;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 991px) {
+            .sidebar-toggle {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a class="skip-to-content" href="#main-content">Saltar al contenido principal</a>
+    
+    <!-- Botón para mostrar/ocultar sidebar en móvil -->
+    <div class="sidebar-toggle" aria-label="Mostrar menú lateral" role="button" tabindex="0">
+        <i class="fa fa-bars"></i>
+    </div>
+    
+    <div class="dashboard-container">
+        <!-- Sidebar de navegación -->
+        <div class="sidebar" role="navigation" aria-label="Menú principal">
+            <div class="sidebar-header">
+                <img src="https://via.placeholder.com/150x150?text=E" alt="Foto de perfil del entrenador" onerror="this.src='https://via.placeholder.com/150x150?text=E'">
+                <h2>Carlos Rodríguez</h2>
+                <p>Entrenador Senior</p>
+            </div>
+            
+            <div class="sidebar-menu">
+                <ul>
+                    <li>
+                        <a href="perfil-entrenador.html">
+                            <i class="fa fa-dashboard"></i>
+                            <span>DASHBOARD</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="entrenador-clases.html">
+                            <i class="fa fa-calendar"></i>
+                            <span>MIS CLASES</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="entrenador-alumnos.html" class="active" aria-current="page">
+                            <i class="fa fa-users"></i>
+                            <span>MIS ALUMNOS</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="entrenador-programas.html">
+                            <i class="fa fa-file-text"></i>
+                            <span>PROGRAMAS</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="entrenador-notificaciones.html">
+                            <i class="fa fa-bell"></i>
+                            <span>NOTIFICACIONES</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="entrenador-estadisticas.html">
+                            <i class="fa fa-line-chart"></i>
+                            <span>ESTADÍSTICAS</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="entrenador-configuracion.html">
+                            <i class="fa fa-cog"></i>
+                            <span>CONFIGURACIÓN</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="index.html">
+                            <i class="fa fa-sign-out"></i>
+                            <span>CERRAR SESIÓN</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Contenido principal -->
+        <main class="main-content" id="main-content">
+            <!-- Cabecera del panel -->
+            <div class="dashboard-header">
+                <h1>Mis Alumnos</h1>
+                
+                <div class="user-actions">
+                    <div class="notification-bell">
+                        <i class="fa fa-bell" aria-label="Notificaciones"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                    
+                    <div class="user-profile">
+                        <img src="https://via.placeholder.com/150x150?text=E" alt="Foto de perfil" onerror="this.src='https://via.placeholder.com/150x150?text=E'">
+                        <span>Carlos Rodríguez</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Sección de filtros y búsqueda -->
+            <div class="panel-section">
+                <div class="panel-section-header">
+                    <h2>Gestión de Alumnos</h2>
+                    <a href="#" class="primary-action student-action-btn">
+                        <i class="fa fa-plus"></i> Nuevo Alumno
+                    </a>
+                </div>
+                
+                <div class="filter-controls">
+                    <button class="filter-control active">Todos</button>
+                    <button class="filter-control">Activos</button>
+                    <button class="filter-control">Inactivos</button>
+                    <button class="filter-control">Nuevos</button>
+                    <input type="text" class="search-box" placeholder="Buscar alumnos...">
+                </div>
+            </div>
+            
+            <!-- Alumnos destacados -->
+            <div class="panel-section">
+                <div class="panel-section-header">
+                    <h2>Alumnos Destacados</h2>
+                    <a href="#">Ver todos <i class="fa fa-arrow-right"></i></a>
+                </div>
+                
+                <div class="student-cards">
+                    <div class="student-card">
+                        <div class="student-card-header">
+                            <img src="https://via.placeholder.com/150x150?text=AG" alt="Ana García" class="student-avatar">
+                            <div class="student-info">
+                                <h3>Ana García</h3>
+                                <div class="student-plan">Plan: Fitness Total</div>
+                            </div>
+                        </div>
+                        <div class="student-card-body">
+                            <div class="student-stats">
+                                <div class="student-stat">
+                                    <div class="student-stat-value">75%</div>
+                                    <div>Progreso</div>
+                                </div>
+                                <div class="student-stat">
+                                    <div class="student-stat-value">95%</div>
+                                    <div>Asistencia</div>
+                                </div>
+                                <div class="student-stat">
+                                    <div class="student-stat-value">18</div>
+                                    <div>Sesiones</div>
+                                </div>
+                            </div>
+                            
+                            <div class="student-progress-label">
+                                <span>Objetivos alcanzados</span>
+                                <span>75%</span>
+                            </div>
+                            <div class="student-progress-bar">
+                                <div class="student-progress-value" style="width: 75%;"></div>
+                            </div>
+                            
+                            <div class="student-progress-label">
+                                <span>Última sesión:</span>
+                                <span>Ayer, 18:00</span>
+                            </div>
+                        </div>
+                        <div class="student-card-footer">
+                            <a href="#" class="student-action-btn primary-action">Ver perfil</a>
+                            <a href="#" class="student-action-btn secondary-action">Crear programa</a>
+                        </div>
+                    </div>
+                    
+                    <div class="student-card">
+                        <div class="student-card-header">
+                            <img src="https://via.placeholder.com/150x150?text=LM" alt="Laura Martínez" class="student-avatar">
+                            <div class="student-info">
+                                <h3>Laura Martínez</h3>
+                                <div class="student-plan">Plan: Yoga y Pilates</div>
+                            </div>
+                        </div>
+                        <div class="student-card-body">
+                            <div class="student-stats">
+                                <div class="student-stat">
+                                    <div class="student-stat-value">80%</div>
+                                    <div>Progreso</div>
+                                </div>
+                                <div class="student-stat">
+                                    <div class="student-stat-value">90%</div>
+                                    <div>Asistencia</div>
+                                </div>
+                                <div class="student-stat">
+                                    <div class="student-stat-value">24</div>
+                                    <div>Sesiones</div>
+                                </div>
+                            </div>
+                            
+                            <div class="student-progress-label">
+                                <span>Objetivos alcanzados</span>
+                                <span>80%</span>
+                            </div>
+                            <div class="student-progress-bar">
+                                <div class="student-progress-value" style="width: 80%;"></div>
+                            </div>
+                            
+                            <div class="student-progress-label">
+                                <span>Última sesión:</span>
+                                <span>21/10/2023</span>
+                            </div>
+                        </div>
+                        <div class="student-card-footer">
+                            <a href="#" class="student-action-btn primary-action">Ver perfil</a>
+                            <a href="#" class="student-action-btn secondary-action">Crear programa</a>
+                        </div>
+                    </div>
+                    
+                    <div class="student-card">
+                        <div class="student-card-header">
+                            <img src="https://via.placeholder.com/150x150?text=PS" alt="Pedro Sánchez" class="student-avatar">
+                            <div class="student-info">
+                                <h3>Pedro Sánchez</h3>
+                                <div class="student-plan">Plan: Musculación</div>
+                            </div>
+                        </div>
+                        <div class="student-card-body">
+                            <div class="student-stats">
+                                <div class="student-stat">
+                                    <div class="student-stat-value">45%</div>
+                                    <div>Progreso</div>
+                                </div>
+                                <div class="student-stat">
+                                    <div class="student-stat-value">70%</div>
+                                    <div>Asistencia</div>
+                                </div>
+                                <div class="student-stat">
+                                    <div class="student-stat-value">10</div>
+                                    <div>Sesiones</div>
+                                </div>
+                            </div>
+                            
+                            <div class="student-progress-label">
+                                <span>Objetivos alcanzados</span>
+                                <span>45%</span>
+                            </div>
+                            <div class="student-progress-bar">
+                                <div class="student-progress-value" style="width: 45%;"></div>
+                            </div>
+                            
+                            <div class="student-progress-label">
+                                <span>Última sesión:</span>
+                                <span>23/10/2023</span>
+                            </div>
+                        </div>
+                        <div class="student-card-footer">
+                            <a href="#" class="student-action-btn primary-action">Ver perfil</a>
+                            <a href="#" class="student-action-btn secondary-action">Crear programa</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Lista de alumnos -->
+            <div class="panel-section">
+                <div class="panel-section-header">
+                    <h2>Listado de Alumnos</h2>
+                    <a href="#">Exportar <i class="fa fa-download"></i></a>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="students-table">
+                        <thead>
+                            <tr>
+                                <th>Alumno</th>
+                                <th>Plan</th>
+                                <th>Última Sesión</th>
+                                <th>Asistencia</th>
+                                <th>Progreso</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ana García</td>
+                                <td>Fitness Total</td>
+                                <td>Ayer, 18:00</td>
+                                <td>95%</td>
+                                <td class="progress-cell">
+                                    <div class="progress-bar">
+                                        <div class="progress-value" style="width: 75%;"></div>
+                                    </div>
+                                </td>
+                                <td><span class="student-status status-active">Activo</span></td>
+                                <td>
+                                    <a href="#" aria-label="Ver perfil de Ana García"><i class="fa fa-eye"></i></a>
+                                    <a href="#" aria-label="Editar perfil de Ana García" style="margin-left: 10px;"><i class="fa fa-pencil"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Pedro Sánchez</td>
+                                <td>Musculación</td>
+                                <td>23/10/2023</td>
+                                <td>70%</td>
+                                <td class="progress-cell">
+                                    <div class="progress-bar">
+                                        <div class="progress-value" style="width: 45%;"></div>
+                                    </div>
+                                </td>
+                                <td><span class="student-status status-active">Activo</span></td>
+                                <td>
+                                    <a href="#" aria-label="Ver perfil de Pedro Sánchez"><i class="fa fa-eye"></i></a>
+                                    <a href="#" aria-label="Editar perfil de Pedro Sánchez" style="margin-left: 10px;"><i class="fa fa-pencil"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Laura Martínez</td>
+                                <td>Yoga y Pilates</td>
+                                <td>21/10/2023</td>
+                                <td>90%</td>
+                                <td class="progress-cell">
+                                    <div class="progress-bar">
+                                        <div class="progress-value" style="width: 80%;"></div>
+                                    </div>
+                                </td>
+                                <td><span class="student-status status-active">Activo</span></td>
+                                <td>
+                                    <a href="#" aria-label="Ver perfil de Laura Martínez"><i class="fa fa-eye"></i></a>
+                                    <a href="#" aria-label="Editar perfil de Laura Martínez" style="margin-left: 10px;"><i class="fa fa-pencil"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Miguel Fernández</td>
+                                <td>CrossFit</td>
+                                <td>20/10/2023</td>
+                                <td>50%</td>
+                                <td class="progress-cell">
+                                    <div class="progress-bar">
+                                        <div class="progress-value" style="width: 30%;"></div>
+                                    </div>
+                                </td>
+                                <td><span class="student-status status-pending">Pendiente</span></td>
+                                <td>
+                                    <a href="#" aria-label="Ver perfil de Miguel Fernández"><i class="fa fa-eye"></i></a>
+                                    <a href="#" aria-label="Editar perfil de Miguel Fernández" style="margin-left: 10px;"><i class="fa fa-pencil"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Carmen López</td>
+                                <td>Fitness Total</td>
+                                <td>18/10/2023</td>
+                                <td>40%</td>
+                                <td class="progress-cell">
+                                    <div class="progress-bar">
+                                        <div class="progress-value" style="width: 60%;"></div>
+                                    </div>
+                                </td>
+                                <td><span class="student-status status-inactive">Inactivo</span></td>
+                                <td>
+                                    <a href="#" aria-label="Ver perfil de Carmen López"><i class="fa fa-eye"></i></a>
+                                    <a href="#" aria-label="Editar perfil de Carmen López" style="margin-left: 10px;"><i class="fa fa-pencil"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Alejandro Torres</td>
+                                <td>Funcional</td>
+                                <td>17/10/2023</td>
+                                <td>85%</td>
+                                <td class="progress-cell">
+                                    <div class="progress-bar">
+                                        <div class="progress-value" style="width: 70%;"></div>
+                                    </div>
+                                </td>
+                                <td><span class="student-status status-active">Activo</span></td>
+                                <td>
+                                    <a href="#" aria-label="Ver perfil de Alejandro Torres"><i class="fa fa-eye"></i></a>
+                                    <a href="#" aria-label="Editar perfil de Alejandro Torres" style="margin-left: 10px;"><i class="fa fa-pencil"></i></a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Lucía Romero</td>
+                                <td>Pilates</td>
+                                <td>15/10/2023</td>
+                                <td>75%</td>
+                                <td class="progress-cell">
+                                    <div class="progress-bar">
+                                        <div class="progress-value" style="width: 65%;"></div>
+                                    </div>
+                                </td>
+                                <td><span class="student-status status-active">Activo</span></td>
+                                <td>
+                                    <a href="#" aria-label="Ver perfil de Lucía Romero"><i class="fa fa-eye"></i></a>
+                                    <a href="#" aria-label="Editar perfil de Lucía Romero" style="margin-left: 10px;"><i class="fa fa-pencil"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div style="margin-top: 20px; text-align: center;">
+                    <a href="#" class="student-action-btn secondary-action">Cargar más</a>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/bootstrap.bundle.min.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script>
+        // Script para el toggle del sidebar en dispositivos móviles
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebarToggle = document.querySelector('.sidebar-toggle');
+            const sidebar = document.querySelector('.sidebar');
+            
+            if (sidebarToggle && sidebar) {
+                sidebarToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('active');
+                    
+                    // Actualizar ARIA expanded
+                    const isExpanded = sidebar.classList.contains('active');
+                    sidebarToggle.setAttribute('aria-expanded', isExpanded);
+                });
+                
+                // Permitir cerrar con teclado
+                sidebarToggle.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        sidebarToggle.click();
+                    }
+                });
+            }
+            
+            // Si hay notificaciones, hacer que el botón de campana sea accesible
+            const notificationBell = document.querySelector('.notification-bell');
+            if (notificationBell) {
+                notificationBell.setAttribute('tabindex', '0');
+                notificationBell.setAttribute('role', 'button');
+                notificationBell.setAttribute('aria-label', 'Ver 3 notificaciones');
+                
+                notificationBell.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        // Aquí iría la lógica para mostrar las notificaciones
+                        alert('Notificaciones:\n1. Nueva solicitud de clase\n2. Mensaje nuevo\n3. Recordatorio: actualizar rutina');
+                    }
+                });
+                
+                notificationBell.addEventListener('click', function() {
+                    // Aquí iría la lógica para mostrar las notificaciones
+                    alert('Notificaciones:\n1. Nueva solicitud de clase\n2. Mensaje nuevo\n3. Recordatorio: actualizar rutina');
+                });
+            }
+            
+            // Filtros de alumnos
+            const filterButtons = document.querySelectorAll('.filter-control');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

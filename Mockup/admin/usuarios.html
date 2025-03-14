@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Panel de administración GymTracker - Gestión de usuarios">
+    <title>Gestión de Usuarios - Admin GymTracker</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="admin-page">
+    <!-- Enlace para saltar al contenido principal -->
+    <a href="#admin-content" class="skip-to-admin">Saltar al contenido principal</a>
+
+    <!-- Contenedor principal del panel admin -->
+    <div class="admin-container">
+        <!-- Barra lateral con navegación -->
+        <aside class="admin-sidebar" id="admin-sidebar" role="navigation" aria-label="Menú de administración">
+            <div class="admin-brand">
+                <img src="../images/logo.png" alt="Logo de GymTracker" width="40" height="40">
+                <h1>GymTracker</h1>
+            </div>
+            
+            <nav>
+                <ul role="menubar" aria-label="Menú principal">
+                    <li role="none">
+                        <a href="dashboard.html" role="menuitem">
+                            <i class="fas fa-tachometer-alt" aria-hidden="true"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="usuarios.html" role="menuitem" aria-current="page" class="active">
+                            <i class="fas fa-users" aria-hidden="true"></i>
+                            <span>Usuarios</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="clases.html" role="menuitem">
+                            <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+                            <span>Clases</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="pagos.html" role="menuitem">
+                            <i class="fas fa-credit-card" aria-hidden="true"></i>
+                            <span>Pagos</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="estadisticas.html" role="menuitem">
+                            <i class="fas fa-chart-line" aria-hidden="true"></i>
+                            <span>Estadísticas</span>
+                        </a>
+                    </li>
+                    <li role="none">
+                        <a href="configuracion.html" role="menuitem">
+                            <i class="fas fa-cog" aria-hidden="true"></i>
+                            <span>Configuración</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="admin-sidebar-footer">
+                <a href="../index.html" role="menuitem">
+                    <i class="fas fa-sign-out-alt" aria-hidden="true"></i>
+                    <span>Salir</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Contenido principal del panel -->
+        <main class="admin-main" id="admin-content">
+            <!-- Cabecera con información y botón de menú -->
+            <header class="admin-header">
+                <button id="sidebar-toggle" aria-label="Alternar menú lateral" aria-expanded="true" aria-controls="admin-sidebar">
+                    <i class="fas fa-bars" aria-hidden="true"></i>
+                </button>
+                
+                <div class="admin-user-info">
+                    <span>Administrador</span>
+                    <img src="../images/admin-avatar.jpg" alt="Avatar del administrador" width="40" height="40">
+                </div>
+            </header>
+
+            <!-- Contenido de la página -->
+            <div class="admin-content">
+                <h2>Gestión de Usuarios</h2>
+                <p class="admin-subtitle">Administra los usuarios registrados en la plataforma GymTracker</p>
+
+                <!-- Acciones y filtros -->
+                <div class="admin-actions-bar">
+                    <div class="admin-search">
+                        <label for="user-search" class="sr-only">Buscar usuario</label>
+                        <input type="search" id="user-search" placeholder="Buscar usuario..." aria-label="Buscar usuario por nombre o email">
+                        <button type="button" aria-label="Buscar">
+                            <i class="fas fa-search" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="admin-filters">
+                        <label for="plan-filter" class="sr-only">Filtrar por plan</label>
+                        <select id="plan-filter" aria-label="Filtrar usuarios por plan">
+                            <option value="">Todos los planes</option>
+                            <option value="basico">Básico</option>
+                            <option value="estandar">Estándar</option>
+                            <option value="premium">Premium</option>
+                        </select>
+                        
+                        <label for="status-filter" class="sr-only">Filtrar por estado</label>
+                        <select id="status-filter" aria-label="Filtrar usuarios por estado">
+                            <option value="">Todos los estados</option>
+                            <option value="activo">Activo</option>
+                            <option value="inactivo">Inactivo</option>
+                            <option value="pendiente">Pendiente</option>
+                        </select>
+                    </div>
+                    
+                    <button type="button" class="admin-button" id="add-user-btn" aria-label="Añadir nuevo usuario">
+                        <i class="fas fa-plus" aria-hidden="true"></i> Añadir Usuario
+                    </button>
+                </div>
+
+                <!-- Tabla de usuarios -->
+                <div class="admin-table-container" role="region" aria-label="Lista de usuarios" tabindex="0">
+                    <table class="admin-table" aria-label="Tabla de usuarios registrados">
+                        <caption class="sr-only">Lista de usuarios registrados en GymTracker con sus detalles</caption>
+                        <thead>
+                            <tr>
+                                <th scope="col" id="user-id">ID</th>
+                                <th scope="col" id="user-name">Nombre</th>
+                                <th scope="col" id="user-email">Email</th>
+                                <th scope="col" id="user-plan">Plan</th>
+                                <th scope="col" id="user-status">Estado</th>
+                                <th scope="col" id="user-date">Fecha Registro</th>
+                                <th scope="col" id="user-actions">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td headers="user-id">001</td>
+                                <td headers="user-name">María García</td>
+                                <td headers="user-email"><a href="mailto:maria.garcia@email.com">maria.garcia@email.com</a></td>
+                                <td headers="user-plan">Premium</td>
+                                <td headers="user-status">
+                                    <span class="status-badge status-active" aria-label="Usuario activo">Activo</span>
+                                </td>
+                                <td headers="user-date"><time datetime="2023-08-15">15/08/2023</time></td>
+                                <td headers="user-actions" class="admin-actions">
+                                    <button type="button" aria-label="Editar usuario María García">
+                                        <i class="fas fa-edit" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" aria-label="Ver detalles de usuario María García">
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="danger-button" aria-label="Eliminar usuario María García">
+                                        <i class="fas fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td headers="user-id">002</td>
+                                <td headers="user-name">Carlos Rodríguez</td>
+                                <td headers="user-email"><a href="mailto:carlos.r@email.com">carlos.r@email.com</a></td>
+                                <td headers="user-plan">Estándar</td>
+                                <td headers="user-status">
+                                    <span class="status-badge status-active" aria-label="Usuario activo">Activo</span>
+                                </td>
+                                <td headers="user-date"><time datetime="2023-06-10">10/06/2023</time></td>
+                                <td headers="user-actions" class="admin-actions">
+                                    <button type="button" aria-label="Editar usuario Carlos Rodríguez">
+                                        <i class="fas fa-edit" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" aria-label="Ver detalles de usuario Carlos Rodríguez">
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="danger-button" aria-label="Eliminar usuario Carlos Rodríguez">
+                                        <i class="fas fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td headers="user-id">003</td>
+                                <td headers="user-name">Laura Martínez</td>
+                                <td headers="user-email"><a href="mailto:laura.m@email.com">laura.m@email.com</a></td>
+                                <td headers="user-plan">Básico</td>
+                                <td headers="user-status">
+                                    <span class="status-badge status-inactive" aria-label="Usuario inactivo">Inactivo</span>
+                                </td>
+                                <td headers="user-date"><time datetime="2023-01-23">23/01/2023</time></td>
+                                <td headers="user-actions" class="admin-actions">
+                                    <button type="button" aria-label="Editar usuario Laura Martínez">
+                                        <i class="fas fa-edit" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" aria-label="Ver detalles de usuario Laura Martínez">
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="danger-button" aria-label="Eliminar usuario Laura Martínez">
+                                        <i class="fas fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td headers="user-id">004</td>
+                                <td headers="user-name">Daniel López</td>
+                                <td headers="user-email"><a href="mailto:daniel.l@email.com">daniel.l@email.com</a></td>
+                                <td headers="user-plan">Premium</td>
+                                <td headers="user-status">
+                                    <span class="status-badge status-pending" aria-label="Usuario pendiente de activación">Pendiente</span>
+                                </td>
+                                <td headers="user-date"><time datetime="2023-09-01">01/09/2023</time></td>
+                                <td headers="user-actions" class="admin-actions">
+                                    <button type="button" aria-label="Editar usuario Daniel López">
+                                        <i class="fas fa-edit" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" aria-label="Ver detalles de usuario Daniel López">
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="danger-button" aria-label="Eliminar usuario Daniel López">
+                                        <i class="fas fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td headers="user-id">005</td>
+                                <td headers="user-name">Ana Sánchez</td>
+                                <td headers="user-email"><a href="mailto:ana.s@email.com">ana.s@email.com</a></td>
+                                <td headers="user-plan">Estándar</td>
+                                <td headers="user-status">
+                                    <span class="status-badge status-active" aria-label="Usuario activo">Activo</span>
+                                </td>
+                                <td headers="user-date"><time datetime="2023-07-12">12/07/2023</time></td>
+                                <td headers="user-actions" class="admin-actions">
+                                    <button type="button" aria-label="Editar usuario Ana Sánchez">
+                                        <i class="fas fa-edit" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" aria-label="Ver detalles de usuario Ana Sánchez">
+                                        <i class="fas fa-eye" aria-hidden="true"></i>
+                                    </button>
+                                    <button type="button" class="danger-button" aria-label="Eliminar usuario Ana Sánchez">
+                                        <i class="fas fa-trash" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Paginación -->
+                <nav class="admin-pagination" aria-label="Paginación de usuarios">
+                    <ul>
+                        <li>
+                            <a href="#" aria-label="Ir a página anterior" class="disabled">
+                                <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                        <li><a href="#" aria-label="Página 1" aria-current="page">1</a></li>
+                        <li><a href="#" aria-label="Página 2">2</a></li>
+                        <li><a href="#" aria-label="Página 3">3</a></li>
+                        <li><a href="#" aria-label="Ir a página siguiente">
+                            <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                        </a></li>
+                    </ul>
+                </nav>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modales -->
+    <!-- Modal para añadir/editar usuario -->
+    <div id="user-modal" class="admin-modal" role="dialog" aria-labelledby="modal-title" aria-hidden="true">
+        <div class="admin-modal-content">
+            <header class="admin-modal-header">
+                <h3 id="modal-title">Añadir Usuario</h3>
+                <button type="button" class="admin-modal-close" aria-label="Cerrar modal">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </header>
+            
+            <div class="admin-modal-body">
+                <form id="user-form">
+                    <fieldset>
+                        <legend>Información Personal</legend>
+                        
+                        <div class="form-group">
+                            <label for="user-name-input">Nombre <span class="required">*</span></label>
+                            <input type="text" id="user-name-input" name="name" required aria-required="true">
+                            <p id="name-error" class="error-message" aria-live="polite" hidden>
+                                El nombre es obligatorio
+                            </p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="user-email-input">Email <span class="required">*</span></label>
+                            <input type="email" id="user-email-input" name="email" required aria-required="true">
+                            <p id="email-error" class="error-message" aria-live="polite" hidden>
+                                Email inválido o ya registrado
+                            </p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="user-phone-input">Teléfono</label>
+                            <input type="tel" id="user-phone-input" name="phone">
+                        </div>
+                    </fieldset>
+                    
+                    <fieldset>
+                        <legend>Detalles de Cuenta</legend>
+                        
+                        <div class="form-group">
+                            <label for="user-plan-input">Plan <span class="required">*</span></label>
+                            <select id="user-plan-input" name="plan" required aria-required="true">
+                                <option value="">Seleccionar plan</option>
+                                <option value="basico">Básico</option>
+                                <option value="estandar">Estándar</option>
+                                <option value="premium">Premium</option>
+                            </select>
+                            <p id="plan-error" class="error-message" aria-live="polite" hidden>
+                                Debe seleccionar un plan
+                            </p>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="user-status-input">Estado <span class="required">*</span></label>
+                            <select id="user-status-input" name="status" required aria-required="true">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                                <option value="pendiente">Pendiente</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="user-date-input">Fecha de registro</label>
+                            <input type="date" id="user-date-input" name="date">
+                        </div>
+                    </fieldset>
+                    
+                    <div class="form-actions">
+                        <button type="button" class="admin-button outlined" id="cancel-user-btn">Cancelar</button>
+                        <button type="submit" class="admin-button">Guardar Usuario</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación de eliminación -->
+    <div id="confirm-delete-modal" class="admin-modal" role="alertdialog" aria-labelledby="confirm-title" aria-describedby="confirm-text" aria-hidden="true">
+        <div class="admin-modal-content">
+            <header class="admin-modal-header">
+                <h3 id="confirm-title">Confirmar Eliminación</h3>
+                <button type="button" class="admin-modal-close" aria-label="Cerrar modal">
+                    <i class="fas fa-times" aria-hidden="true"></i>
+                </button>
+            </header>
+            
+            <div class="admin-modal-body">
+                <p id="confirm-text">¿Está seguro que desea eliminar este usuario? Esta acción no se puede deshacer.</p>
+                
+                <div class="form-actions">
+                    <button type="button" class="admin-button outlined" id="cancel-delete-btn">Cancelar</button>
+                    <button type="button" class="admin-button danger" id="confirm-delete-btn">Eliminar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contenedor para mensajes de error/éxito -->
+    <div id="admin-messages" aria-live="polite"></div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/admin.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            'use strict';
+            
+            try {
+                // Referencias a elementos DOM
+                const sidebarToggle = document.getElementById('sidebar-toggle');
+                const sidebar = document.getElementById('admin-sidebar');
+                const userModal = document.getElementById('user-modal');
+                const confirmModal = document.getElementById('confirm-delete-modal');
+                const addUserBtn = document.getElementById('add-user-btn');
+                const cancelUserBtn = document.getElementById('cancel-user-btn');
+                const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+                const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+                const userForm = document.getElementById('user-form');
+                const actionButtons = document.querySelectorAll('.admin-actions button');
+                const messagesContainer = document.getElementById('admin-messages');
+                
+                // Función para mostrar mensajes
+                function showMessage(message, type = 'success') {
+                    const messageElement = document.createElement('div');
+                    messageElement.className = type === 'success' ? 'admin-success-message' : 'admin-error-message';
+                    messageElement.setAttribute('role', type === 'success' ? 'status' : 'alert');
+                    messageElement.textContent = message;
+                    
+                    messagesContainer.appendChild(messageElement);
+                    
+                    // Eliminar mensaje después de 5 segundos
+                    setTimeout(() => {
+                        messageElement.remove();
+                    }, 5000);
+                }
+                
+                // Toggle sidebar
+                if (sidebarToggle && sidebar) {
+                    sidebarToggle.addEventListener('click', function() {
+                        const isExpanded = sidebar.classList.contains('collapsed');
+                        sidebar.classList.toggle('collapsed');
+                        sidebarToggle.setAttribute('aria-expanded', isExpanded);
+                    });
+                }
+                
+                // Abrir modal de añadir usuario
+                if (addUserBtn && userModal) {
+                    addUserBtn.addEventListener('click', function() {
+                        // Limpiar formulario
+                        userForm.reset();
+                        document.getElementById('modal-title').textContent = 'Añadir Usuario';
+                        
+                        // Mostrar modal
+                        userModal.setAttribute('aria-hidden', 'false');
+                        userModal.style.display = 'flex';
+                        
+                        // Enfocar primer campo
+                        setTimeout(() => {
+                            document.getElementById('user-name-input').focus();
+                        }, 100);
+                    });
+                }
+                
+                // Cerrar modales
+                document.querySelectorAll('.admin-modal-close, #cancel-user-btn, #cancel-delete-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const modal = this.closest('.admin-modal');
+                        if (modal) {
+                            modal.setAttribute('aria-hidden', 'true');
+                            modal.style.display = 'none';
+                            
+                            // Devolver foco al elemento que abrió el modal
+                            if (modal.id === 'user-modal') {
+                                addUserBtn.focus();
+                            } else if (modal.id === 'confirm-delete-modal') {
+                                // Buscar el botón que abrió el modal de eliminación
+                                document.querySelector('.danger-button[data-active="true"]')?.focus();
+                            }
+                        }
+                    });
+                });
+                
+                // Eventos de los botones de acción de la tabla
+                actionButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const action = this.querySelector('i').className;
+                        const row = this.closest('tr');
+                        const userId = row.querySelector('td:first-child').textContent;
+                        const userName = row.querySelector('td:nth-child(2)').textContent;
+                        
+                        if (action.includes('edit')) {
+                            // Abrir modal de edición con datos prefilled
+                            document.getElementById('modal-title').textContent = 'Editar Usuario';
+                            document.getElementById('user-name-input').value = userName;
+                            document.getElementById('user-email-input').value = row.querySelector('td:nth-child(3) a').textContent;
+                            
+                            const plan = row.querySelector('td:nth-child(4)').textContent.toLowerCase();
+                            document.getElementById('user-plan-input').value = plan === 'premium' ? 'premium' : plan === 'estándar' ? 'estandar' : 'basico';
+                            
+                            const status = row.querySelector('.status-badge').textContent.toLowerCase();
+                            document.getElementById('user-status-input').value = status;
+                            
+                            userModal.setAttribute('aria-hidden', 'false');
+                            userModal.style.display = 'flex';
+                            
+                            setTimeout(() => {
+                                document.getElementById('user-name-input').focus();
+                            }, 100);
+                        } 
+                        else if (action.includes('trash')) {
+                            // Marcar este botón como activo para devolver el foco después
+                            document.querySelectorAll('.danger-button').forEach(btn => btn.removeAttribute('data-active'));
+                            this.setAttribute('data-active', 'true');
+                            
+                            // Actualizar texto de confirmación
+                            document.getElementById('confirm-text').textContent = 
+                                `¿Está seguro que desea eliminar el usuario "${userName}"? Esta acción no se puede deshacer.`;
+                            
+                            // Mostrar modal de confirmación
+                            confirmModal.setAttribute('aria-hidden', 'false');
+                            confirmModal.style.display = 'flex';
+                            
+                            setTimeout(() => {
+                                document.getElementById('cancel-delete-btn').focus();
+                            }, 100);
+                        }
+                        else if (action.includes('eye')) {
+                            // Simular vista de detalles (en una aplicación real, esto podría navegar a otra página)
+                            showMessage(`Viendo detalles del usuario "${userName}"`, 'success');
+                        }
+                    });
+                });
+                
+                // Manejar envío del formulario
+                if (userForm) {
+                    userForm.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        
+                        // Validar el formulario
+                        let isValid = true;
+                        const nameInput = document.getElementById('user-name-input');
+                        const emailInput = document.getElementById('user-email-input');
+                        const planInput = document.getElementById('user-plan-input');
+                        
+                        // Validar nombre
+                        if (!nameInput.value.trim()) {
+                            document.getElementById('name-error').hidden = false;
+                            nameInput.setAttribute('aria-invalid', 'true');
+                            isValid = false;
+                        } else {
+                            document.getElementById('name-error').hidden = true;
+                            nameInput.removeAttribute('aria-invalid');
+                        }
+                        
+                        // Validar email
+                        if (!emailInput.value.trim() || !emailInput.value.includes('@')) {
+                            document.getElementById('email-error').hidden = false;
+                            emailInput.setAttribute('aria-invalid', 'true');
+                            isValid = false;
+                        } else {
+                            document.getElementById('email-error').hidden = true;
+                            emailInput.removeAttribute('aria-invalid');
+                        }
+                        
+                        // Validar plan
+                        if (!planInput.value) {
+                            document.getElementById('plan-error').hidden = false;
+                            planInput.setAttribute('aria-invalid', 'true');
+                            isValid = false;
+                        } else {
+                            document.getElementById('plan-error').hidden = true;
+                            planInput.removeAttribute('aria-invalid');
+                        }
+                        
+                        if (isValid) {
+                            // En una aplicación real, aquí se enviarían los datos al servidor
+                            const isEdit = document.getElementById('modal-title').textContent.includes('Editar');
+                            const message = isEdit 
+                                ? `Usuario "${nameInput.value}" actualizado correctamente`
+                                : `Usuario "${nameInput.value}" creado correctamente`;
+                            
+                            // Cerrar modal
+                            userModal.setAttribute('aria-hidden', 'true');
+                            userModal.style.display = 'none';
+                            
+                            // Mostrar mensaje de éxito
+                            showMessage(message, 'success');
+                            
+                            // Devolver el foco
+                            addUserBtn.focus();
+                        }
+                    });
+                }
+                
+                // Manejar confirmación de eliminación
+                if (confirmDeleteBtn) {
+                    confirmDeleteBtn.addEventListener('click', function() {
+                        // En una aplicación real, aquí se enviaría la solicitud de eliminación al servidor
+                        
+                        // Cerrar modal
+                        confirmModal.setAttribute('aria-hidden', 'true');
+                        confirmModal.style.display = 'none';
+                        
+                        // Mostrar mensaje de éxito
+                        showMessage('Usuario eliminado correctamente', 'success');
+                        
+                        // Devolver el foco
+                        document.querySelector('.danger-button[data-active="true"]')?.focus();
+                    });
+                }
+                
+                // Navegación por teclado para la tabla
+                const table = document.querySelector('.admin-table');
+                if (table) {
+                    table.addEventListener('keydown', function(e) {
+                        const target = e.target;
+                        
+                        // Si estamos en un botón de acción
+                        if (target.tagName === 'BUTTON' && target.closest('.admin-actions')) {
+                            const row = target.closest('tr');
+                            const buttons = Array.from(row.querySelectorAll('.admin-actions button'));
+                            const currentIndex = buttons.indexOf(target);
+                            
+                            if (e.key === 'ArrowRight' && currentIndex < buttons.length - 1) {
+                                e.preventDefault();
+                                buttons[currentIndex + 1].focus();
+                            } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
+                                e.preventDefault();
+                                buttons[currentIndex - 1].focus();
+                            }
+                        }
+                    });
+                }
+                
+                // Eventos para los filtros
+                document.querySelectorAll('#plan-filter, #status-filter').forEach(filter => {
+                    filter.addEventListener('change', function() {
+                        // En una aplicación real, esto filtraría la tabla según selección
+                        showMessage(`Filtro aplicado: ${this.value || 'Todos'}`, 'success');
+                    });
+                });
+                
+                // Buscar usuarios
+                const searchInput = document.getElementById('user-search');
+                if (searchInput) {
+                    searchInput.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter') {
+                            e.preventDefault();
+                            // En una aplicación real, esto buscaría usuarios
+                            showMessage(`Buscando: ${this.value}`, 'success');
+                        }
+                    });
+                    
+                    const searchButton = searchInput.nextElementSibling;
+                    if (searchButton) {
+                        searchButton.addEventListener('click', function() {
+                            // En una aplicación real, esto buscaría usuarios
+                            showMessage(`Buscando: ${searchInput.value}`, 'success');
+                        });
+                    }
+                }
+                
+                // Teclas de escape para modales
+                document.addEventListener('keydown', function(e) {
+                    if (e.key === 'Escape') {
+                        const openModals = document.querySelectorAll('.admin-modal[aria-hidden="false"]');
+                        if (openModals.length) {
+                            const modal = openModals[0];
+                            modal.setAttribute('aria-hidden', 'true');
+                            modal.style.display = 'none';
+                            
+                            // Devolver foco
+                            if (modal.id === 'user-modal') {
+                                addUserBtn.focus();
+                            } else if (modal.id === 'confirm-delete-modal') {
+                                document.querySelector('.danger-button[data-active="true"]')?.focus();
+                            }
+                        }
+                    }
+                });
+                
+                // Inicializar trampas de foco para modales
+                function trapFocus(modal) {
+                    const focusableElements = modal.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                    const firstFocusable = focusableElements[0];
+                    const lastFocusable = focusableElements[focusableElements.length - 1];
+                    
+                    modal.addEventListener('keydown', function(e) {
+                        if (e.key === 'Tab') {
+                            if (e.shiftKey && document.activeElement === firstFocusable) {
+                                e.preventDefault();
+                                lastFocusable.focus();
+                            } else if (!e.shiftKey && document.activeElement === lastFocusable) {
+                                e.preventDefault();
+                                firstFocusable.focus();
+                            }
+                        }
+                    });
+                }
+                
+                trapFocus(userModal);
+                trapFocus(confirmModal);
+                
+                // Soporte para preferencias de usuario
+                if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                    // Aplicar estilos sin animaciones
+                    document.documentElement.style.setProperty('--admin-transition', 'none');
+                }
+                
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    // En una aplicación real, esto aplicaría un tema oscuro
+                    // (ya implementado por variables CSS)
+                }
+                
+                console.log('Inicialización de página de usuarios completada.');
+            } catch (error) {
+                console.error('Error al inicializar la página de usuarios:', error);
+                
+                // Mostrar mensaje de error
+                const messagesContainer = document.getElementById('admin-messages');
+                if (messagesContainer) {
+                    const errorMessage = document.createElement('div');
+                    errorMessage.className = 'admin-error-message';
+                    errorMessage.setAttribute('role', 'alert');
+                    errorMessage.textContent = 'Ha ocurrido un error al cargar la página. Por favor, recargue.';
+                    messagesContainer.appendChild(errorMessage);
+                }
+            }
+        });
+    </script>
+</body>
+</html> 

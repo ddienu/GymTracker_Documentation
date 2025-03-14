@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Nutricionistas - GymTracker</title>
+    <meta name="description" content="Panel de control para nutricionistas en GymTracker">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/nutricionistas.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Skip link para accesibilidad -->
+    <a href="#main-content" class="skip-to-content">Saltar al contenido principal</a>
+
+    <header class="menu">
+        <div class="contenedor-logo">
+            <img id="logoGym" src="images/logo.png" alt="Logo GymTracker">
+        </div>
+        <button class="navbar-toggle" aria-expanded="false" aria-controls="list">
+            <i class="fas fa-bars"></i>
+        </button>
+        <nav>
+            <ul class="nav-list" id="list">
+                <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+                <li><a href="nutricionistas.html" class="active"><i class="fas fa-apple-alt"></i> Nutricionistas</a></li>
+                <li><a href="entrenadores.html"><i class="fas fa-dumbbell"></i> Entrenadores</a></li>
+                <li><a href="contacto.html"><i class="fas fa-envelope"></i> Contacto</a></li>
+                <li class="registerNav">
+                    <div class="DivSignInButton">
+                        <a href="perfil.html"><i class="fas fa-user"></i> Mi Perfil</a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container" id="main-content">
+        <section>
+            <h1>Panel de Nutricionistas</h1>
+            
+            <div class="dashboard">
+                <h2>Resumen de Actividades</h2>
+                <div class="summary-cards">
+                    <div class="card">
+                        <h3><i class="fas fa-users"></i> Pacientes Actuales</h3>
+                        <p>12</p>
+                        <span>+2 esta semana</span>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-clipboard-list"></i> Planes de Nutrición</h3>
+                        <p>8</p>
+                        <span>Activos actualmente</span>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-calendar-check"></i> Citas Pendientes</h3>
+                        <p>5</p>
+                        <span>Próximos 7 días</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="patient-management">
+                <h2>Gestión de Pacientes</h2>
+                <button id="addPatientBtn"><i class="fas fa-plus"></i> Agregar Paciente</button>
+                <div class="search-box">
+                    <input type="text" placeholder="Buscar paciente..." aria-label="Buscar paciente">
+                    <i class="fas fa-search"></i>
+                </div>
+                <table aria-label="Lista de pacientes">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Estado</th>
+                            <th>Última Visita</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Laura Martínez</td>
+                            <td><a href="mailto:laura@example.com">laura@example.com</a></td>
+                            <td><span class="status active">Activo</span></td>
+                            <td>15/05/2023</td>
+                            <td>
+                                <button class="action-btn" aria-label="Ver perfil de Laura Martínez"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn" aria-label="Editar perfil de Laura Martínez"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Carlos Rodríguez</td>
+                            <td><a href="mailto:carlos@example.com">carlos@example.com</a></td>
+                            <td><span class="status active">Activo</span></td>
+                            <td>20/05/2023</td>
+                            <td>
+                                <button class="action-btn" aria-label="Ver perfil de Carlos Rodríguez"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn" aria-label="Editar perfil de Carlos Rodríguez"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Ana López</td>
+                            <td><a href="mailto:ana@example.com">ana@example.com</a></td>
+                            <td><span class="status inactive">Inactivo</span></td>
+                            <td>10/04/2023</td>
+                            <td>
+                                <button class="action-btn" aria-label="Ver perfil de Ana López"><i class="fas fa-eye"></i></button>
+                                <button class="action-btn" aria-label="Editar perfil de Ana López"><i class="fas fa-edit"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="nutrition-plans">
+                <h2>Planes de Nutrición</h2>
+                <button id="addPlanBtn"><i class="fas fa-plus"></i> Crear Plan de Nutrición</button>
+                <div class="plans-container">
+                    <div class="plan-card">
+                        <h3>Plan Pérdida de Peso</h3>
+                        <p><i class="fas fa-user-friends"></i> 5 pacientes asignados</p>
+                        <p><i class="fas fa-calendar-alt"></i> Actualizado: 20/05/2023</p>
+                        <div class="plan-actions">
+                            <button class="action-btn" aria-label="Ver plan de pérdida de peso"><i class="fas fa-eye"></i> Ver</button>
+                            <button class="action-btn" aria-label="Editar plan de pérdida de peso"><i class="fas fa-edit"></i> Editar</button>
+                        </div>
+                    </div>
+                    <div class="plan-card">
+                        <h3>Plan Ganancia Muscular</h3>
+                        <p><i class="fas fa-user-friends"></i> 3 pacientes asignados</p>
+                        <p><i class="fas fa-calendar-alt"></i> Actualizado: 18/05/2023</p>
+                        <div class="plan-actions">
+                            <button class="action-btn" aria-label="Ver plan de ganancia muscular"><i class="fas fa-eye"></i> Ver</button>
+                            <button class="action-btn" aria-label="Editar plan de ganancia muscular"><i class="fas fa-edit"></i> Editar</button>
+                        </div>
+                    </div>
+                    <div class="plan-card">
+                        <h3>Plan Mantenimiento</h3>
+                        <p><i class="fas fa-user-friends"></i> 2 pacientes asignados</p>
+                        <p><i class="fas fa-calendar-alt"></i> Actualizado: 15/05/2023</p>
+                        <div class="plan-actions">
+                            <button class="action-btn" aria-label="Ver plan de mantenimiento"><i class="fas fa-eye"></i> Ver</button>
+                            <button class="action-btn" aria-label="Editar plan de mantenimiento"><i class="fas fa-edit"></i> Editar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="appointments-section">
+                <h2>Próximas Citas</h2>
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button aria-label="Mes anterior"><i class="fas fa-chevron-left"></i></button>
+                        <h3>Mayo 2023</h3>
+                        <button aria-label="Mes siguiente"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="calendar-body">
+                        <!-- Aquí iría la visualización del calendario -->
+                        <div class="calendar-placeholder">
+                            <p>El calendario se cargará con JavaScript</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="upcoming-appointments">
+                    <h3>Hoy</h3>
+                    <div class="appointment-card">
+                        <div class="appointment-time">10:00 AM</div>
+                        <div class="appointment-details">
+                            <h4>Laura Martínez</h4>
+                            <p>Seguimiento de plan de pérdida de peso</p>
+                        </div>
+                        <div class="appointment-actions">
+                            <button class="action-btn" aria-label="Ver detalles de la cita"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                    <div class="appointment-card">
+                        <div class="appointment-time">11:30 AM</div>
+                        <div class="appointment-details">
+                            <h4>Carlos Rodríguez</h4>
+                            <p>Primera consulta - Evaluación</p>
+                        </div>
+                        <div class="appointment-actions">
+                            <button class="action-btn" aria-label="Ver detalles de la cita"><i class="fas fa-eye"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footerContainer">
+            <div class="contact-info">
+                <h3>Contacto</h3>
+                <div><i class="fas fa-envelope"></i> <a href="mailto:contacto@gymtracker.com">contacto@gymtracker.com</a></div>
+                <div><i class="fas fa-phone"></i> <a href="tel:+34600000000">+34 600 000 000</a></div>
+                <div><i class="fas fa-map-marker-alt"></i> Calle Principal 123, Madrid</div>
+            </div>
+            <div class="social-media">
+                <h3>Redes Sociales</h3>
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i> Facebook</a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i> Instagram</a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i> Twitter</a>
+            </div>
+            <div class="aboutContainer">
+                <h3>GymTracker</h3>
+                <p>Tu solución completa para el seguimiento y gestión de tu gimnasio, entrenadores, nutricionistas y clientes.</p>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2023 GymTracker. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    <script src="js/nutricionistas.js"></script>
+</body>
+</html> 
