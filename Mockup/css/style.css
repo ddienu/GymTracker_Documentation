@@ -177,7 +177,7 @@ a {
     -webkit-text-stroke: 0.1px black;
     font-size: 50px;
     margin: 0;
-    padding-bottom: 1em;
+    /* padding-bottom: 1em; */
 }
 
 .plansDescription {

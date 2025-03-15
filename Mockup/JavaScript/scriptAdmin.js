@@ -5,6 +5,13 @@ function loadSectionAdmin(page){
        .catch(error => console.error("Error al cargar la sección:", error));
 }
 
+function loadSectionAdminTarget(role, page){
+  fetch(`/componentsAdmin/${role}/${page}.html`)
+  .then(response => response.text())
+  .then(html => document.getElementById("admin-content").innerHTML = html)
+  .catch(error => console.error("Error al cargar la sección:", error));
+}
+
 document.addEventListener("click", function (event) {
     if (event.target.matches(".nav-link")) {
       event.preventDefault();
@@ -28,16 +35,14 @@ document.addEventListener("click", function (event) {
     console.log("Eventos adjuntados");
 
     //Evento para obtener más información del cliente.
-    const moreInformationBtn = document.querySelectorAll("#more-information-client");
+    const moreInformationBtn = document.querySelector("#more-information-client");
 
     if( moreInformationBtn ) {
-        moreInformationBtn.forEach( btn => {
-            btn.addEventListener("click", function(event) {
-                event.preventDefault();
-                //Lógica que se va a implementar para cuando el administrador de clic en el botón de más información
-            });
+        moreInformationBtn.addEventListener("click", function(event){
+          event.preventDefault();
+          loadSectionAdminTarget("clients", "moreInformation");
         });
-    }
+    };
 
     //Evento para añadir un nuevo cliente
     const addNewClientBtn = document.querySelector("#new-client");
