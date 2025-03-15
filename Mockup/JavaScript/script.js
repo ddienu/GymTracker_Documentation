@@ -194,7 +194,9 @@ function attachEventListeners() {
       if( profileForm.reportValidity()){
         sweetAlertSuccess("Tu perfil ha sido creado exitosamente", "#GymTrackerAdmin");
         window.history.replaceState({},document.title,window.location.pathname);
-        window.location.href = "GymTrackerAdmin.html";
+        setTimeout( function() {
+          window.location.href = "GymTrackerAdmin.html";
+        }, 1800);
       }else{
         profileForm.reportValidity();
       }

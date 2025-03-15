@@ -6,6 +6,7 @@ function loadSectionAdmin(page){
 }
 
 function loadSectionAdminTarget(role, page){
+  history.pushState({ role, page }, "", `#${role}/${page}`);
   fetch(`/componentsAdmin/${role}/${page}.html`)
   .then(response => response.text())
   .then(html => document.getElementById("admin-content").innerHTML = html)
@@ -72,15 +73,52 @@ document.addEventListener("click", function (event) {
         });
     };
 
-    //Evento para añadir un nuevo cliente
+    //Evento para mostrar el formulario para añadir un nuevo cliente
     const addNewClientBtn = document.querySelector("#new-client");
 
     if( addNewClientBtn ){
         addNewClientBtn.addEventListener("click", function(event) {
             event.preventDefault();
-            //Lógica que se va a implementar para cuando el administrador de clic en el botón de añadir un nuevo cliente
+            sweetAlertDecition("¿Deseas agregar un nuevo cliente?").then( result => {
+              console.log(result);
+              if( result ){
+                loadSectionAdminTarget("clients", "addClient");
+              }
+            })
         })
     }
+
+    //Evento para guardar un nuevo cliente
+    const newClientForm = document.querySelector("#new-client-form");
+    const createClientBtn = document.querySelector("#create-client-button");
+
+    if( newClientForm && createClientBtn ) {
+      createClientBtn.addEventListener("click", function(event) {
+        event.preventDefault();
+        if( newClientForm.reportValidity() ){
+          sweetAlertSuccess("Cliente creado con exito", "#clients");
+          setTimeout(function() {
+            const newClientItem = document.createElement("li");
+            newClientItem.classList.add("flex", "items-center", "p-4", "hover:bg-gray-50", "transition");
+
+            newClientItem.innerHTML = `
+            <img src="../assets/male-client.svg" alt="Cliente" class="w-12 h-12 rounded-full">
+            <div class="ml-4 flex-1">
+                <h3 class="text-lg font-semibold text-gray-800">Juan Gómez</h3>
+                <p><span class="font-bold">Plan:</span> Premium</p>
+                <p class="flex"><span class="font-bold">Estado: </span> Activo<span class="flex items-center"><img src="../assets/active-icon.svg" alt="Icono cliente activo" class="h-5 w-5"></span></p>
+            </div>
+            <button class="bg-blue-600 text-[#E6ED07] px-4 py-2 rounded-lg hover:bg-blue-700 transition hover:scale-105 font-semibold">
+                Más información
+            </button>
+            `;
+
+        // Agregar el nuevo cliente a la lista
+        clientList.appendChild(newClientItem);
+          }, 1600)
+        }
+      })
+     }
 
     //Evento para eliminar cliente "Desactivar"
     const deactivateButton = document.querySelector("#deactivate-client-btn");
@@ -88,7 +126,7 @@ document.addEventListener("click", function (event) {
     if(deactivateButton) {
       deactivateButton.addEventListener("click", function(event){
         event.preventDefault();
-        sweetAlertDecition("Estás seguro?").then( response => {
+        sweetAlertDecition("¿Deseas eliminar el cliente?").then( response => {
           if( response ) {
             sweetAlertSuccess("Cliente eliminado correctamente", "#clients");
             setTimeout ( function() {
