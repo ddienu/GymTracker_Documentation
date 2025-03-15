@@ -12,6 +12,34 @@ function loadSectionAdminTarget(role, page){
   .catch(error => console.error("Error al cargar la sección:", error));
 }
 
+//Alerta cuando es satisfactorio 
+ function sweetAlertSuccess(message, windowLocation) {
+  Swal.fire({
+    position: 'center',
+    icon:'success',
+    title: message,
+    showConfirmButton: false,
+    timer: 1500
+  }).then(() => {
+    window.location.href = windowLocation;
+  });
+}
+
+//Alerta para decisión
+async function sweetAlertDecition(message) {
+  const result = await Swal.fire({
+    title: message,
+    text: "¿Estás seguro?",
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Si',
+    cancelButtonText: 'No'
+  });
+
+  return result.isConfirmed;
+}
+
+
 document.addEventListener("click", function (event) {
     if (event.target.matches(".nav-link")) {
       event.preventDefault();
@@ -52,6 +80,28 @@ document.addEventListener("click", function (event) {
             event.preventDefault();
             //Lógica que se va a implementar para cuando el administrador de clic en el botón de añadir un nuevo cliente
         })
+    }
+
+    //Evento para eliminar cliente "Desactivar"
+    const deactivateButton = document.querySelector("#deactivate-client-btn");
+
+    if(deactivateButton) {
+      deactivateButton.addEventListener("click", function(event){
+        event.preventDefault();
+        sweetAlertDecition("Estás seguro?").then( response => {
+          if( response ) {
+            sweetAlertSuccess("Cliente eliminado correctamente", "#clients");
+            setTimeout ( function() {
+              const statusClientIcon = document.querySelector("#status-client");
+              const statusClientDescription = document.querySelector("#status-cliente-desc");
+              if ( statusClientIcon ){
+                statusClientDescription.childNodes[2].textContent = "Inactivo";
+                statusClientIcon.src = "../assets/inactive-icon.svg";
+              }
+            }, 1600)
+          }
+        })
+      })
     }
   }
 
