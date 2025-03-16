@@ -20,6 +20,7 @@ function loadSectionAdminTarget(role, page){
     icon:'success',
     title: message,
     showConfirmButton: false,
+    timerProgressBar: true,
     timer: 1500
   }).then(() => {
     window.location.href = windowLocation;
@@ -30,7 +31,6 @@ function loadSectionAdminTarget(role, page){
 async function sweetAlertDecition(message) {
   const result = await Swal.fire({
     title: message,
-    text: "¿Estás seguro?",
     icon: 'question',
     showCancelButton: true,
     confirmButtonText: 'Si',
@@ -118,6 +118,46 @@ document.addEventListener("click", function (event) {
           }, 1600)
         }
       })
+     }
+
+     //Evento para editar información del cliente
+     const updateClientBtn = document.querySelector("#update-client-btn");
+
+     if( updateClientBtn ){
+      updateClientBtn.addEventListener("click", function(event) {
+        event.preventDefault();
+        //Lógica para editar información del cliente
+        sweetAlertDecition("¿Desea editar la información del cliente?").then(response => {
+          if( response ){
+            loadSectionAdminTarget("clients", "updateClient");
+          }
+        });
+      })
+     }
+
+     //Evento para confirmar la edición de información del cliente
+     const updatedClientInfo = document.querySelector("#updated-client-btn");
+     const updatedClientInfoForm = document.querySelector("#update-client-form");
+     const clientEmailUpdated = document.querySelector("#client-email-value");
+
+     if( updatedClientInfo ){
+      clientEmailUpdated.addEventListener("input", function() {
+        const emailValue = clientEmailUpdated.value;      
+      updatedClientInfo.addEventListener("click", function(event){
+        event.preventDefault();
+        if( updatedClientInfoForm.reportValidity() ){
+        sweetAlertDecition("¿Deseas actualizar la información?").then( response => {
+          if ( response ) {
+            sweetAlertSuccess("Información del cliente actualizada", "#clients/moreInformation");
+            setTimeout(function() {
+              const clientEmail = document.querySelector("#client-email");
+              clientEmail.childNodes[1].textContent = " " + emailValue.toString();
+            }, 1650)
+          }
+       })
+      }
+      })
+    })
      }
 
     //Evento para eliminar cliente "Desactivar"
