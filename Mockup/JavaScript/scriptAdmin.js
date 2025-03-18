@@ -181,6 +181,75 @@ document.addEventListener("click", function (event) {
         })
       })
     }
+
+    //Evento para mostrar la alerta al administrador si desea añadir una nueva rutina
+    const addRoutineBtn = document.querySelector("#add-routine-btn");
+
+    if( addRoutineBtn ){
+      addRoutineBtn.addEventListener("click", function(event) {
+        event.preventDefault();
+        sweetAlertDecition("¿Deseas añadir una nueva rutina al cliente?").then( response => {
+          if( response ){
+            loadSectionAdminTarget("clients", "addRoutine");
+          }
+        });
+      });
+    }
+
+    //Eventos para añadir rutina al cliente
+    const routineDay = document.querySelector("#routine-day-selected");
+    const routineExercises = document.querySelector("#routine-exercises");
+    const routineCategory = document.querySelector("#routine-category");
+    const saveRoutineBtn = document.querySelector("#save-routine-btn");
+    const addRoutineForm = document.querySelector("#add-routine-form");
+    const routineDificulty = document.querySelector("#routine-dificulty");
+    
+    if( saveRoutineBtn ){
+      saveRoutineBtn.addEventListener("click", function(event) {
+        event.preventDefault();
+        if( routineExercises.value != "" ){
+          sweetAlertDecition("¿Desea guardar la nueva rutina?").then(response => {
+            if( response ){
+              sweetAlertSuccess("Rutina creada con exito", "#clients/clientRoutines");
+              setTimeout(function(e) {
+                const addRoutineItem = document.createElement("div");
+                addRoutineItem.classList.add("bg-red-50", "p-4", "rounded-lg", "shadow", "mb-4", "hover:bg-red-100", "mt-4");
+                
+                const exercisesArray = routineExercises.value.split(",").map(exercise => exercise.trim());
+                
+                let exercisesHTML = "<ul class='mt-2 text-gray-700'>";
+                exercisesArray.forEach(exercise => {
+                    exercisesHTML += `<li class="ml-6 list-disc">${exercise}</li>`;
+                });
+                exercisesHTML += "</ul>";
+
+                let colorText;
+
+                if( routineDificulty.value == "Basico"){
+                  colorText = "text-green-400";
+                }else if( routineDificulty.value == "Intermedio"){
+                  colorText = "text-yellow-400";
+                }else{
+                  colorText = "text-red-400";
+                }
+
+                
+                addRoutineItem.innerHTML = `
+                    <h3 class="text-xl font-semibold text-red-700">${routineDay.value} - ${routineCategory.value}</h3>
+                    <h3 class="text-lg font-semibold ${colorText}">Dificultad: ${routineDificulty.value}</h3>
+                    ${exercisesHTML}
+                `;
+                
+                routineList.appendChild(addRoutineItem);
+              },1650);
+            }
+          })
+        }else{
+          routineExercises.setCustomValidity("Este campo no puede estar vacío");
+          addRoutineForm.reportValidity();
+        }
+      })
+    } 
   }
 
   document.addEventListener("DOMContentLoaded", () => {

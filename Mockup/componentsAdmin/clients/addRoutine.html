@@ -1,0 +1,53 @@
+<div class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="max-w-2xl w-full bg-white shadow-lg rounded-lg p-6">
+        <h2 class="containerTitle drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">Agregar Nueva Rutina</h2>
+        
+        <form class="space-y-4" id="add-routine-form">
+            <div>
+                <label class="block text-gray-700 font-semibold">Cliente</label>
+                <input type="text" class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" placeholder="Nombre del cliente" value="Juan Pérez">
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-semibold">Día de la Semana</label>
+                <select class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" id="routine-day-selected">
+                    <!-- <option>Lunes</option> -->
+                    <option>Martes</option>
+                    <!-- <option>Miércoles</option> -->
+                    <option>Jueves</option>
+                    <!-- <option>Viernes</option> -->
+                    <option>Sábado</option>
+                    <option>Domingo</option>
+                </select>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-semibold">Ejercicios</label>
+                <textarea class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" rows="4" placeholder="Agrege los ejercicios, separados por comas. Ejemplo: Sentadilla rusa 20x4, Sentadilla sumo 25x4" id="routine-exercises"></textarea>
+            </div>
+            
+            <div>
+                <label class="block text-gray-700 font-semibold">Categoría</label>
+                <select class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" id="routine-category">
+                    <option>Calentamiento</option>
+                    <option>Pecho y Tríceps</option>
+                    <option>Espalda y Bíceps</option>
+                    <option>Pierna y Hombro</option>
+                    <option>Abdomen</option>
+                    <option>Estiramiento</option>
+                </select>
+            </div>
+
+            <div>
+                <label class="block text-gray-700 font-semibold">Dificultad</label>
+                <select class="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500" id="routine-dificulty">
+                    <option>Principiante</option>
+                    <option>Intermedio</option>
+                    <option>Avanzado</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition" id="save-routine-btn">Agregar Rutina</button>
+        </form>
+    </div>
+</div>
