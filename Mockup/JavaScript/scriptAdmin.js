@@ -215,7 +215,6 @@ function attachEventListeners() {
 
   //Eventos para añadir rutina al cliente
   const routineDay = document.querySelector("#routine-day-selected");
-  const routineExercises = document.querySelector("#routine-exercises");
   const routineCategory = document.querySelector("#routine-category");
   const saveRoutineBtn = document.querySelector("#save-routine-btn");
   const addRoutineForm = document.querySelector("#add-routine-form");
@@ -321,6 +320,26 @@ function attachEventListeners() {
         }
         addRoutineForm.reportValidity();
       }
+    });
+  }
+
+  //Eventos para editar la rutina del cliente
+
+  //Eventos para eliminar la rutina del cliente
+  const eraseRoutineBtn = document.querySelector("#erase-routine");
+
+  if( eraseRoutineBtn ){
+    eraseRoutineBtn.addEventListener("click", function(event){
+      event.preventDefault();
+      sweetAlertDecition("¿Desea eliminar la rutina?").then( (response) => {
+        if(response){
+          sweetAlertSuccess("Rutina eliminada correctamente", "#clients/clientRoutines");
+          setTimeout(function(){
+            const routineToRemove = document.querySelector("#routine-to-erase");
+            routineToRemove.parentNode.removeChild(routineToRemove);
+          }, 1650);
+        }
+      });
     });
   }
 }
