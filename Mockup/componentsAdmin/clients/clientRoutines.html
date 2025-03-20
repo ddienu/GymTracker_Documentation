@@ -6,16 +6,16 @@
         <div id="routineList">
             <div class="bg-red-50 p-4 rounded-lg shadow mb-4 flex justify-between items-center" id="routine-to-erase">
                 <div>
-                    <h3 class="text-xl font-semibold text-orange-700">Calentamiento</h3>
+                    <h3 class="text-xl font-semibold text-orange-700">Diario - Calentamiento</h3>
                     <h3 class="text-lg font-semibold text-green-400">Dificultad: Principiante</h3>
                     <ul class="mt-2 text-gray-700">
-                        <li class="ml-6 list-disc">Cinta caminadora - 5 min</li>
+                        <li class="ml-6 list-disc" id="exercise-to-edit">Cinta caminadora - 5 min</li>
                         <li class="ml-6 list-disc">Bicicleta estática - 5 min</li>
                         <li class="ml-6 list-disc">Movilidad articular - 5 min</li>
                     </ul>
                 </div>
                 <div class="flex gap-2">
-                    <a class="py-2 px-4 text-sm text-white bg-yellow-500 hover:bg-yellow-700 font-semibold rounded-lg hover:scale-105 cursor-pointer" href="#">Editar</a>
+                    <a class="py-2 px-4 text-sm text-white bg-yellow-500 hover:bg-yellow-700 font-semibold rounded-lg hover:scale-105 cursor-pointer" href="#" id="edit-routine">Editar</a>
                     <a class="py-2 px-4 text-sm text-white bg-red-700 hover:bg-red-800 font-semibold rounded-lg hover:scale-105 transition-transform cursor-pointer" id="erase-routine" href="#">Eliminar</a>
                 </div>
             </div>
@@ -74,7 +74,7 @@
 
                 <div class="bg-purple-50 p-4 rounded-lg shadow flex justify-between items-center">
                     <div>
-                        <h3 class="text-xl font-semibold text-purple-700">Abdomen</h3>
+                        <h3 class="text-xl font-semibold text-purple-700">Diario - Abdomen</h3>
                         <h3 class="text-lg font-semibold text-green-400">Dificultad: Principiante</h3>
                         <ul class="mt-2 text-gray-700">
                             <li class="ml-6 list-disc">Crunches - 3 series x 20 repeticiones</li>

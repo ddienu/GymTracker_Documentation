@@ -323,7 +323,50 @@ function attachEventListeners() {
     });
   }
 
-  //Eventos para editar la rutina del cliente
+  //Eventos para abrir la ventana de edición de la rutina del cliente
+  const editRoutineBtn = document.querySelector("#edit-routine");
+
+  if( editRoutineBtn ){
+    editRoutineBtn.addEventListener("click", function(event){
+      event.preventDefault();
+      sweetAlertDecition("¿Deseas editar la rutina del cliente?").then(response => {
+        if(response){
+          loadSectionAdminTarget("clients", "editRoutine");
+        }
+      })
+    })
+  }
+
+  //Eventos para editar la información de la rutina del cliente
+  const routineNameEdited = document.querySelector("#exercise-edited-name");
+  const setsEditedNumber = document.querySelector("#sets-edited-number");
+  const editRoutineButton = document.querySelector("#update-routine-btn")
+  const editRoutineForm = document.querySelector("#edit-routine-form");
+
+  if( editRoutineButton ){
+    editRoutineButton.addEventListener("click", function(event){
+      event.preventDefault();
+      if( routineNameEdited.value!= "" && setsEditedNumber.value!= ""){
+        sweetAlertDecition("¿Desea actualizar la rutina?").then( (response) => {
+          if(response){
+            sweetAlertSuccess("Rutina actualizada con éxito", "#clients/clientRoutines");
+            setTimeout(function(){
+              const exerciseToEdit = document.querySelector("#exercise-to-edit");
+              exerciseToEdit.textContent = `${routineNameEdited.value} - ${setsEditedNumber.value}`;
+            }, 1650);
+          }
+        }
+      )}else{
+        if( routineNameEdited.value == ""){
+          routineNameEdited.setCustomValidity("Este campo no puede estar vacío");
+        }
+        if( setsEditedNumber.value == ""){
+          setsEditedNumber.setCustomValidity("Este campo no puede estar vacío");
+        }
+        editRoutineForm.reportValidity();
+      }
+    })
+  }
 
   //Eventos para eliminar la rutina del cliente
   const eraseRoutineBtn = document.querySelector("#erase-routine");
