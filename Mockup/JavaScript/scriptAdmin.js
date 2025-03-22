@@ -206,7 +206,7 @@ function attachEventListeners() {
       sweetAlertDecition("¿Deseas añadir una nueva rutina al cliente?").then(
         (response) => {
           if (response) {
-            loadSectionAdminTarget("clients", "addRoutine");
+            loadSectionAdminTarget("clients", "/routines/addRoutine");
           }
         }
       );
@@ -331,7 +331,7 @@ function attachEventListeners() {
       event.preventDefault();
       sweetAlertDecition("¿Deseas editar la rutina del cliente?").then(response => {
         if(response){
-          loadSectionAdminTarget("clients", "editRoutine");
+          loadSectionAdminTarget("clients", "routines/editRoutine");
         }
       })
     })
@@ -385,6 +385,89 @@ function attachEventListeners() {
       });
     });
   }
+
+  //Eventos para crear un nuevo plan alimentario
+  const createNutritionPlan = document.querySelector("#save-nutrition-btn");
+  const mealTarget = document.querySelector("#meal-target");
+  const mealDescription = document.querySelector("#meal-description");
+  const nutritionPlanForm = document.querySelector("#add-nutrition-form");
+  const nutritionHour = document.querySelector("#hour-target");
+
+  if( createNutritionPlan ){
+    createNutritionPlan.addEventListener("click", function(event){
+      event.preventDefault();
+      if( mealTarget.value!= "" && mealDescription.value!= ""){
+        sweetAlertDecition("¿Desea guardar el plan alimentario?").then(response => {
+          if( response ){
+            sweetAlertSuccess("Plan guardado con éxito", "#clients/nutrition/clientNutritionPlans")
+            setTimeout( function(e) {
+              const addNutritionPlanItem = document.querySelector("#add-routine-item");
+              const newItem = document.createElement("tr");
+              newItem.classList.add("border-t");
+              newItem.innerHTML = `
+                <td class="py-2 px-4">${mealTarget.value}</td>
+                <td class="py-2 px-4">${nutritionHour.value}</td>
+                <td class="py-2 px-4">${mealDescription.value}</td>
+                <td class="py-2 px-4">
+                  <a class="px-4 py-2 text-sm text-center text-white bg-yellow-500 hover:bg-yellow-700 rounded-lg font-semibold hover:scale-105" href="">Editar</a>
+                  <a class="px-4 py-2 text-sm text-center text-white bg-red-500 hover:bg-red-700 rounded-lg font-semibold hover:scale-105" href="" id="delete-nutrition-plan">Eliminar</a>
+                </td>
+            `
+            addNutritionPlanItem.appendChild(newItem);
+            }, 1650);
+          }
+        })
+      }else{
+        mealTarget.setCustomValidity("Este campo no puede ir vacio");
+        nutritionPlanForm.reportValidity();
+      }
+    })
+  }
+
+  //Eventos para editar un plan alimentario
+  const editNutritionPlanForm = document.querySelector("#edit-nutrition-form");
+  const editedMeal = document.querySelector("#meal-edited-target");
+  const editedHour = document.querySelector("#hour-edited-target");
+  const editedDescription = document.querySelector("#meal-edited-description");
+  const editedNutritionPlanBtn = document.querySelector("#save-edited-routine-btn");
+
+  if( editedNutritionPlanBtn ){
+    editedNutritionPlanBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      if( editedMeal.value!= "" && editedHour.value!= "" && editedDescription.value!= ""){ 
+        sweetAlertDecition("¿Desea actualizar el plan alimentario?").then(response => {
+          if(response){
+            sweetAlertSuccess("Plan alimentario actualizado con éxito", "#clients/nutrition/clientNutritionPlans");
+            setTimeout(function(){
+              const nutritionPlanToEdit = document.querySelector("#nutrition-plan-to-delete");
+              nutritionPlanToEdit.childNodes[1].textContent = editedMeal.value;
+              nutritionPlanToEdit.childNodes[3].textContent = editedHour.value;
+              nutritionPlanToEdit.childNodes[5].textContent = editedDescription.value;
+            }, 1650);
+          }
+        })
+      }
+    })
+  }
+
+  //Eventos para eliminar un plan alimentario
+  const eraseNutritionPlanBtn = document.querySelector("#delete-nutrition-plan");
+
+  if( eraseNutritionPlanBtn ){
+    eraseNutritionPlanBtn.addEventListener("click", function(event){
+      event.preventDefault();
+      sweetAlertDecition("¿Desea eliminar el plan alimentario?").then( (response) => {
+        if(response){
+          sweetAlertSuccess("Plan alimentario eliminado correctamente", "#clients/nutrition/clientNutritionPlans");
+          setTimeout(function(){
+            const nutritionPlanToRemove = document.querySelector("#nutrition-plan-to-delete");
+            nutritionPlanToRemove.parentNode.removeChild(nutritionPlanToRemove);
+          }, 1650);
+        }
+      });
+    })
+  }
+  
 }
 
 document.addEventListener("DOMContentLoaded", () => {

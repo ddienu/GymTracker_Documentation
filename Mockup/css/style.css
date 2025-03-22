@@ -281,4 +281,13 @@ a {
     padding-top: 40px;
 }
 
+.nutritionContainer {
+    background: url('../assets/food_plates.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 0;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+
 /* drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] */
