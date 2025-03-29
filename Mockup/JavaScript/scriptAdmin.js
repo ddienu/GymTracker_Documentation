@@ -467,6 +467,104 @@ function attachEventListeners() {
       });
     })
   }
+
+  //Eventos para crear un nuevo plan de fisioterapia
+  const physiotherapyForm = document.querySelector("#add-physiotherapy-form");
+  const physiotherapyAddBtn = document.querySelector("#save-physiotherapy-plan");
+  const physiotherapyDay = document.querySelector("#physiotherapy-day");
+  const physiotherapyExercise = document.querySelector("#physiotherapy-exercise");
+  const physiotherapyReps = document.querySelector("#physiotherapy-reps");
+  const physiotherapyDuration = document.querySelector("#physiotherapy-duration");
+
+  if( physiotherapyAddBtn ){
+    physiotherapyAddBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      if( physiotherapyDay.value!= "" && physiotherapyExercise.value!= "" && physiotherapyReps.value!= "" && physiotherapyDuration.value!= ""){ 
+        sweetAlertDecition("¿Desea guardar el plan de fisioterapia?").then(response => { 
+          if( response ){
+            sweetAlertSuccess("Plan de fisioterapia guardado con éxito", "#clients/physiotherapy/physiotherapyPlans");
+            setTimeout( function(event) {
+              const addPhysiotherapyItem = document.querySelector("#physiotherapy-to-add");
+              const newItem = document.createElement("tr");
+              newItem.classList.add("border-t");
+              newItem.innerHTML = `
+                        <td class="py-2 px-4">${physiotherapyDay.value}</td>
+                        <td class="py-2 px-4">${physiotherapyExercise.value}</td>
+                        <td class="py-2 px-4">${physiotherapyReps.value}</td>
+                        <td class="py-2 px-4">${physiotherapyDuration.value} minutos</td>
+                        <td class="py-2 px-4">
+                            <a class="w-full px-4 py-2 text-sm text-center text-white bg-yellow-500 hover:bg-yellow-700 rounded-lg font-semibold hover:scale-105" href="">Editar</a>
+                            <a class="w-full px-4 py-2 text-sm text-center text-white bg-red-500 hover:bg-red-700 rounded-lg font-semibold hover:scale-105" id="erase-physiotherapy" href="">Eliminar</a>
+                        </td>
+              `
+              addPhysiotherapyItem.appendChild(newItem);
+            }, 1650)
+          }
+        })
+      }
+    })
+  }
+
+  //Eventos para mostrar la pantalla de edición luego de la alerta
+
+  const editPhysioterapyPlanBtn = document.querySelector("#edit-physiotherapy-plan");
+
+  if( editPhysioterapyPlanBtn ){
+    editPhysioterapyPlanBtn.addEventListener("click", function(event) { 
+      event.preventDefault();
+      sweetAlertDecition("¿Desea editar el plan?").then( response => {
+        if( response ){
+          loadSectionAdminTarget("clients", "physiotherapy/editPhysiotherapyPlan"); 
+        }
+      })
+    })
+  }
+  
+  //Eventos para editar un plan de fisioterapia
+  const updatePhysiotherapyBtn = document.querySelector("#save-updated-physiotherapy-plan");
+  const updatedPhysiotherapyDay = document.querySelector("#edited-physiotherapy-day");
+  const updatedPhysiotherapyExercise = document.querySelector("#edited-physiotherapy-exercise");
+  const updatedPhysiotherapyReps = document.querySelector("#edited-physiotherapy-reps");
+  const editedPhysiotherapyDuration = document.querySelector("#edited-physiotherapy-duration");
+
+  if( updatePhysiotherapyBtn ){
+    updatePhysiotherapyBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      if( updatedPhysiotherapyDay.value != "" && updatedPhysiotherapyExercise.value != "" && updatedPhysiotherapyReps.value != "" && editedPhysiotherapyDuration.value != ""){
+          sweetAlertDecition("¿Desea actualizar el plan de fisioterapia?").then(response => {
+            if( response ){
+              sweetAlertSuccess("Plan de fisioterapia actualizado con éxito", "#clients/physiotherapy/physiotherapyPlans");
+              setTimeout(function(){
+                const updatedPlan = document.querySelector("#physiotherapy-to-erase");
+                updatedPlan.childNodes[1].textContent = updatedPhysiotherapyDay.value;
+                updatedPlan.childNodes[3].textContent = updatedPhysiotherapyExercise.value;
+                updatedPlan.childNodes[5].textContent = updatedPhysiotherapyReps.value;
+                updatedPlan.childNodes[7].textContent = editedPhysiotherapyDuration.value + " minutos";
+              }, 1650);
+            }
+          })
+      } 
+    })
+  }
+
+  //Eventos para eliminar un plan de fisioterapia
+  const erasePhysiotherapyBtn = document.querySelector("#erase-physiotherapy");
+
+  if( erasePhysiotherapyBtn ){
+    erasePhysiotherapyBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      sweetAlertDecition("¿Desea eliminar el plan de fisioterapia?").then( (response) => {
+        if(response){
+          sweetAlertSuccess("Plan de fisioterapia eliminado correctamente", "#clients/physiotherapy/physiotherapyPlans");
+          setTimeout(function(){
+            const itemToErase = document.querySelectorAll("#physiotherapy-to-erase");
+            itemToErase.forEach(item => 
+              item.parentNode.removeChild(item));
+          }, 1650);
+        }
+      });
+    })
+  }
   
 }
 

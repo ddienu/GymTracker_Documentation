@@ -1,0 +1,40 @@
+<div class="p-6">
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-lg">
+        <h2 class="containerTitle drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">Editar Plan de Fisioterapia</h2>
+        
+        <div class="mt-4">
+            <h3 class="text-lg font-semibold">Información del Cliente</h3>
+            <p><strong>Nombre:</strong> Juan Pérez</p>
+            <p><strong>Edad:</strong> 45 años</p>
+            <p><strong>Diagnóstico:</strong> Lesión de rodilla</p>
+        </div>
+
+        <form class="mt-4" id="add-physiotherapy-form">
+            <h3 class="text-lg font-semibold">Detalles del Plan</h3>
+            
+            <label for="dia" class="block font-medium mt-3">Día:</label>
+            <select id="edited-physiotherapy-day" class="w-full p-2 border rounded-md" required>
+                <option value="Lunes" selected>Lunes</option>
+                <option value="Martes">Martes</option>
+                <option value="Miércoles">Miércoles</option>
+                <option value="Jueves">Jueves</option>
+                <option value="Viernes">Viernes</option>
+                <option value="Sábado">Sábado</option>
+                <option value="Domingo">Domingo</option>
+            </select>
+            
+            <label for="ejercicio" class="block font-medium mt-3">Ejercicio:</label>
+            <input type="text" id="edited-physiotherapy-exercise" class="w-full p-2 border rounded-md" placeholder="Ingrese el ejercicio" required value="Estiramiento de cuádriceps">
+            
+            <label for="repeticiones" class="block font-medium mt-3">Repeticiones:</label>
+            <input type="text" id="edited-physiotherapy-reps" class="w-full p-2 border rounded-md" placeholder="Ejemplo: 3 series de 10" required value="3 series de 15">
+            
+            <label for="duracion" class="block font-medium mt-3">Duración (minutos):</label>
+            <input type="number" id="edited-physiotherapy-duration" class="w-full p-2 border rounded-md" placeholder="Ejemplo: 20" required value="15">
+            
+            <div class="mt-4 text-center">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-700" id="save-updated-physiotherapy-plan">Editar Plan</button>
+            </div>
+        </form>
+    </div>
+</div>
