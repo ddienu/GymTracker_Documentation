@@ -565,6 +565,116 @@ function attachEventListeners() {
       });
     })
   }
+
+  //Eventos para cargar la vista de adición de cita con alerta
+  const addAppointmentBtn = document.querySelector("#new-appointment-btn");
+
+  if( addAppointmentBtn) {
+    addAppointmentBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      sweetAlertDecition("¿Desea agregar una nueva cita?").then( response => {
+        if( response ){
+          loadSectionAdminTarget("clients", "appointment/addAppointment");
+        }
+      })
+    })
+  }
+
+  //Eventos para agendar una nueva cita
+  const appointmentWith = document.querySelector("#appointment-with");
+  const appointmentDate = document.querySelector("#appointment-date");
+  const appointmentHour = document.querySelector("#appointment-hour");
+  const saveAppointmentBtn = document.querySelector("#save-appointment-btn");
+
+  if( saveAppointmentBtn) {
+    saveAppointmentBtn.addEventListener("click", function(event) {
+      if(appointmentWith.value != "" &&  appointmentDate.value != "" && appointmentHour.value != ""){
+        sweetAlertSuccess("La cita ha sido agendada correctamente", "#clients/appointment/appointmentList");
+        setTimeout(function(){
+          const newAppointmentTarget = document.querySelector("#appointment-to-add");
+          const newAppointmentItem = document.createElement("li");
+          newAppointmentItem.classList.add("p-4", "flex", "justify-between", "items-center", "bg-gray-50");
+          newAppointmentItem.innerHTML = `
+                <div>
+                    <p class="text-lg font-semibold">${appointmentWith.value}</p>
+                    <p class="text-gray-600">Fecha: ${appointmentDate.value} - Hora: ${appointmentHour.value}</p>
+                </div>
+                <div>
+                    <button class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 hover:scale-105">Reagendar</button>
+                    <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 hover:scale-105" id="cancel-appointment">Cancelar</button>
+                </div>
+          `
+          newAppointmentTarget.appendChild(newAppointmentItem);
+        }, 1650);
+      }
+    })
+  }
+
+  //Eventos para abrir los la pantalla de reagendamiento de citas con alerta
+  const rescheduleAppointmentBtn = document.querySelector("#reschedule-appointment");
+
+  if( rescheduleAppointmentBtn ){
+    rescheduleAppointmentBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      sweetAlertDecition("¿Deseas reagendar la cita?").then( response => {
+        if( response ){
+          loadSectionAdminTarget("clients", "appointment/rescheduleAppointment");
+        }
+      })
+    })
+  }
+  //Eventos para reagendar la cita del cliente
+  const rescheduledAppointmentBtn = document.querySelector("#save-appointment-btn-rescheduled");
+  const appointmentDateRescheduled = document.querySelector("#appointment-date-rescheduled");
+  const appointmentHourRescheduled = document.querySelector("#appointment-hour-rescheduled");
+  const rescheduleAppointmentForm = document.querySelector("#reschedule-appointment-form");
+
+  if( rescheduledAppointmentBtn ){
+    rescheduledAppointmentBtn.addEventListener("click", function(event) {
+      if( appointmentDateRescheduled.value != "" && appointmentHourRescheduled.value != ""){
+        sweetAlertDecition("¿Desea reagendar la cita?").then( response => {
+          if( response ){
+            sweetAlertSuccess("La cita ha sido reagendada correctamente", "#clients/appointment/appointmentList");
+            setTimeout(function(){
+              const appointmentToReschedule = document.querySelector("#appointment-to-rescheduled");
+              appointmentToReschedule.textContent = `
+              Fecha: ${appointmentDateRescheduled.value} - Hora: ${appointmentHourRescheduled.value}
+              `
+            }, 1650)
+          }
+        })
+      }else{
+        if( appointmentDateRescheduled.value === ""){
+          appointmentDateRescheduled.setCustomValidity("Este campo debe diligenciarse");
+          appointmentDateRescheduled.setCustomValidity("");
+        }
+        if( appointmentHourRescheduled.value === ""){
+          appointmentHourRescheduled.setCustomValidity("Este campo no puede estar vacío");
+          appointmentDateRescheduled.setCustomValidity("");
+        }
+        rescheduleAppointmentForm.reportValidity();       
+      }
+    })
+  }
+
+  //Eventos para cancelar una cita del cliente
+  const cancelAppointment = document.querySelector("#cancel-appointment");
+
+  if( cancelAppointment ){
+    cancelAppointment.addEventListener("click", function(event) {
+      event.preventDefault();
+      sweetAlertDecition("¿Deseas cancelar la cita?").then( response => {
+        if( response ){
+          sweetAlertSuccess("La cita ha sido cancelada satisfactoriamente", "#clients/appointment/appointmentList");
+          setTimeout( function(event) {
+            const appointmentToCancel = document.querySelector("#appointment-to-cancel");
+            appointmentToCancel.parentNode.removeChild(appointmentToCancel);
+          }, 1650)
+        }
+      })
+    })
+  }
+  
   
 }
 
