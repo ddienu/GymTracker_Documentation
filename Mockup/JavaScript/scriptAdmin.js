@@ -674,6 +674,136 @@ function attachEventListeners() {
       })
     })
   }
+
+  //Eventos para abrir la vista para agregar un nuevo pago
+  const addPaymentBtn = document.querySelector("#new-payment-btn");
+
+  if( addPaymentBtn){
+    addPaymentBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      sweetAlertDecition("¿Desea agregar un nuevo pago?").then(response => {
+        if( response ){
+          loadSectionAdminTarget("clients", "paymentHistory/addNewPayment");
+        }
+      })
+    })
+  }
+
+  //Eventos para agregar un nuevo pago.
+  const savePaymentBtn = document.querySelector("#save-payment-btn");
+  const paymentDate = document.querySelector("#payment-date");
+  const paymentAmount = document.querySelector("#payment-amount");
+  const paymentMethod = document.querySelector("#payment-method");
+  const paymentPlan = document.querySelector("#payment-plan");
+
+  if( savePaymentBtn ){
+    savePaymentBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      if( paymentDate.value != "" && paymentMethod.value != ""){
+        sweetAlertDecition("¿Desea guardar el nuevo pago?").then(response => {
+          if( response ){
+            sweetAlertSuccess("El pago ha sido guardado correctamente", "#clients/paymentHistory/paymentHistory");
+            setTimeout(function(event) {
+              const addPaymentTarget = document.querySelector("#add-payment-target");
+              const newPaymentItem = document.createElement("tr");
+              const [date, time] = paymentDate.value.split("T");
+              newPaymentItem.classList.add("bg-white","hover:bg-gray-50","text-black");
+              const amountFormated = parseInt(paymentAmount.value);
+              newPaymentItem.innerHTML = `
+                <td class="px-4 py-3">${date} ${time}</td>
+                <td class="px-4 py-3">$${amountFormated.toLocaleString('es-CO')}</td>
+                <td class="px-4 py-3">${paymentMethod.value}</td>
+                <td class="px-4 py-3">${paymentPlan.value}</td>
+                <td class="px-4 py-3 text-green-600 font-medium">Pagado</td>
+                <td>
+                  <div class="flex justify-evenly">
+                      <button class="px-4 py-2 text-white bg-yellow-500 rounded-md hover:bg-yellow-600 font-semibold hover:scale-105 text-sm">Editar</button>
+                      <button class="px-4 py-2 text-white bg-red-500 rounded-md hover:bg-red-600 font-semibold hover:scale-105 text-sm" id="cancel-payment-btn">Anular</button>
+                  </div>
+                </td>
+                `
+                addPaymentTarget.appendChild(newPaymentItem);
+            }, 1650);
+          }
+        })
+      }
+    })
+  }
+
+  //Eventos para abrir la vista de edición del pago.
+  const editPaymentBtn = document.querySelector("#edit-payment-btn");
+
+  if( editPaymentBtn ){
+    editPaymentBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      sweetAlertDecition("¿Desea editar el pago?").then(response => {
+        if( response ){
+          loadSectionAdminTarget("clients", "paymentHistory/editPayment");
+        }
+      })
+    })
+  }
+
+  //Eventos para editar el pago
+  const editedPaymentMethod = document.querySelector("#payment-method-edited");
+  const editedStatusPayment = document.querySelector("#payment-status-edited");
+  const editedPaymentBtn = document.querySelector("#save-edit-payment-btn");
+
+  if( editedPaymentBtn ){
+    editedPaymentBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      if( editedPaymentMethod.value != "" && editedStatusPayment.value != ""){
+        sweetAlertDecition("¿Desea guardar los cambios en el pago?").then(response => {
+          if( response ){
+            sweetAlertSuccess("Los cambios en el pago han sido guardados correctamente", "#clients/paymentHistory/paymentHistory");
+            setTimeout(function(event) {
+              const editedPaymentTarget = document.querySelector("#payment-to-update");
+              // console.log(editedPaymentTarget.childNodes[5].classList)
+              // console.log(editedPaymentTarget.childNodes[9].classList)
+              
+              editedPaymentTarget.childNodes[5].textContent = editedPaymentMethod.value;
+              editedPaymentTarget.childNodes[9].textContent = editedStatusPayment.value
+              console.log(editedPaymentTarget.childNodes[5].textContent)
+              console.log(editedPaymentTarget.childNodes[9].textContent)
+              if( editedPaymentTarget.childNodes[9].textContent === "Rechazado"){
+                editedPaymentTarget.childNodes[9].classList.add("text-red-600");
+              }else if( editedPaymentTarget.childNodes[9].textContent === "Pendiente" ){
+                editedPaymentTarget.childNodes[9].classList.add("text-yellow-600");
+              }else{
+                editedPaymentTarget.childNodes[9].classList.add("text-green-600");
+              }
+              
+              // console.log(editedPaymentTarget.childNodes[11])
+              // console.log(editedPaymentTarget.childNodes[12])
+              //editedPaymentTarget.textContent = `Método de pago: ${editedPaymentMethod.value} - Estado: ${editedStatusPayment.value}`
+            }, 1650)
+          }
+        })
+      }
+    })
+  }
+
+
+
+  //Eventos para eliminar(anular) un pago
+  const cancelPaymentBtn = document.querySelector("#cancel-payment-btn");
+
+  if( cancelPaymentBtn ){
+    cancelPaymentBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      sweetAlertDecition("¿Desea anular el pago?").then(response => {
+        if( response ){
+          sweetAlertSuccess("El pago ha sido anulado satisfactoriamente", "#clients/paymentHistory/paymentHistory");
+          setTimeout(function(event) {
+            const paymentToCancelTarget = document.querySelector("#payment-to-modify");
+            paymentToCancelTarget.textContent = "Anulado"
+            paymentToCancelTarget.classList.replace('text-green-600', 'text-red-600')
+          }, 1650)
+        }
+      })
+    })
+  }
+
   
   
 }
