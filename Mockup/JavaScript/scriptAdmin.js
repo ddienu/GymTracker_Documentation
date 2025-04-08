@@ -757,10 +757,7 @@ function attachEventListeners() {
           if( response ){
             sweetAlertSuccess("Los cambios en el pago han sido guardados correctamente", "#clients/paymentHistory/paymentHistory");
             setTimeout(function(event) {
-              const editedPaymentTarget = document.querySelector("#payment-to-update");
-              // console.log(editedPaymentTarget.childNodes[5].classList)
-              // console.log(editedPaymentTarget.childNodes[9].classList)
-              
+              const editedPaymentTarget = document.querySelector("#payment-to-update");              
               editedPaymentTarget.childNodes[5].textContent = editedPaymentMethod.value;
               editedPaymentTarget.childNodes[9].textContent = editedStatusPayment.value
               console.log(editedPaymentTarget.childNodes[5].textContent)
@@ -772,10 +769,6 @@ function attachEventListeners() {
               }else{
                 editedPaymentTarget.childNodes[9].classList.add("text-green-600");
               }
-              
-              // console.log(editedPaymentTarget.childNodes[11])
-              // console.log(editedPaymentTarget.childNodes[12])
-              //editedPaymentTarget.textContent = `Método de pago: ${editedPaymentMethod.value} - Estado: ${editedStatusPayment.value}`
             }, 1650)
           }
         })
