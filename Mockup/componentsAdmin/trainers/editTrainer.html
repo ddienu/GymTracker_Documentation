@@ -1,0 +1,48 @@
+<div class="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+    <div class="bg-white w-full max-w-2xl rounded-2xl shadow-xl p-8">
+      
+      <!-- Encabezado del formulario -->
+      <div class="text-center mb-6">
+        <h2 class="containerTitle drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">Editar entrenador</h2>
+      </div>
+  
+      <!-- Formulario -->
+      <form class="space-y-4 text-sm text-gray-700" id="new-trainer-form">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block font-semibold mb-1" for="nombre">Nombre completo</label>
+            <input type="text" id="edit-trainer-name" name="nombre" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400" required value="Carlos Mendonza">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1" for="correo">Correo electrónico</label>
+            <input type="email" id="edit-trainer-email" name="correo" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400" required value="carlos.mendoza@gymtracker.com">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1" for="telefono">Teléfono</label>
+            <input type="tel" id="edit-trainer-phone" name="telefono" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400" value="310 1234567">
+          </div>
+          <div>
+            <label class="block font-semibold mb-1" for="especialidades">Especialidades</label>
+            <input type="text" id="edit-trainer-specialty" name="especialidades" placeholder="Ej: Musculación, funcional..." class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400" value="Musculación, entrenamiento funcional, fuerza y movilidad.">
+          </div>
+        </div>
+  
+        <div>
+          <label class="block font-semibold mb-1" for="experiencia">Experiencia</label>
+          <textarea id="edit-trainer-experience" name="experiencia" rows="2" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400" placeholder="Ej: Más de 10 años entrenando...">Más de 10 años guiando a personas de todos los niveles hacia sus objetivos de fuerza y condición física.</textarea>
+        </div>
+  
+        <div>
+          <label class="block font-semibold mb-1" for="biografia">Biografía</label>
+          <textarea id="edit-trainer-bio" name="biografia" rows="3" class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-400" placeholder="Describe brevemente al entrenador">Carlos es un entrenador comprometido con el progreso físico de sus alumnos. Su enfoque se basa en la técnica, la disciplina y la personalización de los entrenamientos. Ayuda a sus clientes a desarrollar fuerza funcional y mejorar su rendimiento diario con rutinas dinámicas y efectivas.</textarea>
+        </div>
+  
+        <!-- Botones -->
+        <div class="mt-6 flex justify-center space-x-3">
+          <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 hover:scale-105 transition-transform" id="save-edit-trainer">Guardar</button>
+        </div>
+      </form>
+  
+    </div>
+  </div>
+  

@@ -797,6 +797,134 @@ function attachEventListeners() {
     })
   }
 
+  //EVENTOS DE TRAINER
+
+  //Eventos para agregar un nuevo entrenador.
+  const saveNewTrainerBtn = document.querySelector("#save-new-trainer");
+  const newTrainerName = document.querySelector("#new-trainer-name");
+  const newTrainerSpecialty = document.querySelector("#new-trainer-specialty");
+  const newTrainerForm = document.querySelector("#new-trainer-form");
+
+  if( saveNewTrainerBtn ){
+    saveNewTrainerBtn.addEventListener("click", function(event) {
+      console.log(newTrainerName.value)
+      console.log(newTrainerSpecialty.value)
+      event.preventDefault();
+      if( newTrainerName.value !== "" && newTrainerSpecialty.value !== ""){
+        sweetAlertDecition("¿Desea guardar el nuevo entrenador?").then(response => {
+          if( response ){
+            sweetAlertSuccess("El nuevo entrenador ha sido guardado con éxito", "#trainers/trainers")
+            setTimeout(function(event) {
+              const targetAddTrainer = document.querySelector("#target-add-trainer");
+              const newItemTrainer = document.createElement("div");
+              newItemTrainer.classList.add("bg-white", "shadow-xl", "rounded-2xl", "overflow-hidden", "transition-transform", "duration-300");
+              const newTrainerNameInitials = newTrainerName.value.split(" ");
+              newItemTrainer.innerHTML = `
+              <div class="flex justify-center pt-6">
+                <div class="w-16 h-16 rounded-full bg-indigo-500 text-white flex items-center justify-center text-xl font-bold shadow-md">
+                  ${newTrainerNameInitials[0].substring(0,1)}${newTrainerNameInitials[1].substring(0,1)}
+                </div>
+              </div>
+              <div class="p-6 text-center">
+                <h3 class="text-xl font-semibold mb-2">${newTrainerName.value}</h3>
+                <p class="text-sm text-gray-600 mb-6">${newTrainerSpecialty.value}</p>
+                <p class="flex justify-center text-sm" id="item-to-change-erase-trainer"><span class="font-bold">Estado: </span> Activo<span class="items-center"><img src="../assets/active-icon.svg" alt="Icono cliente activo" class="h-5 w-5" id="icon-to-change" ></span></p>
+                <a class="bg-blue-600 text-white px-4 py-2 mt-6 rounded-lg hover:bg-blue-700 transition hover:scale-105 font-semibold hover:cursor-pointer block w-2/4 mx-auto" href="#trainers/moreInformation">
+                 Más información
+                </a>
+              </div>
+              `
+              targetAddTrainer.appendChild(newItemTrainer);
+            }, 1650)
+          }
+        })
+      }else{
+        if( newTrainerName.value === ""){
+          // newTrainerName.setCustomValidity("Este campo no puede estar vacio");
+          newTrainerForm.reportValidity();
+        }
+        if( newTrainerSpecialty.value === "" ){
+          newTrainerSpecialty.setCustomValidity("Completa este campo");
+          newTrainerForm.reportValidity();
+        }    
+        newTrainerForm.reportValidity();   
+      }
+    })
+  }
+
+  //Evento para abrir la vista de edición de entrenador
+  const editTrainerBtn = document.querySelector("#edit-trainer");
+
+  if( editTrainerBtn ){
+    editTrainerBtn.addEventListener("click", function(event) {
+      sweetAlertDecition("Desea editar la información del entrenador?").then(response => {
+        if( response ){
+          loadSectionAdminTarget("trainers", "editTrainer");
+        }
+      })
+    })
+  }
+
+  //Eventos para editar el entrenador.
+  const trainerEditedName = document.querySelector("#edit-trainer-name");
+  const trainerEditedEmail = document.querySelector("#edit-trainer-email");
+  const trainerEditedPhone = document.querySelector("#edit-trainer-phone");
+  const trainerEditedSpecialty = document.querySelector("#edit-trainer-specialty");
+  const trainerEditedExperience = document.querySelector("#edit-trainer-experience");
+  const trainerEditedBiography = document.querySelector("#edit-trainer-bio");
+  const saveEditedTrainerBtn = document.querySelector("#save-edit-trainer");
+
+  if( saveEditedTrainerBtn ){
+    saveEditedTrainerBtn.addEventListener("click", function(event){
+      if( trainerEditedName.value !== "" && trainerEditedEmail.value !== "" && trainerEditedPhone.value !== "" && trainerEditedSpecialty.value !== "" && trainerEditedExperience.value !== "" && trainerEditedBiography.value !== ""){
+        event.preventDefault();
+        sweetAlertDecition("¿Desea editar la información del entrenador?").then(response => {
+          if( response ){
+            sweetAlertSuccess("La información del entrenador ha sido actualizada satisfactoriamente", "#trainers/moreInformation");
+            setTimeout(function(event) {
+              const initialsValueTarget = document.querySelector("#initials-to-edit-trainer");
+              const nameValueTarget = document.querySelector("#name-to-edit-trainer");
+              const emailValueTarget = document.querySelector("#email-to-edit-trainer");
+              const phoneValueTarget = document.querySelector("#phone-to-edit-trainer");
+              const experienceValueTarget = document.querySelector("#experience-to-edit-trainer");
+              const specialtyValueTarget = document.querySelector("#specialty-to-edit-trainer");
+              const biographyValueTarget = document.querySelector("#bio-to-edit-trainer");
+              const initialsNameSplit = trainerEditedName.value.split(" ");
+              
+              initialsValueTarget.textContent = initialsNameSplit[0].substring(0,1)+initialsNameSplit[1].substring(0,1);
+              nameValueTarget.textContent = " "+trainerEditedName.value;
+              emailValueTarget.childNodes[1].textContent = " "+trainerEditedEmail.value;
+              phoneValueTarget.childNodes[1].textContent = " "+trainerEditedPhone.value;
+              experienceValueTarget.childNodes[1].textContent = " "+trainerEditedExperience.value;
+              specialtyValueTarget.childNodes[1].textContent = " "+trainerEditedSpecialty.value;
+              biographyValueTarget.childNodes[1].textContent = " "+trainerEditedBiography.value;
+            }, 1650)
+          }
+        })
+      }
+    })
+  }
+
+  //Eventos para eliminar un entrenador
+  const eraseTrainerBtn = document.querySelector("#erase-trainer");
+
+  if( eraseTrainerBtn ){
+    eraseTrainerBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      sweetAlertDecition("¿Está seguro que desea eliminar el entrenador?").then( response => {
+        if( response ){
+          sweetAlertSuccess("El entrenador ha sido eliminado satisfactoriamente", "#trainers/trainers");
+          setTimeout(function() {
+            const itemToChange = document.querySelector("#item-to-change-erase-trainer"); 
+            const iconToChange = document.querySelector("#icon-to-change");
+            itemToChange.childNodes[1].textContent = "Inactivo"
+            iconToChange.src = "../assets/inactive-icon.svg";
+          }, 1650)
+        }
+      })
+    })
+  }
+
   
   
 }
