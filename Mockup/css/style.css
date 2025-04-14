@@ -308,5 +308,19 @@ a {
     padding-top: 40px;
 }
 
+.appointmentPhysiotherapistContainer {
+    background: url('../assets/Physiotherapist2.jpg') no-repeat center;
+    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 0;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+
+@media(max-width: 1050px){
+    body{
+        min-height: 100vh;
+    }
+}
 
 /* drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] */

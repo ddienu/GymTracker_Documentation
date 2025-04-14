@@ -890,7 +890,7 @@ function attachEventListeners() {
               const specialtyValueTarget = document.querySelector("#specialty-to-edit-trainer");
               const biographyValueTarget = document.querySelector("#bio-to-edit-trainer");
               const initialsNameSplit = trainerEditedName.value.split(" ");
-              
+
               initialsValueTarget.textContent = initialsNameSplit[0].substring(0,1)+initialsNameSplit[1].substring(0,1);
               nameValueTarget.textContent = " "+trainerEditedName.value;
               emailValueTarget.childNodes[1].textContent = " "+trainerEditedEmail.value;
@@ -919,6 +919,140 @@ function attachEventListeners() {
             const iconToChange = document.querySelector("#icon-to-change");
             itemToChange.childNodes[1].textContent = "Inactivo"
             iconToChange.src = "../assets/inactive-icon.svg";
+          }, 1650)
+        }
+      })
+    })
+  }
+
+  //EVENTOS FISIOTERAPEUTAS
+
+  //Eventos para abrir la pantalla para agregar un nuevo fisioterapeuta
+  const newPhysiotherapistBtn = document.querySelector("#new-physiotherapist-btn");
+
+  if( newPhysiotherapistBtn ){
+    newPhysiotherapistBtn.addEventListener("click", function(event){
+      sweetAlertDecition("¿Desea agregar un nuevo fisioterapeuta?").then(response => {
+        if( response ){
+          loadSectionAdminTarget("physiotherapy", "addPhysiotherapist");
+        }
+      })
+    })
+  }
+
+  //Eventos para agregar un nuevo fisioterapeuta
+  const newPhysiotherapistName = document.querySelector("#new-physiotherapist-name");
+  const newPhysiotherapistEmail = document.querySelector("#new-physiotherapist-email");
+  const newPhysiotherapistPhone = document.querySelector("#new-physiotherapist-phone");
+  const newPhysiotherapistSpecialty = document.querySelector("#new-physiotherapist-specialty");
+  const newPhysiotherapistBio = document.querySelector("#new-physiotherapist-bio");
+  const saveNewPhysiotherapistBtn = document.querySelector("#save-new-physiotherapist-btn");
+  const newPhysiotherapistForm = document.querySelector("#newPhysiotherapistForm");
+
+  if( saveNewPhysiotherapistBtn ){
+    saveNewPhysiotherapistBtn.addEventListener("click", function(event){
+      event.preventDefault();
+      if( newPhysiotherapistName.value !== "" && newPhysiotherapistEmail.value !== "" && newPhysiotherapistPhone.value !== "" && newPhysiotherapistSpecialty.value !== "" && newPhysiotherapistBio.value !== ""){
+        sweetAlertDecition("¿Desea guardar el nuevo fisioterapeuta?").then(response => {
+          if( response ){
+            sweetAlertSuccess("El fisioterapeuta ha sido guardado con éxito", "#physiotherapy/physiotherapists");
+            setTimeout(function(event) {
+              const addNewPhysiotherapistTarget = document.querySelector("#add-new-physiotherapist");
+              const newItemPhysiotherapist = document.createElement("div");
+              newItemPhysiotherapist.classList.add("bg-white", "rounded-2xl", "shadow-lg", "p-6", "hover:shadow-xl", "transition", "duration-300");
+              const newPhysiotherapistInitialsArray = newPhysiotherapistName.value.split(" ");
+              newItemPhysiotherapist.innerHTML = `
+                <div class="flex flex-col items-center">
+                  <div class="w-20 h-20 rounded-full bg-indigo-500 text-white flex items-center justify-center text-2xl font-bold mb-4 shadow-md">
+                    ${newPhysiotherapistInitialsArray[0].substring(0,1)}${newPhysiotherapistInitialsArray[1].substring(0,1)}
+                  </div>
+                  <h3 class="text-xl font-semibold text-gray-800">${newPhysiotherapistName.value}</h3>
+                  <p class="text-sm text-gray-500 my-4">${newPhysiotherapistSpecialty.value}</p>
+                  <p class="flex justify-center text-sm" id="item-to-change-erase-physiotherapist"><span class="font-bold">Estado: </span> Activo<span class="items-center"><img src="../assets/active-icon.svg" alt="Icono cliente activo" class="h-5 w-5" id="icon-to-change-physiotherapist" ></span></p>
+                  <a class="bg-blue-600 text-white px-4 py-2 mt-4 rounded-lg hover:bg-blue-700 transition hover:scale-105 font-semibold hover:cursor-pointer block w-2/4 mx-auto text-center" href="#physiotherapy/moreInformation">
+                    Más información
+                  </a>
+                </div>
+              `
+              addNewPhysiotherapistTarget.appendChild(newItemPhysiotherapist);
+            },1650)
+          }
+        })
+      }else{
+        newPhysiotherapistForm.reportValidity();
+      }
+    })
+  }
+
+  //Eventos para abrir la pantalla para editar un fisioterapeuta 
+  const editPhysiotherapistBtn = document.querySelector("#edit-physiotherapist-btn");
+
+  if( editPhysiotherapistBtn ){
+    editPhysiotherapistBtn.addEventListener("click", function(event) {
+      sweetAlertDecition("¿Desea editar el fisioterapeuta?").then(response => {
+        if( response ){
+          loadSectionAdminTarget("physiotherapy", "editPhysiotherapist");
+        }
+      })
+    })
+  }
+
+  //Eventos para editar un fisioterapeuta
+  const editPhysiotherapistName = document.querySelector("#edit-physiotherapist-name");
+  const editPhysiotherapistEmail = document.querySelector("#edit-physiotherapist-email");
+  const editPhysiotherapistPhone = document.querySelector("#edit-physiotherapist-phone");
+  const editPhysiotherapistSpecialty = document.querySelector("#edit-physiotherapist-specialty");
+  const editPhysiotherapistBio = document.querySelector("#edit-physiotherapist-bio");
+  const saveEditPhysiotherapistBtn = document.querySelector("#save-edit-physiotherapist-btn");
+  const editPhysioterapistForm = document.querySelector("#edit-physiotherapist-form");
+
+  if( saveEditPhysiotherapistBtn ){
+    saveEditPhysiotherapistBtn.addEventListener("click", function(event){
+      event.preventDefault();
+      if( editPhysiotherapistName.value !== "" && editPhysiotherapistEmail.value !== "" && editPhysiotherapistPhone.value !== "" && editPhysiotherapistSpecialty.value !== "" && editPhysiotherapistBio.value !== ""){
+        sweetAlertDecition("Desea guardar los cambios?").then(response => {
+          if( response){
+          sweetAlertSuccess("La información del fisioterapeuta ha sido editada con éxito", "#physiotherapy/moreInformation");
+          setTimeout(function(event){
+            const nameToEditTarget = document.querySelector("#name-to-edit");
+            const bioToEditTarget = document.querySelector("#bio-to-edit");
+            const specialtyToEditTarget = document.querySelector("#specialty-to-edit");
+            const emailToEditTarget = document.querySelector("#email-to-edit");
+            const phoneToEditTarget = document.querySelector("#phone-to-edit");
+            const initialsToEditTarget = document.querySelector("#initials-to-edit");
+
+            const initialsNameArray = editPhysiotherapistName.value.split(" ");
+
+            initialsToEditTarget.textContent = initialsNameArray[0].substring(0,1)+initialsNameArray[1].substring(0,1)
+            nameToEditTarget.textContent = editPhysiotherapistName.value;
+            bioToEditTarget.textContent = editPhysiotherapistBio.value;
+            specialtyToEditTarget.textContent = editPhysiotherapistSpecialty.value;
+            emailToEditTarget.textContent = "Email: "+editPhysiotherapistEmail.value;
+            phoneToEditTarget.textContent = "Teléfono: "+editPhysiotherapistPhone.value;
+          }, 1650)
+        }
+        })
+      }else{
+        editPhysioterapistForm.reportValidity();
+      }
+    })
+  }
+
+
+
+  //Eventos para eliminar un fisioterapeuta
+  const erasePhysiotherapistBtn = document.querySelector("#erase-physiotherapist-btn");
+  
+  if( erasePhysiotherapistBtn ){
+    erasePhysiotherapistBtn.addEventListener("click", function(event) {
+      sweetAlertDecition("¿Desea eliminar el fisioterapeuta?").then(response => {
+        if( response ){
+          sweetAlertSuccess("El fisioterapeuta ha sido eliminado satisfactoriamente", "#physiotherapy/physiotherapists");
+          setTimeout(function(event) {
+            const iconToEditTarget = document.querySelector("#icon-to-change-physiotherapist");
+            const itemToEditTarget = document.querySelector("#item-to-change-erase-physiotherapist");
+            iconToEditTarget.src = "../assets/inactive-icon.svg"
+            itemToEditTarget.childNodes[1].textContent = "Inactivo";
           }, 1650)
         }
       })
