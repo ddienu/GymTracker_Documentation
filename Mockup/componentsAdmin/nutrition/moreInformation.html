@@ -1,0 +1,61 @@
+<div class="min-h-screen bg-gray-50 p-6">
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <h1 class="containerTitle drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">Perfil del Nutricionista</h1>
+      <p class="text-gray-600 mt-2">Conoce más sobre su experiencia y especialidad</p>
+    </div>
+  
+    <!-- Card Principal -->
+    <div class="max-w-4xl mx-auto bg-white rounded-xl shadow-md p-8">
+      <div class="flex flex-col md:flex-row items-center md:items-start gap-8">
+        <!-- Avatar -->
+        <div class="flex-shrink-0">
+          <div class="w-32 h-32 rounded-full bg-green-600 flex items-center justify-center text-white text-3xl font-bold" id="initials-to-edit-target">
+            AM
+          </div>
+        </div>
+  
+        <!-- Información del Nutricionista -->
+        <div class="flex-1">
+          <h2 class="text-2xl font-semibold text-gray-800 mb-1" id="name-to-edit-target">Ana Martínez</h2>
+          <p class="text-green-600 font-medium" id="specialty-to-edit-target">Especialista en nutrición deportiva y vegana</p>
+  
+          <div class="mt-4">
+            <p class="text-gray-700 mb-2" id="email-to-edit-target">
+              <strong>Correo:</strong> ana.martinez@email.com
+            </p>
+            <p class="text-gray-700 mb-2" id="phone-to-edit-target">
+              <strong>Teléfono:</strong> +57 321 456 7890
+            </p>
+          </div>
+        </div>
+      </div>
+  
+      <!-- Sección de experiencia -->
+      <div class="mt-10 border-t pt-6">
+        <h3 class="text-xl font-semibold text-gray-800 mb-2">Biografía</h3>
+        <p class="text-gray-700 leading-relaxed" id="bio-to-edit-target">
+          Soy nutricionista con más de 8 años de experiencia ayudando a personas a mejorar su salud a través de la alimentación. Me especializo en dietas deportivas, planes veganos y estrategias personalizadas para lograr tus objetivos de bienestar.
+        </p>
+      </div>
+  
+      <!-- Botón volver -->
+      <div class="flex mt-8 justify-between items-center">
+        <div class="flex space-x-3">
+          <a class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 font-semibold transition hover:scale-105" href="#nutrition/nutritionistAppointments">
+            Consultar agenda
+          </a>
+          <button class="bg-yellow-600 text-white px-6 py-2 rounded-md hover:bg-yellow-700 font-semibold transition hover:scale-105" id="edit-nutritionist-btn">
+            Editar
+          </button>
+          <button class="bg-red-600 text-white px-6 py-2 rounded-md hover:bg-red-700 font-semibold transition hover:scale-105" id="erase-nutritionist-btn">
+            Eliminar
+          </button>
+        </div>
+        <a href="#nutrition/nutritionists" class="inline-block bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition">
+          Volver
+        </a>
+      </div>
+    </div>
+  </div>
+  

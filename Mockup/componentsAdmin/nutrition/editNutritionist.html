@@ -1,0 +1,83 @@
+<div class="min-h-screen bg-gray-50 p-6">
+    <!-- Header -->
+    <div class="text-center mb-10">
+      <h1 class="containerTitle drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">Editar Nutricionista</h1>
+      <p class="text-gray-600 mt-2">Completa la información del profesional de la salud</p>
+    </div>
+  
+    <!-- Formulario -->
+    <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-md p-8">
+      <form id="edit-nutritionist-form">
+        <!-- Nombre -->
+        <div class="mb-5">
+          <label class="block mb-1 font-medium text-gray-700">Nombre completo</label>
+          <input
+            type="text"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+            placeholder="Ej: Ana Martínez"
+            required
+            value="Ana Martínez"
+            id="edit-nutritionist-name"
+          />
+        </div>
+  
+        <!-- Correo -->
+        <div class="mb-5">
+          <label class="block mb-1 font-medium text-gray-700">Correo electrónico</label>
+          <input
+            type="email"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+            placeholder="Ej: ana@email.com"
+            required
+            value="ana-martinez@email.com"
+            id="edit-nutritionist-email"
+          />
+        </div>
+  
+        <!-- Teléfono -->
+        <div class="mb-5">
+          <label class="block mb-1 font-medium text-gray-700">Teléfono</label>
+          <input
+            type="tel"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+            placeholder="Ej: +57 300 1234567"
+            required
+            value="+57 321 456 7890"
+            id="edit-nutritionist-phone"
+          />
+        </div>
+  
+        <!-- Especialidad -->
+        <div class="mb-5">
+          <label class="block mb-1 font-medium text-gray-700">Especialidad</label>
+          <input
+            type="text"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-600"
+            placeholder="Ej: Nutrición deportiva y vegana"
+            required
+            value="Especialista en nutrición deportiva y vegana"
+            id="edit-nutritionist-specialty"
+          />
+        </div>
+
+        <!-- Biografía -->
+        <div>
+            <label class="block font-medium text-gray-700 mb-1" for="bio">Biografía</label>
+            <textarea id="edit-nutritionist-bio" name="bio" rows="4" placeholder="Describe su trayectoria y experiencia..." required
+                      class="w-full px-4 py-2 border border-gray-300 rounded-md resize-none focus:ring-2 focus:ring-indigo-500 focus:outline-none">Soy nutricionista con más de 8 años de experiencia ayudando a personas a mejorar su salud a través de la alimentación. Me especializo en dietas deportivas, planes veganos y estrategias personalizadas para lograr tus objetivos de bienestar.</textarea>
+          </div>
+
+        <!-- Botón Guardar -->
+        <div class="mt-6 text-right">
+          <button
+            type="submit"
+            class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg transition"
+            id="save-edit-nutritionist-btn"
+          >
+            Guardar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

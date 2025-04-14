@@ -1038,8 +1038,6 @@ function attachEventListeners() {
     })
   }
 
-
-
   //Eventos para eliminar un fisioterapeuta
   const erasePhysiotherapistBtn = document.querySelector("#erase-physiotherapist-btn");
   
@@ -1059,7 +1057,142 @@ function attachEventListeners() {
     })
   }
 
-  
+  //EVENTOS DE NUTRICIÓN
+
+  //Eventos para abrir la pantalla de adición de un nuevo nutricionista
+  const newNutritionistBtn = document.querySelector("#new-nutritionist-btn");
+
+  if( newNutritionistBtn ){
+    newNutritionistBtn.addEventListener("click", function(event){
+      event.preventDefault();
+      sweetAlertDecition("¿Desea agregar un nuevo nutricionista?").then(response => {
+        if( response ){
+          loadSectionAdminTarget("nutrition", "addNutritionist");
+        }
+      })
+    })
+  }
+
+  //Eventos para guardar un nuevo nutricionista
+  const saveNewNutritionistBtn = document.querySelector("#save-new-nutritionist-btn");
+  const newNutritionistName = document.querySelector("#new-nutritionist-name");
+  const newNutritionistEmail = document.querySelector("#new-nutritionist-email");
+  const newNutritionistPhone = document.querySelector("#new-nutritionist-phone");
+  const newNutritionistSpecialty = document.querySelector("#new-nutritionist-specialty");
+  const newNutritionistBio = document.querySelector("#new-nutritionist-bio");
+  const newNutritionistForm = document.querySelector("#new-nutritionist-form");
+
+  if( saveNewNutritionistBtn ){
+    saveNewNutritionistBtn.addEventListener("click", function(event){
+      event.preventDefault();
+      if( newNutritionistName.value !== "" && newNutritionistEmail.value !== "" && newNutritionistPhone.value !== "" && newNutritionistSpecialty.value !== "" && newNutritionistBio.value !== "" ){
+        sweetAlertDecition("¿Desea guardar el nuevo nutricionista?").then(response => {
+          if( response ){
+            sweetAlertSuccess("El nutricionista ha sido guardado con éxito", "#nutrition/nutritionists")
+            setTimeout( function(event) {
+              const targetToAddItem = document.querySelector("#target-to-add-nutritionist");
+              const nameSplitted = newNutritionistName.value.split(" ");
+              const newNutritionist = document.createElement("div");
+              newNutritionist.classList.add("bg-white", "rounded-2xl", "shadow-lg", "p-6", "hover:shadow-xl", "transition", "duration-300");
+              newNutritionist.innerHTML = `
+              <div class="flex flex-col items-center text-center">
+                <div class="bg-green-600 text-white font-bold text-2xl w-20 h-20 rounded-full flex items-center justify-center mb-4">
+                  ${nameSplitted[0].substring(0,1)}${nameSplitted[1].substring(0,1)}
+                </div>
+                <h3 class="text-xl font-semibold text-gray-800">${newNutritionistName.value}</h3>
+                <p class="text-sm text-gray-600 mb-2">${newNutritionistSpecialty.value}</p>
+                <p class="flex justify-center text-sm" id="item-to-change-erase-nutritionist"><span class="font-bold">Estado: </span> Activo<span class="items-center"><img src="../assets/active-icon.svg" alt="Icono cliente activo" class="h-5 w-5" id="icon-to-change-nutritionist"></span></p>
+                <a class="bg-green-600 text-white px-4 py-2 mt-6 rounded-lg hover:bg-green-700 transition hover:scale-105 font-semibold hover:cursor-pointer block w-2/4 mx-auto" href="#nutrition/moreInformation">
+                  Más información
+                </a>
+              </div>
+              `
+              targetToAddItem.appendChild(newNutritionist);
+            }, 1650)
+          }
+        })
+      }else{
+        newNutritionistForm.reportValidity();
+      }
+    })
+  }
+
+  //Eventos para abrir la pantalla de edición del nutricionista
+  const editNutritionistBtn = document.querySelector("#edit-nutritionist-btn");
+
+  if( editNutritionistBtn ){
+    editNutritionistBtn.addEventListener("click", function(event){
+      event.preventDefault();
+      sweetAlertDecition("¿Desea editar la información del nutricionista?").then(response => {
+        if( response ){
+          loadSectionAdminTarget("nutrition", "editNutritionist");
+        }
+      })
+    })
+  }
+
+  //Eventos para editar el nutricionista
+  const editNutritionistName = document.querySelector("#edit-nutritionist-name");
+  const editNutritionistEmail = document.querySelector("#edit-nutritionist-email");
+  const editNutritionistPhone = document.querySelector("#edit-nutritionist-phone");
+  const editNutritionistSpecialty = document.querySelector("#edit-nutritionist-specialty");
+  const editNutritionistBio = document.querySelector("#edit-nutritionist-bio");
+  const saveEditNutritionistBtn = document.querySelector("#save-edit-nutritionist-btn");
+  const editNutritionistForm = document.querySelector("#edit-nutritionist-form");
+
+  if( saveEditNutritionistBtn ){
+    saveEditNutritionistBtn.addEventListener("click", function(event){
+      event.preventDefault();
+      if( editNutritionistName.value !== "" &&  editNutritionistEmail.value !== "" && editNutritionistPhone.value !== "" && editNutritionistSpecialty.value !== "" && editNutritionistBio.value !== ""){
+      sweetAlertDecition("¿Desea guardar la información actualizada del nutricionista?").then(response => {
+        if( response ){
+          sweetAlertSuccess("Información del nutricionista actualizada satisfactoriamente", "#nutrition/moreInformation");
+          setTimeout(function(event) {
+            const initialsToEditTarget = document.querySelector("#initials-to-edit-target");
+            const nameToEditTarget = document.querySelector("#name-to-edit-target")
+            const specialtyToEditTarget = document.querySelector("#specialty-to-edit-target");
+            const emailToEditTarget = document.querySelector("#email-to-edit-target");
+            const phoneToEditTarget = document.querySelector("#phone-to-edit-target");
+            const bioToEditTarget = document.querySelector("#bio-to-edit-target");
+
+            const initialsNameArray = editNutritionistName.value.split(" ");
+
+            initialsToEditTarget.textContent = initialsNameArray[0].substring(0,1)+initialsNameArray[1].substring(0,1);
+            nameToEditTarget.textContent = editNutritionistName.value
+            specialtyToEditTarget.textContent = editNutritionistSpecialty.value;
+            emailToEditTarget.textContent = editNutritionistEmail.value;
+            phoneToEditTarget.textContent = editNutritionistPhone.value;
+            bioToEditTarget.textContent = editNutritionistBio.value;
+          }, 1650)
+        }
+      })
+     }else{
+        editNutritionistForm.reportValidity();
+     }
+    })
+  }
+
+
+  //Eventos para eliminar un nutricionista
+  const eraseNutritionistBtn = document.querySelector("#erase-nutritionist-btn");
+
+  if( eraseNutritionistBtn ){
+    eraseNutritionistBtn.addEventListener("click", function(event){
+      sweetAlertDecition("¿Desea eliminar el nutricionista?").then(response => {
+        if( response ){
+          sweetAlertSuccess("El nutricionista ha sido eliminado con éxito", "#nutrition/nutritionists");
+          setTimeout(function(event) {
+            const itemToChangeNutritionist = document.querySelector("#item-to-change-erase-nutritionist");
+            const iconToChangeNutritionist = document.querySelector("#icon-to-change-nutritionist");
+
+            itemToChangeNutritionist.childNodes[1].textContent = "Inactivo"
+            iconToChangeNutritionist.src = "../assets/inactive-icon.svg"
+          }, 1650)
+        }
+      })
+    })
+  }
+
   
 }
 

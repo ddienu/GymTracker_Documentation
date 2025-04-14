@@ -7,6 +7,9 @@
 
 body {
     margin: 0;
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr auto;
 }
 
 a {
@@ -317,10 +320,6 @@ a {
     padding-top: 40px;
 }
 
-@media(max-width: 1050px){
-    body{
-        min-height: 100vh;
-    }
-}
+
 
 /* drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] */
