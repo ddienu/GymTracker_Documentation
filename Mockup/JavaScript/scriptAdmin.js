@@ -1193,6 +1193,169 @@ function attachEventListeners() {
     })
   }
 
+  //EVENTOS DE PLANES
+
+  //Eventos para abrir la pantalla de adición de planes.
+  const newPlanBtn = document.querySelector("#add-new-plan-btn");
+
+  if( newPlanBtn ){
+    newPlanBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      sweetAlertDecition("¿Desea agregar un nuevo plan?").then(response => {
+        if( response ){
+          loadSectionAdminTarget("plans", "addPlan");
+        }
+      })
+    })
+  }
+
+  //Eventos para agregar un nuevo plan de gimnasio
+  const newPlanName = document.querySelector("#new-plan-name");
+  const newPlanDescription = document.querySelector("#new-plan-desc");
+  const newPlanPrice = document.querySelector("#new-plan-price");
+  const newPlanBenefits = document.querySelector("#new-plan-benefits");
+  const saveNewPlanBtn = document.querySelector("#save-new-plan-btn");
+  const newPlanForm = document.querySelector("#new-plan-form");
+
+  if( saveNewPlanBtn ){
+    saveNewPlanBtn.addEventListener("click", function(event){
+      event.preventDefault();
+      if( newPlanName.value !== "" && newPlanDescription.value !== "" && newPlanPrice.value !== "" && newPlanBenefits.value !== ""){
+        sweetAlertDecition("¿Desea guardar el nuevo plan?").then(response => {
+          if( response ){
+            sweetAlertSuccess("El nuevo plan ha sido guardado exitosamente", "#plans/planList");
+            setTimeout(function(event) {
+              const benefitsArray = newPlanBenefits.value.split("\n");
+              let benefitsList = "";
+              benefitsArray.forEach(
+                benefit => {
+                  if( benefit !== ""){
+                  benefitsList += `<li>✔ ${benefit}</li>`;
+                  }
+                }
+              )
+              const addNewPlanTarget = document.querySelector("#add-new-plan-target");
+              const newItem = document.createElement("div");
+              newItem.classList.add("bg-white", "rounded-2xl", "shadow-lg", "p-8", "border-t-4", "border-yellow-400", "hover:scale-105", "transition-transform", "flex", "flex-col", "h-full", "justify-between", "relative");
+              newItem.innerHTML= `
+              <div>
+              <h2 class="text-2xl font-bold text-gray-700 mb-2">${newPlanName.value}</h2>
+              <p class="text-gray-500 mb-6">${newPlanDescription.value}</p>
+              <p class="text-4xl font-extrabold text-gray-800 mb-6">
+                $${newPlanPrice.value}<span class="text-base font-medium text-gray-500">/mes</span>
+              </p>
+              <ul class="text-left text-gray-600 space-y-3 mb-6">
+                ${benefitsList}
+              </ul>
+              </div>
+          
+              <!-- Botones al final -->
+              <div class="flex justify-center space-x-3 mt-auto pt-4">
+                <button class="w-full bg-yellow-700 text-white py-2 rounded-xl hover:bg-yellow-800 transition">Editar</button>
+                <button class="w-full bg-red-700 text-white py-2 rounded-xl hover:bg-red-800 transition">Eliminar</button>
+              </div> 
+              `
+              addNewPlanTarget.appendChild(newItem);
+            }, 1650)
+          }
+        })
+      }else{
+        newPlanForm.reportValidity();
+      }
+    })
+  }
+  //Eventos para abrir la pantalla de edición del planes.
+  const editPlanBtn = document.querySelector("#edit-plan-btn");
+
+  if( editPlanBtn ){
+    editPlanBtn.addEventListener("click", function(event){
+      sweetAlertDecition("¿Deseas editar el plan?").then(response => {
+        if( response ){
+          loadSectionAdminTarget("plans", "editPlan");
+        }
+      })
+    })
+  }
+
+  //Eventos para editar el plan
+  const editPlanName = document.querySelector("#edit-plan-name");
+  const editPlanDesc = document.querySelector("#edit-plan-desc");
+  const editPlanPrice = document.querySelector("#edit-plan-price");
+  const editPlanBenefits = document.querySelector("#edit-plan-benefits");
+  const saveEditPlanBtn = document.querySelector("#save-edit-plan-btn");
+  const editPlanForm = document.querySelector("edit-plan-form");
+
+  if(saveEditPlanBtn){
+    saveEditPlanBtn.addEventListener("click", function(event) {
+      event.preventDefault();
+      if( editPlanName.value !== "" && editPlanDesc.value !== "" && editPlanPrice.value !== "" && editPlanBenefits.value !== ""){
+        sweetAlertDecition("¿Desea guardar los cambios?").then(response => {
+          if(response){
+            sweetAlertSuccess("Los cambios en el plan han sido guardados exitosamente", "#plans/planList");
+            setTimeout(function(event){
+              const planNameTarget = document.querySelector("#plan-name-target");
+              const planDescTarget = document.querySelector("#plan-desc-target");
+              const planPriceTarget = document.querySelector("#plan-price-target");
+              const planBenefitsTarget = document.querySelector("#plan-benefits-target");
+
+              planNameTarget.textContent = editPlanName.value;
+
+              planDescTarget.textContent = editPlanDesc.value;
+
+              const newPrice = "$" + parseInt(editPlanPrice.value).toLocaleString("es-CO");
+              planPriceTarget.innerHTML = `${newPrice}<span class="text-base font-medium text-gray-500">/mes</span>`;
+
+              const benefitsArray = editPlanBenefits.value.split('\n');
+
+              const ul = document.createElement('ul');
+              ul.className = "text-left text-gray-600 space-y-3 mb-6";
+              
+              benefitsArray.forEach(benefit => {
+                if( benefit !== ""){
+                  const li = document.createElement('li');
+                  li.textContent = `✔ ${benefit}`;
+                  ul.appendChild(li);
+                }
+              });
+              
+              planBenefitsTarget.innerHTML = '';
+              planBenefitsTarget.appendChild(ul);              
+            }, 1650)
+          }
+        })
+      }else{
+        editPlanForm.reportValidity();
+      }
+    })
+  }
+
+  //Eventos para eliminar un plan
+  const erasePlanBtn = document.querySelector("#erase-plan-btn");
+
+  if(erasePlanBtn){
+    erasePlanBtn.addEventListener("click", function(event){
+      event.preventDefault();
+      sweetAlertDecition("¿Desea eliminar el plan?").then(response => {
+        if(response){
+          sweetAlertSuccess("El plan ha sido eliminado de forma satisfactoria", "#plans/planList");
+          setTimeout(function(event){
+            const planToDeactivateTarget = document.querySelector("#plan-to-deactivate-target");
+            planToDeactivateTarget.classList.remove("hover:scale-105")
+
+            const newItem = document.createElement("div");
+
+            newItem.innerHTML = `
+            <div class="absolute inset-0 bg-white bg-opacity-70 backdrop-blur-sm flex items-center justify-center text-xl font-bold text-red-700">
+              Plan desactivado
+            </div>
+            `
+            planToDeactivateTarget.appendChild(newItem);
+          },1650)
+        }
+      })
+    })
+  }
+
   
 }
 

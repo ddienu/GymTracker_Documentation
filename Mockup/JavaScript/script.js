@@ -95,7 +95,11 @@ function attachEventListeners() {
       if (signInButton) {
         signInButton.addEventListener("click", function (e) {
           if (permitLogin) {
-            sweetAlertSuccess("Iniciando sesión", "#index");
+            sweetAlertSuccess("Iniciando sesión", "#GymTrackerAdmin");
+            setTimeout(function () {
+              window.history.replaceState({}, document.title, window.location.pathname);
+              window.location.replace("../GymTrackerAdmin.html");
+            }, 2050);
           }
         });
       }
