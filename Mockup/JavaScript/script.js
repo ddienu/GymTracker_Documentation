@@ -66,44 +66,21 @@ observer.observe(document.getElementById("content"), {
 function attachEventListeners() {
   console.log("Eventos adjuntados");
 
-  // Validación de contraseñas dentro del inicio de sesión
-  document
-    .getElementById("content")
-    .addEventListener("input", function (event) {
-      const usernameElement = document.querySelector("#username");
-      const passwordElement = document.querySelector("#password");
-      let permitLogin;
-      if (usernameElement) {
-        usernameElement.setCustomValidity(
-          usernameElement.value.trim() === ""
-            ? "El campo de usuario no puede estar vacío"
-            : ""
-        );
-        permitLogin = usernameElement.value === "" ? false : true;
-      }
-      if (passwordElement) {
-        passwordElement.setCustomValidity(
-          passwordElement.value.trim() === ""
-            ? "El campo de contraseña no puede estar vacío"
-            : ""
-        );
-        permitLogin = passwordElement.value === "" ? false : true;
-      }
-
       //Manejo del evento del botón de inicio de sesión
       const signInButton = document.querySelector("#js-sign-in-button");
+      const signInForm = document.querySelector("#sign-in-form");
+      const username = document.querySelector("#username");
+      const password = document.querySelector("#password");
       if (signInButton) {
-        signInButton.addEventListener("click", function (e) {
-          if (permitLogin) {
-            sweetAlertSuccess("Iniciando sesión", "#GymTrackerAdmin");
-            setTimeout(function () {
-              window.history.replaceState({}, document.title, window.location.pathname);
-              window.location.replace("../GymTrackerAdmin.html");
-            }, 2050);
+        signInButton.addEventListener("click", function (event) {
+          event.preventDefault();
+          if (username.value !== "" && password.value !== "") {
+            sweetAlertSuccess("Iniciando sesión...", "../GymTrackerAdmin.html");
+          }else{
+            signInForm.reportValidity();
           }
         });
       }
-    });
 
   // Manejo del formulario de registro y validaciones de la contraseña
   const signupPassword = document.querySelector("#signup-password");

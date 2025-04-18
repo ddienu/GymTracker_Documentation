@@ -1356,6 +1356,19 @@ function attachEventListeners() {
     })
   }
 
+  //Evento para cerrar sesión
+  const logoutBtn = document.querySelector("#logout");
+
+  if( logout ){
+    logout.addEventListener("click", function(event){
+      sweetAlertDecition("¿Desea cerrar sesión?").then(response => {
+        if( response ){
+          sweetAlertSuccess("Cerrando sesión...", "../GymTracker.html");
+        }
+      })
+    })
+  }
+
   
 }
 
