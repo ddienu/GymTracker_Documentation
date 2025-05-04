@@ -1,0 +1,72 @@
+<div class="font-serif mb-10">
+    <div class="mt-10">
+        <h1 class="containerTitle drop-shadow-[0_1.1px_1.1px_rgba(0,0,0,1)] text-center">Crear nuevo cliente</h1>
+    </div>
+
+    <div>
+        <form class="bg-white px-16 py-6 max-w-3xl mx-auto shadow-lg rounded-lg" action="" id="new-client-form">
+            <div class="flex justify-center">
+                <img src="../assets/profileIcon.svg" alt="Icono crear cuenta" class="w-40 h-40 mb-6">
+            </div>
+
+            <div class="grid sm:grid-cols-2 gap-6">
+                <div class="w-full">
+                    <label class="text-gray-600 text-sm mb-2 block font-bold">Nombres</label>
+                    <input name="name" type="text" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded border border-gray-300 focus:border-blue-500 focus:outline-none transition-all" placeholder="Nombres" required/>
+                </div>
+                <div class="w-full">
+                    <label class="text-gray-600 text-sm mb-2 block font-bold">Apellidos</label>
+                    <input name="lastname" type="text" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded border border-gray-300 focus:border-blue-500 focus:outline-none transition-all" placeholder="Apellidos" required/>
+                </div>
+                <div class="w-full">
+                    <label class="text-gray-600 text-sm mb-2 block font-bold">Tipo de documento</label>
+                    <div class="relative w-full">
+                        <select id="miDropdown" class="appearance-none bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded border border-gray-300 focus:border-blue-500 focus:outline-none">
+                            <option value="Masculino">CC</option>
+                            <option value="Femenino">TI</option>
+                            <option value="NA">Pasaporte</option>
+                        </select>
+                        <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                            🔽
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full">
+                    <label class="text-gray-600 text-sm mb-2 block font-bold">Número de documento</label>
+                    <input name="documentNumber" type="number" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded border border-gray-300 focus:border-blue-500 focus:outline-none transition-all" placeholder="Número de documento" required/>
+                </div>        
+                <div class="w-full">
+                    <label class="text-gray-600 text-sm mb-2 block font-bold">Género</label>
+                    <div class="relative w-full">
+                        <select id="miDropdown" class="appearance-none bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded border border-gray-300 focus:border-blue-500 focus:outline-none">
+                            <option value="Masculino">Masculino</option>
+                            <option value="Femenino">Femenino</option>
+                            <option value="NA">Prefiere no decirlo</option>
+                        </select>
+                        <div class="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none">
+                            🔽
+                        </div>
+                    </div>
+                </div>
+                <div class="w-full">
+                    <label class="text-gray-600 text-sm mb-2 block font-bold">Número telefónico</label>
+                    <input name="contactNumber1" type="number" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded border border-gray-300 focus:border-blue-500 focus:outline-none transition-all" placeholder="Número telefónico" required/>
+                </div>
+                <div class="w-full">
+                    <label class="text-gray-600 text-sm mb-2 block font-bold">Número telefónico alterno</label>
+                    <input name="contactNumber2" type="number" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded border border-gray-300 focus:border-blue-500 focus:outline-none transition-all" placeholder="Número telefónico alterno" required/>
+                </div>
+                <div class="w-full">
+                    <label class="text-gray-600 text-sm mb-2 block font-bold">Correo electrónico</label>
+                    <input name="email" type="email" class="bg-gray-100 w-full text-gray-800 text-sm px-4 py-3 rounded border border-gray-300 focus:border-blue-500 focus:outline-none transition-all" placeholder="cliente@correo.com" required/>
+                </div>
+            </div>
+
+            <div class="mt-10 flex justify-center">
+                <button type="submit" class="py-3 px-6 text-sm tracking-wider rounded text-white bg-blue-500 hover:bg-blue-700 focus:outline-none cursor-pointer hover:scale-105 transition-all" id="create-client-button">
+                    Crear cliente
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

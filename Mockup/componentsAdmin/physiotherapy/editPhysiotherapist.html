@@ -1,0 +1,54 @@
+<div class="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+    <div class="bg-white w-full max-w-2xl rounded-2xl shadow-xl p-8">
+      
+      <!-- Título -->
+      <div class="mb-6 text-center">
+        <h2 class="containerTitle drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">Editar fisioterapeuta</h2>
+        <p class="text-sm text-gray-500">Completa los campos para registrar un nuevo profesional</p>
+      </div>
+  
+      <!-- Formulario -->
+      <form id="edit-physiotherapist-form" class="space-y-5">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1" for="name">Nombre completo</label>
+          <input type="text" id="edit-physiotherapist-name" name="name" placeholder="Ej. Laura Castillo" required
+                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" value="Laura Castillo" />
+        </div>
+  
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1" for="email">Correo electrónico</label>
+          <input type="email" id="edit-physiotherapist-email" name="email" placeholder="Ej. laura.castillo@gymtracker.com" required
+                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" value="laura.castillo@gymtracker.com"/>
+        </div>
+  
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1" for="phone">Teléfono</label>
+          <input type="tel" id="edit-physiotherapist-phone" name="phone" placeholder="Ej. 3101234567" required
+                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" value="3211234567" />
+        </div>
+  
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1" for="specialty">Especialidad</label>
+          <input type="text" id="edit-physiotherapist-specialty" name="specialty" placeholder="Ej. Terapia deportiva, Neuromuscular" required
+                 class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-indigo-500 focus:outline-none" value="Rehabilitación post-lesión"/>
+        </div>
+  
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1" for="bio">Biografía</label>
+          <textarea id="edit-physiotherapist-bio" name="bio" rows="4" placeholder="Describe su trayectoria y experiencia..." required
+                    class="w-full px-4 py-2 border border-gray-300 rounded-md resize-none focus:ring-2 focus:ring-indigo-500 focus:outline-none">Laura es una fisioterapeuta con más de 10 años de experiencia en el tratamiento de lesiones deportivas. Se destaca por su enfoque personalizado y uso de técnicas modernas para acelerar la recuperación.</textarea>
+        </div>
+  
+        <!-- Botones -->
+        <div class="flex justify-between items-center pt-4">
+          <a href="#physiotherapy/moreInformation" class="bg-gray-300 text-gray-800 px-4 py-2 rounded-md hover:bg-gray-400 font-semibold transition">
+            Volver
+          </a>
+          <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-md hover:bg-indigo-700 font-semibold transition" id="save-edit-physiotherapist-btn">
+            Guardar fisioterapeuta
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

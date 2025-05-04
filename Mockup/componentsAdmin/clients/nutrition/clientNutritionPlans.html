@@ -1,0 +1,69 @@
+<div class="bg-gray-100 font-sans leading-normal tracking-normal nutritionContainer">
+    <header>
+        <h1 class="containerTitle drop-shadow-[0_1.4px_1.8px_rgba(0,0,0,1)] ">Plan Nutricional</h1>
+        <p class="text-center text-white text-xl mb-4">Cliente: <span class="font-semibold">Juan Pérez</span></p>
+    </header>
+
+    <main class="container mx-auto p-4">
+
+        <section class="bg-white rounded-3xl shadow-md p-4">
+            <table class="min-w-full bg-white text-center">
+                <thead>
+                    <tr>
+                        <th class="py-2 px-4 bg-blue-500 text-white">Comida</th>
+                        <th class="py-2 px-4 bg-blue-500 text-white">Hora</th>
+                        <th class="py-2 px-4 bg-blue-500 text-white">Descripción</th>
+                        <th class="py-2 px-4 bg-blue-500 text-white">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody id="add-routine-item">
+                    <tr class="border-t" id="nutrition-plan-to-delete">
+                        <td class="py-2 px-4">Desayuno</td>
+                        <td class="py-2 px-4">08:00</td>
+                        <td class="py-2 px-4">Avena con frutas y nueces</td>
+                        <td class="py-2 px-4">
+                            <a class="px-4 py-2 text-sm text-center text-white bg-yellow-500 hover:bg-yellow-700 rounded-lg font-semibold hover:scale-105" href="#clients/nutrition/editNutritionPlan">Editar</a>
+                            <a class="px-4 py-2 text-sm text-center text-white bg-red-500 hover:bg-red-700 rounded-lg font-semibold hover:scale-105" href="" id="delete-nutrition-plan">Eliminar</a>
+                        </td>
+                    </tr>
+                    <tr class="border-t">
+                        <td class="py-2 px-4">Almuerzo</td>
+                        <td class="py-2 px-4">12:00</td>
+                        <td class="py-2 px-4">Ensalada de verduras con pechuga al vapor</td>
+                        <div>
+                            <td>
+                                <a class="w-full px-4 py-2 text-sm text-center text-white bg-yellow-500 hover:bg-yellow-700 rounded-lg font-semibold hover:scale-105" href="">Editar</a>
+                                <a class="w-full px-4 py-2 text-sm text-center text-white bg-red-500 hover:bg-red-700 rounded-lg font-semibold hover:scale-105" href="">Eliminar</a>
+                            </td>
+                        </div>
+                    </tr>
+                    <tr class="border-t">
+                        <td class="py-2 px-4">Snack</td>
+                        <td class="py-2 px-4">15:00</td>
+                        <td class="py-2 px-4">Yogurt griego con granola</td>
+                        <div>
+                            <td>
+                                <a class="w-full px-4 py-2 text-sm text-center text-white bg-yellow-500 hover:bg-yellow-700 rounded-lg font-semibold hover:scale-105" href="">Editar</a>
+                                <a class="w-full px-4 py-2 text-sm text-center text-white bg-red-500 hover:bg-red-700 rounded-lg font-semibold hover:scale-105" href="">Eliminar</a>
+                            </td>
+                        </div>
+                    </tr>
+                    <tr class="border-t">
+                        <td class="py-2 px-4">Cena</td>
+                        <td class="py-2 px-4">19:00</td>
+                        <td class="py-2 px-4">Salmón ahumado con espárragos</td>
+                        <div>
+                            <td>
+                                <a class="w-full px-4 py-2 text-sm text-center text-white bg-yellow-500 hover:bg-yellow-700 rounded-lg font-semibold hover:scale-105" href="">Editar</a>
+                                <a class="w-full px-4 py-2 text-sm text-center text-white bg-red-500 hover:bg-red-700 rounded-lg font-semibold hover:scale-105" href="">Eliminar</a>
+                            </td>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        <div class="flex justify-center">
+            <a href="#clients/nutrition/addNutritionPlan" class="text-white font-semibold py-4 px-4 border-2 mt-10 rounded-lg hover:scale-105 bg-blue-500 hover:bg-blue-700">Nuevo plan</a>
+        </div>
+    </main>
+</div>

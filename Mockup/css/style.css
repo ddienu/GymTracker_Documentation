@@ -1,12 +1,19 @@
 @font-face {
-    font-family: 'BebasNeue'; /* Nombre que le darás a la fuente */
-    src: url('../fonts/BebasNeue-Regular.woff2') format('woff2'); /* Ruta al archivo .woff2 */
-    font-weight: normal; /* Estilo de la fuente (normal, bold, etc.) */
-    font-style: normal; /* Estilo de la fuente (normal, italic, etc.) */
+    font-family: 'BebasNeue';
+    src: url('../fonts/BebasNeue-Regular.woff2') format('woff2'); 
+    font-weight: normal; 
+    font-style: normal;
   }
 
 body {
     margin: 0;
+    display: grid;
+    min-height: 100dvh;
+    grid-template-rows: auto 1fr auto;
+}
+
+a {
+    color: #FAED27;
 }
 .menu {
     display: flex;
@@ -32,7 +39,6 @@ body {
     width: 70px;
     height: 70px;
     margin-left: 4em;
-    --border-radius: 40px;
 }
 
 #list {
@@ -119,7 +125,13 @@ body {
 
 .photoTitleContainer {
     display: flex;
-    margin: 7em 0 0 12em;
+    justify-content: center;
+    margin: 7em 0 7em 0em;
+}
+
+#fotoGimnasio {
+    width: 600px;
+    height: 400px;
 }
 
 .gymDescription {
@@ -128,27 +140,186 @@ body {
 }
 
 .footerContainer {
-    align-items: center;
     display: flex;
     justify-content: center;
+    align-items: center; 
+    flex-wrap: wrap; 
     font-family: 'BebasNeue';
-    color:#E6ED07;
+    color: #E6ED07;
     background-color: black;
+    padding: 10px;
 }
 
-.aboutCompany {
-    text-align: -webkit-center;
+.infoCompanyContainer div {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
 }
 
-.aboutCompanyContainer {
-    width: 50%;
+.infoCompanyContainer div svg {
+    width: 20px;
+    height: 30px;
+    margin: 0 20px 0 0;
+}
+
+.socialMedia a {
+    text-decoration: none;
+    color: #E6ED07;
+}
+
+/*ABOUT PLANS STYLES*/
+
+.plansContainer {
+    margin: 2em 0 5em 0;
+}
+
+.containerTitle {
     text-align: center;
+    font-family: 'BebasNeue';
+    color: #E6ED07;
+    -webkit-text-stroke: 0.1px black;
+    font-size: 50px;
+    margin: 0;
+    /* padding-bottom: 1em; */
+}
+
+.plansDescription {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin: 2em 10em 0 10em;
+}
+
+.plan1, .plan2, .plan3{
+    border: solid black;
+    display: grid;
+    flex-grow: 1;
+    text-align: center;
+    margin: 0 2em 0 2em;
+}
+
+.plan1 img, .plan2 img, .plan3 img {
+    height: 200px;
+    align-items: center;
+    width: 80%;
+    margin: auto;
+}
+
+.aboutUsImageDescriptionContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10em 0 10em;
+}
+
+#aboutUsImage {
+    width: 600px;
+    height: 400px;
+    margin: 4em 5em 4em 0em;
+    align-content: baseline;
+    /* border: solid red */
+}
+
+.aboutUsDescriptionContainer {
+    text-align: justify;
+    align-content: center;
+    padding: 0 0 2em 0;
+}
+
+#titleDescription {
+    text-align: center;
+    font-family: 'BebasNeue';
+    font-weight: bold;
+    color: #E6ED07;
+    -webkit-text-stroke: 0.1px black;
+    font-size: 35px;
+    margin: 0.5em 0 0.5em 0;
+}
+
+#titlePrinciples{
+    font-weight: bold;
+}
+
+/* STYLE SIGN IN FORM */
+
+.signInImage {
+    text-align: center;
+    margin: 0 0 2em 0;
+}
+
+.signInContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.signInDiv {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2em; 
+    font-size: 20px;
+}
+
+.signInDiv input {
+    font-size: 15px;
+}
+
+.signInButtonDiv {
+    text-align: center;
+    width: 100%;
+}
+
+.signInButtonDiv button {
+    /* border-radius: 50px; */
+    margin-bottom: 5em;
+}
+
+.contenedor {
+    background: url('../assets/backgroundGym.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 0;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+
+.nutritionContainer {
+    background: url('../assets/food_plates.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 0;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+
+.appointmentContainer {
+    background: url('../assets/appointment.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 0;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+
+.appointmentTrainerContainer {
+    background: url('../assets/appointmentTrainer.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 0;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+
+.appointmentPhysiotherapistContainer {
+    background: url('../assets/Physiotherapist2.jpg') no-repeat center;
+    background-size: cover;
+    background-color: rgba(255, 255, 255, 0.1);
+    margin: 0;
+    padding-bottom: 40px;
+    padding-top: 40px;
 }
 
 
 
-
-
-
-
-
+/* drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] */

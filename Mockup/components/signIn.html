@@ -1,0 +1,29 @@
+<section class="contenedor">
+<h1 class="containerTitle">Inicia sesión en tu cuenta</h1>
+
+<div class="h-max-full w-full flex items-center justify-center boot font-serif mb-10 text-ml">
+    <form class="bg-white px-8 pt-6 pb-8 mb-4 max-w-xs max-h-full border border-gray-200 rounded-xl shadow-lg" id="sign-in-form">
+        <img src="../assets/SignInIcon.svg" alt="Icono usuario" class="h-40 w-40 text-center flex justify-center w-full mb-8">
+        <div class="mb-4">
+            <label class="block text-gray-700 text-ml font-bold mb-2" for="username">
+                Usuario
+            </label>
+            <input class="text-ml shadow appearance-none border rounded w-[90%] p-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="username" type="email" placeholder="correo@correo.com" required>
+        </div>
+        <div class="mb-6">
+            <label class="block text-gray-700 text-ml font-bold mb-2" for="password">
+                Contraseña
+            </label>
+            <input class="shadow appearance-none border rounded w-[90%] p-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline text-ml" id="password" type="password" placeholder="******************" required>
+            </div>
+        <div class="flex items-center justify-between">
+            <button class="text-ml bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-5 cursor-pointer hover:scale-105 rounded-full shadow-md" type="submit" id="js-sign-in-button">
+                Ingresar
+            </button>
+            <a class="inline-block align-baseline font-bold text-ml text-blue-500 hover:text-blue-800 cursor-pointer" href="#forgotPassword">
+                Olvidó su contraseña?
+            </a>
+        </div>
+    </form>
+</div>
+</section>

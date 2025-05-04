@@ -1,0 +1,74 @@
+<body class="bg-gray-100 text-gray-800">
+    <section class="text-center py-12">
+      <h1 class="containerTitle drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">Lista de planes</h1>
+      <p class="text-gray-600 mb-10">Accede a beneficios exclusivos con cada plan</p>
+  
+      <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 px-4" id="add-new-plan-target">
+        
+        <!-- Plan Básico -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 border-t-4 border-gray-400 hover:scale-105 transition-transform flex flex-col h-full justify-between relative" id="plan-to-deactivate-target">
+            <div>
+              <h2 class="text-2xl font-bold text-gray-700 mb-2" id="plan-name-target">Plan Básico</h2>
+              <p class="text-gray-500 mb-6" id="plan-desc-target">Perfecto para empezar</p>
+              <p class="text-4xl font-extrabold text-gray-800 mb-6" id="plan-price-target">
+                $45.000<span class="text-base font-medium text-gray-500">/mes</span>
+              </p>
+              <ul class="text-left text-gray-600 space-y-3 mb-6" id="plan-benefits-target">
+                <li>✔ Acceso ilimitado a la sala de musculación</li>
+                <li>✔ Plan de entrenamiento básico sin personalización</li>
+                <li>✔ Acceso estándar a la app GymTracker</li>
+                <li>✔ Evaluación inicial gratuita (1ra vez, sin seguimientos ni ajustes posteriores)</li>
+              </ul>
+            </div>
+          
+            <!-- Botones al final -->
+            <div class="flex justify-center space-x-3 mt-auto pt-4">
+              <button class="w-full bg-yellow-700 text-white py-2 rounded-xl hover:bg-yellow-800 transition" id="edit-plan-btn">Editar</button>
+              <button class="w-full bg-red-700 text-white py-2 rounded-xl hover:bg-red-800 transition" id="erase-plan-btn">Eliminar</button>
+            </div> 
+          </div>
+  
+        <!-- Plan Intermedio -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 border-t-4 border-yellow-500 hover:scale-105 transition-transform flex flex-col h-full">
+          <h2 class="text-2xl font-bold text-gray-700 mb-2">Plan Intermedio</h2>
+          <p class="text-gray-500 mb-6">Más valor para tu salud</p>
+          <p class="text-4xl font-extrabold text-gray-800 mb-6">$75.000<span class="text-base font-medium text-gray-500">/mes</span></p>
+          <ul class="text-left text-gray-600 space-y-3 mb-6">
+            <li>✔ Acceso ilimitado para entrenar en cualquier momento</li>
+            <li>✔ Evaluaciones periódicas: evaluación inicial + seguimiento mensual con medición y ajustes</li>
+            <li>✔ Acceso premium a la app GymTracker</li>
+            <li>✔ 1 sesión mensual con nutricionista (sin costo)</li>
+            <li>✔ 1 sesión mensual con entrenador personal (sin costo)</li>
+          </ul>
+          <div class="flex justify-center space-x-3 mt-auto pt-4">
+            <button class="w-full bg-yellow-700 text-white py-2 rounded-xl hover:bg-yellow-800 transition">Editar</button>
+            <button class="w-full bg-red-700 text-white py-2 rounded-xl hover:bg-red-800 transition">Eliminar</button>
+          </div>
+        </div>
+  
+        <!-- Plan Premium -->
+        <div class="bg-white rounded-2xl shadow-lg p-8 border-t-4 border-red-500 hover:scale-105 transition-transform flex flex-col h-full">
+          <h2 class="text-2xl font-bold text-gray-700 mb-2">Plan Premium</h2>
+          <p class="text-gray-500 mb-6">Lo mejor para ti</p>
+          <p class="text-4xl font-extrabold text-gray-800 mb-6">$95.000<span class="text-base font-medium text-gray-500">/mes</span></p>
+          <ul class="text-left text-gray-600 space-y-3 mb-6">
+            <li>✔ Acceso ilimitado para entrenar en cualquier momento</li>
+            <li>✔ Evaluaciones avanzadas: inicial + seguimiento mensual con análisis detallado</li>
+            <li>✔ Acceso VIP a la app GymTracker</li>
+            <li>✔ 2 sesiones mensuales con nutricionista (sin costo)</li>
+            <li>✔ 2 sesiones mensuales con entrenador personal (sin costo)</li>
+            <li>✔ Acceso gratuito a fisioterapia en caso de lesión dentro del gimnasio</li>
+          </ul>
+          <div class="flex justify-center space-x-3 mt-auto pt-4">
+            <button class="w-full bg-yellow-700 text-white py-2 rounded-xl hover:bg-yellow-800 transition">Editar</button>
+            <button class="w-full bg-red-700 text-white py-2 rounded-xl hover:bg-red-800 transition">Eliminar</button>
+          </div>
+        </div>
+  
+      </div>
+      <div class="mt-10">
+        <a class="border-2 bg-blue-500 hover:bg-blue-700 cursor-pointer p-3 rounded-xl text-white font-semibold" href="#plans/addPlan" id="add-new-plan-btn">Nuevo plan</a>
+      </div>
+    </section>
+  </body>
+  

@@ -1,0 +1,49 @@
+<section class="bg-white rounded-2xl shadow-lg p-6 max-w-3xl mx-auto mt-10 h-max">  
+    <h2 class="containerTitle drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">Actualizar Pago</h2>
+    <form class="space-y-6">
+      
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Fecha del Pago</label>
+        <input type="datetime-local" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" value="2025-04-05 08:05" disabled/>
+      </div>
+  
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Monto</label>
+        <input type="number" placeholder="$" class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" value="105000" disabled/>
+      </div>
+  
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Método de Pago</label>
+        <select class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="payment-method-edited">
+          <option>Transferencia</option>
+          <option>Efectivo</option>
+          <option selected>Tarjeta de credito</option>
+        </select>
+      </div>
+  
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Plan</label>
+        <select class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" disabled>
+          <option selected>Premium</option>
+          <option>Básico</option>
+          <option>Intermedio</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium text-gray-700 mb-1">Estado del pago</label>
+        <select class="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500" id="payment-status-edited">
+          <option>Pagado</option>
+          <option>Rechazado</option>
+          <option>Pendiente<option>
+        </select>
+      </div>
+  
+      <div class="text-center pt-4">
+        <button type="submit" class="py-3 px-6 bg-indigo-600 text-white font-semibold rounded-xl hover:bg-indigo-700 transition-transform transform hover:scale-105" id="save-edit-payment-btn">
+          Actualizar Pago
+        </button>
+      </div>
+  
+    </form>
+  </section>

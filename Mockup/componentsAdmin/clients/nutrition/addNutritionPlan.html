@@ -1,0 +1,49 @@
+<div class="bg-gray-100 font-sans leading-normal tracking-normal">
+
+    <header class="text-white p-4">
+        <h1 class="containerTitle drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)]">Nuevo Plan Alimentario</h1>
+    </header>
+
+    <main class="container mx-auto p-4">
+
+        <section class="bg-white rounded shadow-md p-6 mb-6">
+            <h2 class="text-xl font-semibold mb-4">Detalles del Plan</h2>
+            <form action="#" method="POST" id="add-nutrition-form">
+    
+                <div class="mb-4">
+                    <label for="cliente" class="block text-gray-700 font-bold mb-2">Nombre del Cliente</label>
+                    <input type="text" id="cliente" name="cliente" placeholder="Ingrese el nombre del cliente" class="w-full p-2 border border-gray-300 rounded" value="Juan Pérez">
+                </div>
+
+                <div class="mb-4">
+                    <label for="fecha_inicio" class="block text-gray-700 font-bold mb-2">Fecha de Inicio</label>
+                    <input type="date" id="fecha_inicio" name="fecha_inicio" class="w-full p-2 border border-gray-300 rounded">
+                </div>
+            
+                <div class="mb-4">
+                    <label for="duracion" class="block text-gray-700 font-bold mb-2">Duración (semanas)</label>
+                    <input type="number" id="duracion" name="duracion" min="1" placeholder="Ingrese la duración en semanas" class="w-full p-2 border border-gray-300 rounded">
+                </div>
+
+                <div class="mb-4">
+                    <label for="comida" class="block text-gray-700 font-bold mb-2">Comida</label>
+                    <input type="text" id="meal-target" name="objetivo" placeholder="Ingrese la comida" class="w-full p-2 border border-gray-300 rounded">
+                </div>
+
+                <div class="mb-4">
+                    <label for="hora" class="block text-gray-700 font-bold mb-2">Hora</label>
+                    <input type="time" id="hour-target" name="hora" placeholder="Ingrese la comida" class="w-full p-2 border border-gray-300 rounded">
+                </div>
+
+                <div class="mb-4">
+                    <label for="descripcion" class="block text-gray-700 font-bold mb-2">Descripción</label>
+                    <textarea id="meal-description" name="descripcion" rows="4" placeholder="Describa el plan alimentario" class="w-full p-2 border border-gray-300 rounded"></textarea>
+                </div>
+
+                <div class="flex justify-center">
+                    <button type="submit" class="bg-green-600 text-white font-bold py-2 px-4 rounded hover:bg-green-700" id="save-nutrition-btn">Guardar Plan</button>
+                </div>
+            </form>
+        </section>
+    </main>
+</div>

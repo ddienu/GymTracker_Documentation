@@ -5,40 +5,45 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/style.css" />
-    <script src="JavaScript/script.js" defer></script>
+    <script src="JavaScript/scriptAdmin.js" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-      tailwind.config = {
-        corePlugins: {
-          preflight: false,
-        }
-      };
-    </script>    
+    
   </head>
 
   <body>
     <nav class="menu">
       <div class="contenedor-logo">
-        <img id="logoGym" src="assets/GymTrackerLogo.png" alt="Logo Gimnasio" />
+        <img id="logoGym" src="assets/GymTrackerLogo.png" alt="Logo Gimnasio"/>
       </div>
       <ul class="nav-list">
         <li id="list"><a id="listAncor" href="#index" class="nav-link">INICIO</a></li>
-        <li id="list"><a id="listAncor" href="#plans" class="nav-link">PLANES</a></li>
-        <li id="list"><a id="listAncor" href="#aboutUs" class="nav-link">SOBRE NOSOTROS</a></li>
+        <li id="list"><a id="listAncor" href="#clients/clients" class="nav-link">CLIENTES</a></li>
+        <li id="list"><a id="listAncor" href="#trainers/trainers" class="nav-link">ENTRENAMIENTO</a></li>
+        <li id="list"><a id="listAncor" href="#physiotherapy/physiotherapists" class="nav-link">FISIOTERAPIA</a></li>
+        <li id="list"><a id="listAncor" href="#nutrition/nutritionists" class="nav-link">NUTRICIÓN</a></li>
+        <li id="list"><a id="listAncor" href="#plans/planList" class="nav-link">PLANES</a></li>
       </ul>
 
       <div class="registerNav">
-        <div class="DivSignInButton">
-          <a id="SignInAncor" href="#signIn" class="hover:scale-105">Iniciar sesión</a>
-        </div>
-        <div class="RegisterButton">
-          <a id="RegisterAncor" href="#signUp" class="no-underline hover:scale-105">Registro</a>
+        <div class="relative group">
+          <button class="flex items-center gap-2 p-2 rounded-md bg-gray-800 hover:bg-gray-700 peer text-white mr-6">
+            <img src="assets/user-icon.svg" alt="User" class="w-8 h-8 rounded-full">
+            <span>Bienvenido, ADMIN</span>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+      
+          <div class="absolute mt-2 w-48 bg-gray-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300">
+            <a href="#profile" class="block px-4 py-2 hover:bg-gray-700 no-underline">Perfil</a>
+            <a id="logout" class="block px-4 py-2 hover:bg-gray-700 no-underline cursor-pointer">Cerrar sesión</a>
+          </div>
         </div>
       </div>
     </nav>
 
-    <section id="content">
+    <section id="admin-content">
     </section>
 
     <footer>
