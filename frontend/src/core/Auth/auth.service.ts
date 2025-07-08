@@ -5,6 +5,7 @@ import { Login } from '../../features/auth/model/login.model';
 import { Observable } from 'rxjs';
 import { RegisterModel } from '../../features/auth/model/register.model';
 import { RegisterResponse } from '../../features/auth/model/registerResponse.model';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ import { RegisterResponse } from '../../features/auth/model/registerResponse.mod
 export class AuthService {
 
   private apiUrl = "http://localhost:3000/api/auth";
+  
 
   constructor(private http: HttpClient) { }
 
@@ -23,4 +25,7 @@ export class AuthService {
     return this.http.post<RegisterResponse>(`${this.apiUrl}/register`, registerPayload);
   }
 
+  isAuthenticated() : boolean {
+    return !!localStorage.getItem('token');
+  }
 }

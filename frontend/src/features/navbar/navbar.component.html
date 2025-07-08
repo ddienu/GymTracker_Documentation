@@ -1,0 +1,51 @@
+<!-- navbar.component.html -->
+<nav *ngIf="!isAuthenticated" class="bg-black text-yellow-400 px-6 py-4 flex items-center justify-between">
+  <div class="flex items-center gap-4">
+    <img src="../../assets/GymTrackerLogo.png" alt="Logo" class="h-12 w-auto" />
+  </div>
+
+  <ul class="flex gap-12 font-bold text-lg uppercase tracking-wide">
+    <li><a routerLink="">Inicio</a></li>
+    <li><a routerLink="/services">Servicios</a></li>
+    <li><a routerLink="/aboutUs">Sobre nosotros</a></li>
+  </ul>
+
+  <div class="flex gap-4">
+    <button class="border-2 border-white rounded-full px-4 py-1 bg-black text-yellow-400 font-bold hover:bg-white hover:text-black transition" routerLink="/auth">
+      Iniciar sesión
+    </button>
+  </div>
+ </nav>
+<nav *ngIf="isAuthenticated" class="bg-black text-yellow-400 px-6 py-4 flex items-center justify-between">
+  <!-- Logo -->
+  <div class="flex items-center gap-4">
+    <img src="../../assets/GymTrackerLogo.png" alt="Logo" class="h-12 w-auto" />
+  </div>
+
+  <!-- Links -->
+  <ul class="flex gap-12 font-bold text-lg uppercase tracking-wide">
+    <li><a routerLink="" class="hover:text-yellow-300">INICIO</a></li>
+    <li><a routerLink="/client" class="hover:text-yellow-300">CLIENTES</a></li>
+    <li><a routerLink="/aboutUs" class="hover:text-yellow-300">ENTRENAMIENTO</a></li>
+    <li><a routerLink="/aboutUs" class="hover:text-yellow-300">FISIOTERAPIA</a></li>
+    <li><a routerLink="/aboutUs" class="hover:text-yellow-300">NUTRICIÓN</a></li>
+    <li><a routerLink="/services" class="hover:text-yellow-300">SERVICIOS</a></li>
+  </ul>
+
+  <!-- Dropdown -->
+  <div class="relative group">
+    <button class="flex items-center gap-2 px-4 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-white">
+      <img src="assets/user-icon.svg" alt="User" class="w-8 h-8 rounded-full">
+      <span>Bienvenido, {{ userLogged }}</span>
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+
+    <div class="absolute right-0 mt-2 w-48 bg-gray-800 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+      <a routerLink="/profile" class="block px-4 py-2 hover:bg-gray-700 text-white">Perfil</a>
+      <a (click)="logout()" class="block px-4 py-2 hover:bg-gray-700 text-white cursor-pointer">Cerrar sesión</a>
+    </div>
+  </div>
+</nav>
+

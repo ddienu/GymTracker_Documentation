@@ -1,7 +1,8 @@
+<app-navbar></app-navbar>
 <body class="bg-gray-100">
 
     <!-- Formulario para login -->
-    <div *ngIf="isRegister==false" class="min-h-screen flex items-center justify-center">
+    <div *ngIf="isRegister==false&&editForm===false" class="min-h-screen flex items-center justify-center">
         <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8">
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-800">Bienvenido a GymTracker</h2>
@@ -49,7 +50,7 @@
     <!-- Fin formulario login -->
 
     <!-- Formulario registro -->
-    <div *ngIf="isRegister==true" class="min-h-screen flex items-center justify-center">
+    <div *ngIf="isRegister==true&&registerFrom===''&&editForm===false" class="min-h-screen flex items-center justify-center">
         <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8">
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-800">Bienvenido a GymTracker</h2>
@@ -66,6 +67,11 @@
                     <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña: </label>
                     <input type="password" id="password" name="password" placeholder="******************"
                         formControlName="password"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="document_number" class="block text-gray-700 text-sm font-bold mb-2">Numero de documento: </label>
+                    <input type="document_number" id="document_number" name="document_number" formControlName="document_number"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-6">
@@ -117,4 +123,142 @@
         </div>
     </div>
     <!-- Fin formulario registro -->
+
+    <!-- Formulario registro nuevo cliente-->
+    <div *ngIf="isRegister==true && registerFrom ==='admin'" class="min-h-screen flex items-center justify-center">
+        <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800">Bienvenido a GymTracker</h2>
+                <p class="text-gray-600">Registro de clientes</p>
+            </div>
+            <form [formGroup]="registerForm" (ngSubmit)="registerFromAdmin()">
+                <div class="mb-4">
+                    <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Nombre de usuario: </label>
+                    <input type="username" id="username" name="username" placeholder="Usuario"
+                        formControlName="username"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña: </label>
+                    <input type="password" id="password" name="password" placeholder="******************"
+                        formControlName="password"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="document_number" class="block text-gray-700 text-sm font-bold mb-2">Numero de documento: </label>
+                    <input type="document_number" id="document_number" name="document_number" formControlName="document_number"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2">Nombre: </label>
+                    <input type="first_name" id="first_name" name="first_name" formControlName="first_name"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="last_name" class="block text-gray-700 text-sm font-bold mb-2">Apellido: </label>
+                    <input type="last_name" id="last_name" name="last_name" formControlName="last_name"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Correo electrónico: </label>
+                    <input type="email" id="email" name="email" placeholder="correo@correo.com" formControlName="email"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="birth_date" class="block text-gray-700 text-sm font-bold mb-2">Fecha de nacimiento:
+                    </label>
+                    <input type="date" id="birth_date" name="birth_date"
+                        formControlName="birth_date"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="gender" class="block text-gray-700 text-sm font-bold mb-2">Género:</label>
+                    <select id="gender" name="gender" formControlName="gender"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="" disabled selected hidden>Clic aquí para seleccionar tu género </option>
+                        <option value="Male">Hombre</option>
+                        <option value="Female" selected>Mujer</option>
+                        <option value="Other">Otro</option>
+                        <option value="Prefer not to say">Prefiero no decirlo</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="submit"
+                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Registro
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Fin formulario registro nuevo cliente -->
+
+    <!-- Formulario edición cliente-->
+    <div *ngIf="clientId !== 0 && editForm === true" class="min-h-screen flex items-center justify-center">
+        <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-gray-800">Edición de clientes</h2>
+            </div>
+            <form [formGroup]="registerForm" (ngSubmit)="editClientForm()">
+                <div class="mb-4">
+                    <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Nombre de usuario: </label>
+                    <input type="username" id="username" name="username" placeholder="Usuario"
+                        formControlName="username"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña: </label>
+                    <input type="password" id="password" name="password" placeholder="******************"
+                        formControlName="password"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="document_number" class="block text-gray-700 text-sm font-bold mb-2">Numero de documento: </label>
+                    <input type="document_number" id="document_number" name="document_number" formControlName="document_number"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2">Nombre: </label>
+                    <input type="first_name" id="first_name" name="first_name" formControlName="first_name"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="last_name" class="block text-gray-700 text-sm font-bold mb-2">Apellido: </label>
+                    <input type="last_name" id="last_name" name="last_name" formControlName="last_name"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Correo electrónico: </label>
+                    <input type="email" id="email" name="email" placeholder="correo@correo.com" formControlName="email"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="birth_date" class="block text-gray-700 text-sm font-bold mb-2">Fecha de nacimiento:
+                    </label>
+                    <input type="date" id="birth_date" name="birth_date"
+                        formControlName="birth_date"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="mb-6">
+                    <label for="gender" class="block text-gray-700 text-sm font-bold mb-2">Género:</label>
+                    <select id="gender" name="gender" formControlName="gender"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="" disabled selected hidden>Clic aquí para seleccionar tu género </option>
+                        <option value="Male">Hombre</option>
+                        <option value="Female" selected>Mujer</option>
+                        <option value="Other">Otro</option>
+                        <option value="Prefer not to say">Prefiero no decirlo</option>
+                    </select>
+                </div>
+                <div>
+                    <button type="submit"
+                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Actualizar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- Fin formulario registro nuevo cliente -->
 </body>
+<app-footer></app-footer>

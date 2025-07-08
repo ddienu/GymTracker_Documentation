@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+
+<main>
+  <div class="bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-3xl font-bold text-center text-gray-800 mb-10">Nuestros Servicios</h2>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div *ngFor="let service of services" class="bg-white shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow">
+          <h3 class="text-xl font-semibold text-gray-900">{{ service.name }}</h3>
+          <p class="text-gray-600 mt-2">{{ service.description }}</p>
+          <p class="text-green-600 font-semibold mt-4">
+            {{ service.price | currency:'COP':'symbol-narrow':'1.0-0' }} /mes
+          </p>
+          <p class="text-gray-600 mt-2">{{ service.duration_days }} días</p>
+          <p *ngIf="service.is_active === 0&&role==='ADMINISTRATOR'" class="text-red-600 mt-2">Desactivado</p>
+          <p *ngIf="service.is_active === 1&&role==='ADMINISTRATOR'" class="text-green-600 mt-2">Activo</p>
+
+          <div *ngIf="role==='ADMINISTRATOR'" class="mt-4 flex gap-3 justify-center">
+            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors" (click)="goToEdit(service.service_id)">
+              Editar
+            </button>
+            <button class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition-colors" (click)="deactivateService(service.service_id)">
+              Desactivar
+            </button>
+            <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors" (click)="removeService(service.service_id)">
+              Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón agregar nuevo servicio -->
+      <div *ngIf="role==='ADMINISTRATOR'" class="flex justify-center mt-10">
+        <a class="bg-green-600 text-white px-6 py-3 rounded-lg shadow hover:bg-green-700 transition-colors" routerLink='add' (click)="goToAdd()">
+          Nuevo servicio
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<app-footer></app-footer>
