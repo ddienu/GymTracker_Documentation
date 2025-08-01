@@ -88,6 +88,6 @@ export default class MoreInfoComponent implements OnInit{
     this.authStateService.setEditMode(true);
     this.authStateService.setClientId(this.clientId);
     this.authStateService.setRegisterMode(true, "");
-    this.router.navigate(['/'])
+    this.router.navigate(['/auth'])
   }
 }

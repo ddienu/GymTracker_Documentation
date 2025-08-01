@@ -34,8 +34,8 @@ export default class NavbarComponent implements OnInit{
       .onHidden.subscribe(() => {
         this.route.url.forEach( (ruta) => {
           ruta.forEach(elemento => {
-            if(!elemento.path.startsWith('')){
-              this.router.navigate(['']);
+            if(!elemento.path.startsWith('/')){
+              this.router.navigate(['/']);
             }else{
               window.location.reload();
             }

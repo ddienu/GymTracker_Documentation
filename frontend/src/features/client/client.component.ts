@@ -36,7 +36,7 @@ export default class ClientComponent implements OnInit{
 
   goToRegister(){
     this.authStateService.setRegisterMode(true, "admin");
-    this.router.navigate(['/'])
+    this.router.navigate(['/auth'])
   }
 
 }
