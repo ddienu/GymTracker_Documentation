@@ -1,5 +1,5 @@
 <!-- navbar.component.html -->
-<nav *ngIf="!isAuthenticated" class="bg-black text-yellow-400 px-6 py-4 flex items-center justify-between">
+<nav *ngIf="!isAuthenticated" class="px-6 py-4 flex items-center justify-between">
   <div class="flex items-center gap-4">
     <img src="../../assets/GymTrackerLogo.png" alt="Logo" class="h-12 w-auto" />
   </div>
@@ -16,7 +16,7 @@
     </button>
   </div>
  </nav>
-<nav *ngIf="isAuthenticated" class="bg-black text-yellow-400 px-6 py-4 flex items-center justify-between">
+<nav *ngIf="isAuthenticated" class="text-yellow-400 px-6 py-4 flex items-center justify-between">
   <!-- Logo -->
   <div class="flex items-center gap-4">
     <img src="../../assets/GymTrackerLogo.png" alt="Logo" class="h-12 w-auto" />
