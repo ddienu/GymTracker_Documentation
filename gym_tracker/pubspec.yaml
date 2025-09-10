@@ -76,6 +76,7 @@ flutter:
     - assets/notifications/training_appointment.png
     - assets/notifications/nutrition_appointment.png
     - assets/notifications/meet.jpg
+    - assets/notifications/payment_reminder.jpg
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

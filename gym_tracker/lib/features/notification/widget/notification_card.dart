@@ -28,17 +28,18 @@ class NotificationCard extends StatelessWidget {
         child: Container(
           width: MediaQuery.of(context).size.width * 0.8,
           height: MediaQuery.of(context).size.width * 0.34,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(12)),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
           child: Stack(
             children: [
-              Container(
-                width: double.infinity,
-                child: Opacity(
-                  opacity: 1,
-                  child: Image(
-                    image: AssetImage(imagePath),
-                    fit: BoxFit.fill
-                    ),
+              ClipRRect(
+                borderRadius: BorderRadiusGeometry.circular(18),
+                child: SizedBox(
+                  height: double.infinity,
+                  width: double.infinity,
+                  child: Opacity(
+                    opacity: 0.9,
+                    child: Image(image: AssetImage(imagePath), fit: BoxFit.cover),
+                  ),
                 ),
               ),
               Positioned(
@@ -56,6 +57,7 @@ class NotificationCard extends StatelessWidget {
               Positioned(
                 bottom: 10,
                 left: 12,
+                right: 12,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -71,6 +73,9 @@ class NotificationCard extends StatelessWidget {
                     Text(
                       subtitle,
                       style: TextStyle(color: fontColor, fontSize: 14),
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      softWrap: true,
                     ),
                   ],
                 ),

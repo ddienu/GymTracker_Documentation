@@ -24,6 +24,16 @@ class Notifications extends StatelessWidget {
       "color": Colors.white,
       "imagePath": "notifications/meet.jpg",
     },
+    {
+      "onTap": () {
+        print("Entrando");
+      },
+      "date": "17/Agosto/2025",
+      "title": "Recordatorio de pago",
+      "subtitle": "Tu afilicación al gimnasio vence pronto, no olvides realizar tu pago.",
+      "color": Colors.white,
+      "imagePath": "notifications/payment_reminder.jpg",
+    },
   ];
 
   Notifications({super.key});
