@@ -11,10 +11,10 @@ class _AvatarSelectorState extends State<AvatarSelector> {
   final List<String> avatars = [
     "gender/female_gender.png",
     "gender/male_gender.png",
-    "assets/avatars/avatar3.png",
-    "assets/avatars/avatar3.png",
-    "assets/avatars/avatar3.png",
-    "assets/avatars/avatar3.png",
+    "gender/female_gender.png",
+    "gender/male_gender.png",
+    "gender/female_gender.png",
+    "gender/male_gender.png",
   ];
 
   int selectedIndex = 0; // el que está seleccionado

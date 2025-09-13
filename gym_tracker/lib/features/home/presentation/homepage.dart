@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:gym_tracker/features/home/widget/card_item.dart';
 import 'package:gym_tracker/features/home/widget/my_account.dart';
 import 'package:gym_tracker/features/notification/presentation/notification.dart';

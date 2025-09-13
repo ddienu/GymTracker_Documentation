@@ -18,9 +18,9 @@ class CustomButton extends StatelessWidget{
   
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: onPressed,
-      child: Container(
+      child: Ink(
         width: MediaQuery.of(context).size.width * width,
         padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 24),
         decoration: BoxDecoration(

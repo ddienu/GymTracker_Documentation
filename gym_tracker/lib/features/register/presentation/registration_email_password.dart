@@ -1,8 +1,6 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym_tracker/features/begin/widgets/custombutton.dart';
-import 'package:gym_tracker/features/login/presentation/login.dart';
 import 'package:gym_tracker/features/register/presentation/registration_personal_info.dart';
 import 'package:gym_tracker/features/register/widgets/email_field.dart';
 import 'package:gym_tracker/features/register/widgets/have_account_already.dart';
