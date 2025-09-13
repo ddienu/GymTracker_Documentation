@@ -28,11 +28,11 @@ class NotificationCard extends StatelessWidget {
         child: Container(
           width: MediaQuery.of(context).size.width * 0.8,
           height: MediaQuery.of(context).size.width * 0.34,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(22)),
           child: Stack(
             children: [
               ClipRRect(
-                borderRadius: BorderRadiusGeometry.circular(18),
+                borderRadius: BorderRadiusGeometry.circular(10),
                 child: SizedBox(
                   height: double.infinity,
                   width: double.infinity,

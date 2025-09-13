@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym_tracker/features/notification/widget/notification_card.dart';
+import 'package:gym_tracker/features/profile/presentation/edit_avatar.dart';
 
 class Notifications extends StatelessWidget {
   final List<Map<String, dynamic>> notificationItems = [
@@ -58,11 +59,45 @@ class Notifications extends StatelessWidget {
                   filterQuality: FilterQuality.high,
                   fit: BoxFit.cover,
                   opacity: 0.8,
+                  // invertColors: true
                 ),
               ),
-              child: Image(
-                image: AssetImage("profile/profile_image.png"),
-                alignment: Alignment.bottomCenter * 0.7,
+              child: Center(
+                child: Stack(
+                  children: [
+                    CircleAvatar(
+                      radius: 70,
+                      backgroundImage: AssetImage("profile/profile_image.png"),
+                    ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFF97316),
+                        borderRadius: BorderRadius.circular(18),
+                        
+                      ),
+                      child: IconButton(
+                        padding: EdgeInsets.zero,
+                        icon: Icon(Icons.edit),
+                        color: Colors.white,
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EditAvatar()
+                              )
+                          );
+                        },
+                      ),
+                    ),
+                  )
+                  ],
+                  
+                ),
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),

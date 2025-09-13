@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart'; // 👈 importante
 import 'package:gym_tracker/features/begin/presentation/begin.dart';
+import 'package:gym_tracker/features/home/presentation/homepage.dart';
 import 'package:gym_tracker/features/initial/presentation/initial_page.dart';
 import 'package:gym_tracker/features/login/presentation/login.dart';
 import 'package:gym_tracker/features/notification/presentation/notification.dart';
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         Locale('es', ''), // español
       ],
 
-      home: Notifications(),
+      home: HomePage(),
       initialRoute: '/',
       routes: {
         'begin': (context) => const Begin(),
