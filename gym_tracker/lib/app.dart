@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         Locale('es', ''), // español
       ],
 
-      home: PersonalInfo(),
+      home: Login(),
       initialRoute: '/',
       routes: {
         'begin': (context) => const Begin(),
