@@ -28,11 +28,11 @@ class MyApp extends StatelessWidget {
         Locale('es', ''), // español
       ],
 
-      home: HomePage(),
+      home: Login(),
       initialRoute: '/',
       routes: {
         'begin': (context) => const Begin(),
-        'login': (context) => const Login(),
+        'login': (context) => Login(),
         'recover': (context) => RecoverPassword(),
       },
     );

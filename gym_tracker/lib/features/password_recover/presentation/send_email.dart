@@ -39,7 +39,7 @@ class _SendEmailPageState extends State<SendEmail> {
               padding: EdgeInsets.all(16),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: Colors.white,
+                color: Colors.white
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -74,8 +74,9 @@ class _SendEmailPageState extends State<SendEmail> {
                     ),
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-                  isAlreadySended == false
-                      ? CustomButton(
+                  isAlreadySended
+                      ? SizedBox()
+                      : CustomButton(
                           text: "Reenviar contraseña",
                           onPressed: () => {
                             setState(() {
@@ -83,17 +84,16 @@ class _SendEmailPageState extends State<SendEmail> {
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
                                   content: Text("Correo reenviado con éxito ✅"),
-                                  backgroundColor: Colors.green,
+                                  backgroundColor: Colors.black,
                                   duration: Duration(seconds: 3),
                                 ),
                               );
                             })
                           },
-                          width: 0.9,
+                          width: 0.8,
                           icon: Icons.lock,
                           color: Colors.black,
                         )
-                      : SizedBox(),
                 ],
               ),
             ),
@@ -103,6 +103,3 @@ class _SendEmailPageState extends State<SendEmail> {
     );
   }
 }
-  // Widget build(BuildContext context) {
-    
-  // }

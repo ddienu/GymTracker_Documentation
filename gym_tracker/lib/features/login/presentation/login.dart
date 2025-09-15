@@ -1,16 +1,24 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym_tracker/features/begin/widgets/custombutton.dart';
+import 'package:gym_tracker/features/home/presentation/homepage.dart';
+import 'package:gym_tracker/features/login/widget/input_field.dart';
 import 'package:gym_tracker/features/password_recover/presentation/recover_password.dart';
 import 'package:gym_tracker/features/register/presentation/registration_email_password.dart';
 
 class Login extends StatelessWidget {
-  const Login({super.key});
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  Login({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Column(
         children: [
           Container(
@@ -56,53 +64,76 @@ class Login extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 20),
-                  TextField(
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: const Color(0xFFF97316),
-                          width: 2.0,
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        InputField(
+                          controller: emailController,
+                          label: "Correo electrónico",
+                          keyboardType: TextInputType.emailAddress,
+                          icon: Icons.email,
+                          isPassword: false,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "El correo electrónico no puede estar vacío";
+                            }
+
+                            if (!RegExp(
+                              r'^[^@]+@[^@]+\.[^@]+',
+                            ).hasMatch(value)) {
+                              return 'Ingresa un correo válido';
+                            }
+                            return null;
+                          },
                         ),
-                      ),
-                      labelText: "Correo electrónico",
-                      labelStyle: TextStyle(color: Colors.black),
-                      floatingLabelStyle: TextStyle(
-                        color: const Color(0xFFF97316),
-                      ),
-                      prefixIcon: const Icon(Icons.email),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    keyboardType: TextInputType.emailAddress,
-                  ),
-                  const SizedBox(height: 50),
-                  TextField(
-                    decoration: InputDecoration(
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                        borderSide: BorderSide(
-                          color: const Color(0xFFF97316),
-                          width: 2.0,
+                        const SizedBox(height: 50),
+                        InputField(
+                          controller: passwordController,
+                          label: "Contraseña",
+                          keyboardType: TextInputType.visiblePassword,
+                          icon: Icons.lock,
+                          isPassword: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "La contraseña no puede estar vacía";
+                            }
+                            return null;
+                          },
                         ),
-                      ),
-                      labelText: "Contraseña",
-                      labelStyle: TextStyle(color: Colors.black),
-                      floatingLabelStyle: TextStyle(
-                        color: const Color(0xFFF97316),
-                      ),
-                      prefixIcon: const Icon(Icons.lock),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
+                      ],
                     ),
-                    keyboardType: TextInputType.emailAddress,
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                   CustomButton(
                     text: "Iniciar sesión",
-                    onPressed: () => print("Iniciando sesión..."),
+                    onPressed: () => {
+                      if (_formKey.currentState!.validate())
+                        {
+                          showDialog(
+                            context: context,
+                            barrierDismissible:
+                                false, // evita que lo cierren tocando afuera
+                            builder: (context) {
+                              // disparar la acción después de que se construya el diálogo
+                              Future.delayed(const Duration(seconds: 3), () {
+                                Navigator.pop(context); // cierra el diálogo
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => HomePage(),
+                                  ),
+                                );
+                              });
+
+                              return AlertDialog(
+                                backgroundColor: Colors.green,
+                                content: const Text("Iniciando sesión...", style: TextStyle(color: Colors.white),),
+                              );
+                            },
+                          ),
+                        },
+                    },
                     width: 0.4,
                     icon: Icons.arrow_forward,
                     color: Colors.black,
@@ -133,7 +164,8 @@ class Login extends StatelessWidget {
                                 ..onTap = () => Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => RegistrationEmailPassword(),
+                                    builder: (context) =>
+                                        RegistrationEmailPassword(),
                                   ),
                                 ),
                             ),
