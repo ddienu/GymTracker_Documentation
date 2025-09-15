@@ -10,8 +10,8 @@ import 'package:gym_tracker/features/register/presentation/registration_email_pa
 
 class Login extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   Login({super.key});
 
