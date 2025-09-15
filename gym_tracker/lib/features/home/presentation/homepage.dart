@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gym_tracker/features/home/widget/card_item.dart';
 import 'package:gym_tracker/features/home/widget/my_account.dart';
 import 'package:gym_tracker/features/notification/presentation/notification.dart';
+import 'package:gym_tracker/features/settings/presentation/settings.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -121,7 +122,14 @@ class HomePage extends StatelessWidget {
             ),
             IconButton(
               icon: Text("⚙️", style: TextStyle(fontSize: 25)),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: (context) => const SettingsPage()
+                    )
+                  );
+              },
             ),
             IconButton(
               icon: Text("🛒", style: TextStyle(fontSize: 25)),
