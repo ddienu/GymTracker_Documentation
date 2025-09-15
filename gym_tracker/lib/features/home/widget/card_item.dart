@@ -13,7 +13,7 @@ class CardItem extends StatelessWidget {
     required this.containerColor,
     required this.cardWidget,
     required this.cardTitle,
-    required this.cardSubtitle, 
+    required this.cardSubtitle,
     required this.onTap,
   });
 

@@ -9,7 +9,7 @@ import 'package:gym_tracker/features/notification/presentation/notification.dart
 class HomePage extends StatelessWidget {
   HomePage({super.key});
 
-  final List<Map<String, dynamic>> items = [
+  List<Map<String, dynamic>> _getItems(BuildContext context) => [
     {
       "containerColor": const Color(0xFFF97316),
       "cardWidget": const Image(
@@ -54,9 +54,7 @@ class HomePage extends StatelessWidget {
       "cardTitle": "Consulta tu plan alimentario",
       "cardSubtitle":
           "Consulta tus planes alimentarios asignados por especialistas",
-      "onTap": () {
-        print("Entrando");
-      },
+      "onTap": () => Navigator.pushNamed(context, 'meal_plan'),
     },
     {
       "containerColor": const Color(0xFF8B5CF6), // purple
@@ -80,18 +78,14 @@ class HomePage extends StatelessWidget {
       ),
       "cardTitle": "Productos",
       "cardSubtitle": "Consulta los productos disponibles",
-      "onTap": () {
-        print("Entrando");
-      },
+      "onTap": () => Navigator.pushNamed(context, 'products'),
     },
     {
       "containerColor": const Color(0xFFEF4444), // red-ish
       "cardWidget": const Icon(Icons.payment, color: Colors.white, size: 30),
       "cardTitle": "Pagos",
       "cardSubtitle": "Observa tu historico",
-      "onTap": () {
-        print("Entrando");
-      },
+      "onTap": () => Navigator.pushNamed(context, 'payments'),
     },
   ];
 
@@ -141,7 +135,7 @@ class HomePage extends StatelessWidget {
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             Column(
               children: [
-                ...items.map(
+                ..._getItems(context).map(
                   (item) => CardItem(
                     containerColor: item['containerColor'],
                     cardWidget: item['cardWidget'],
