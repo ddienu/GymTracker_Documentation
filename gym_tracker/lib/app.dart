@@ -5,7 +5,6 @@ import 'package:gym_tracker/features/home/presentation/homepage.dart';
 import 'package:gym_tracker/features/login/presentation/login.dart';
 import 'package:gym_tracker/features/password_recover/presentation/recover_password.dart';
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
