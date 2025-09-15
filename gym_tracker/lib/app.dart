@@ -34,7 +34,6 @@ class MyApp extends StatelessWidget {
         'begin': (context) => const Begin(),
         'login': (context) => Login(),
         'recover': (context) => RecoverPassword(),
-        
       },
     );
   }

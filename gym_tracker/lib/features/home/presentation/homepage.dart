@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:gym_tracker/features/home/widget/card_item.dart';
 import 'package:gym_tracker/features/home/widget/my_account.dart';
+import 'package:gym_tracker/features/meal_plan/presentation/meal_plan_page.dart';
 import 'package:gym_tracker/features/notification/presentation/notification.dart';
+import 'package:gym_tracker/features/payments/presentation/payments_history_page.dart';
+import 'package:gym_tracker/features/products/presentation/products_page.dart';
 import 'package:gym_tracker/features/settings/presentation/settings.dart';
 
 class HomePage extends StatelessWidget {
@@ -52,7 +55,7 @@ class HomePage extends StatelessWidget {
       "cardTitle": "Consulta tu plan alimentario",
       "cardSubtitle":
           "Consulta tus planes alimentarios asignados por especialistas",
-      "onTap": () => Navigator.pushNamed(context, 'meal_plan'),
+      "onTap": () => Navigator.push(context, MaterialPageRoute(builder: (context)=>MealPlanPage())),
     },
     {
       "containerColor": const Color(0xFF8B5CF6), // purple
@@ -76,14 +79,14 @@ class HomePage extends StatelessWidget {
       ),
       "cardTitle": "Productos",
       "cardSubtitle": "Consulta los productos disponibles",
-      "onTap": () => Navigator.pushNamed(context, 'products'),
+      "onTap": () => Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductsPage())),
     },
     {
       "containerColor": const Color(0xFFEF4444), // red-ish
       "cardWidget": const Icon(Icons.payment, color: Colors.white, size: 30),
       "cardTitle": "Pagos",
       "cardSubtitle": "Observa tu historico",
-      "onTap": () => Navigator.pushNamed(context, 'payments'),
+      "onTap": () => Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentsHistoryPage())),
     },
   ];
 
