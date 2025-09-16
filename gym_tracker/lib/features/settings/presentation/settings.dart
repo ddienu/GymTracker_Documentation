@@ -51,7 +51,7 @@ class _SettingsPageState extends State<SettingsPage> {
             // Lista de opciones
             SettingsCard(
               title: "Notificaciones",
-              icon: Icons.notifications,
+              icon: Icons.notifications_outlined,
               onTap: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
               },
@@ -59,19 +59,19 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             SettingsCard(
               title: "Información personal",
-              icon: Icons.person,
+              icon: Icons.person_outline,
               onTap: () {},
               trailing: Icon(Icons.arrow_forward),
             ),
             SettingsCard(
               title: "Contacto entrenador",
-              icon: Icons.phone,
+              icon: Icons.phone_android_outlined,
               onTap: () {},
               trailing: Icon(Icons.arrow_forward),
             ),
             SettingsCard(
               title: "Modo oscuro",
-              icon: Icons.dark_mode,
+              icon: Icons.dark_mode_outlined,
               onTap: () {
                 setState(() {
                   _isDarkMode = !_isDarkMode;
@@ -92,7 +92,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             SettingsCard(
               title: "Cerrar sesión",
-              icon: Icons.logout,
+              icon: Icons.logout_outlined,
               onTap: () {},
               trailing: Icon(
                 Icons.arrow_forward,
