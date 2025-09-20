@@ -4,6 +4,7 @@ import 'package:gym_tracker/features/begin/presentation/begin.dart';
 import 'package:gym_tracker/features/home/presentation/homepage.dart';
 import 'package:gym_tracker/features/login/presentation/login.dart';
 import 'package:gym_tracker/features/password_recover/presentation/recover_password.dart';
+import 'package:gym_tracker/theme/custom_theme.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -12,11 +13,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'GymTrackerApp',
-      theme: ThemeData(
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme, 
+      // ThemeData(
+      //   useMaterial3: true,
+      // ),
       debugShowCheckedModeBanner: false,
-
       // 👇 Localizations necesarias para DatePicker, TimePicker, etc.
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,

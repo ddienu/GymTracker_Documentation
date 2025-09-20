@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../../data/models/product_model.dart';
-import '../product_detail_page.dart';
+import 'package:gym_tracker/models/product.dart';
+import '../presentation/product_detail_page.dart';
 
 class ProductCard extends StatelessWidget {
-  final ProductModel product;
+  final Product product;
 
   const ProductCard({
     super.key,
@@ -89,7 +89,7 @@ class ProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '\$${_formatPrice(product.price)}',
+                          '\$${_formatPrice(product.price as double)}',
                           style: GoogleFonts.workSans(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,

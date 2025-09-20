@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../data/models/product_model.dart';
-import '../data/repositories/products_repository.dart';
-import 'widgets/product_card.dart';
+import 'package:gym_tracker/features/products/widgets/build_category_button.dart';
+import 'package:gym_tracker/models/product.dart';
+import 'package:gym_tracker/repositories/product.dart';
+import 'package:gym_tracker/services/product_service.dart';
+// import '../data/models/product_model.dart';
+// import '../data/repositories/products_repository.dart';
+import '../widgets/product_card.dart';
 
 class ProductsPage extends StatefulWidget {
   const ProductsPage({super.key});
@@ -12,8 +16,9 @@ class ProductsPage extends StatefulWidget {
 }
 
 class _ProductsPageState extends State<ProductsPage> {
-  final ProductsRepository _repository = ProductsRepository();
-  List<ProductModel> _products = [];
+  final ProductService productService = ProductService();
+  late final ProductRepository _repository = ProductRepository(productService);
+  List<Product> _products = [];
   bool _isLoading = true;
   String _selectedCategory = 'productos';
 
@@ -33,7 +38,7 @@ class _ProductsPageState extends State<ProductsPage> {
       });
     } catch (e) {
       setState(() => _isLoading = false);
-      // Handle error
+      // Handle error5
     }
   }
 
@@ -57,13 +62,21 @@ class _ProductsPageState extends State<ProductsPage> {
               child: Column(
                 children: [
                   // AppBar content
-                  const SizedBox(height: 15), // Extra space to lower the back button
+                  const SizedBox(
+                    height: 15,
+                  ), // Extra space to lower the back button
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 8,
+                    ),
                     child: Row(
                       children: [
                         IconButton(
-                          icon: const Icon(Icons.arrow_back, color: Colors.black),
+                          icon: const Icon(
+                            Icons.arrow_back,
+                            color: Colors.black,
+                          ),
                           onPressed: () => Navigator.pop(context),
                         ),
                         const SizedBox(width: 48), // Balance the back button
@@ -81,32 +94,42 @@ class _ProductsPageState extends State<ProductsPage> {
                     ),
                   ),
                   const Spacer(),
-                    // Category buttons
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: _buildCategoryButton(
-                              'Productos',
-                              'productos',
-                              _selectedCategory == 'productos',
-                            ),
+                  // Category buttons
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: BuildCategoryButton(
+                            title: 'Productos',
+                            category: 'productos',
+                            selectedCategory: _selectedCategory,
+                            onCategorySelected: (category) {
+                              setState(() {
+                                _selectedCategory = category;
+                              });
+                            },
                           ),
-                          const SizedBox(width: 16),
-                          Expanded(
-                            child: _buildCategoryButton(
-                              'Servicios',
-                              'servicios',
-                              _selectedCategory == 'servicios',
-                            ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: BuildCategoryButton(
+                            title: 'Servicios',
+                            category: 'servicios',
+                            selectedCategory: _selectedCategory,
+                            onCategorySelected: (category) {
+                              setState(() {
+                                _selectedCategory = category;
+                              });
+                            },
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+            ),
           ),
           // Products grid section with clean background
           Expanded(
@@ -115,37 +138,11 @@ class _ProductsPageState extends State<ProductsPage> {
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
                   : _selectedCategory == 'productos'
-                      ? _buildProductsGrid()
-                      : _buildServicesView(),
+                  ? _buildProductsGrid()
+                  : _buildServicesView(),
             ),
           ),
         ],
-      ),
-    );
-  }
-
-  Widget _buildCategoryButton(String title, String category, bool isSelected) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedCategory = category;
-        });
-      },
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        decoration: BoxDecoration(
-          color: isSelected ? const Color(0xFFFF6B35) : Colors.grey[300],
-          borderRadius: BorderRadius.circular(25),
-        ),
-        child: Text(
-          title,
-          textAlign: TextAlign.center,
-          style: GoogleFonts.workSans(
-            color: isSelected ? Colors.white : Colors.grey[600],
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
-          ),
-        ),
       ),
     );
   }
@@ -172,10 +169,7 @@ class _ProductsPageState extends State<ProductsPage> {
     return Center(
       child: Text(
         'Servicios próximamente',
-        style: GoogleFonts.workSans(
-          fontSize: 18,
-          color: Colors.grey,
-        ),
+        style: GoogleFonts.workSans(fontSize: 18, color: Colors.grey),
       ),
     );
   }

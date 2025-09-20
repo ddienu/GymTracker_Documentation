@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import '../data/models/product_model.dart';
+import 'package:gym_tracker/models/product.dart';
 
 class ProductDetailPage extends StatelessWidget {
-  final ProductModel product;
+  final Product product;
 
   const ProductDetailPage({super.key, required this.product});
 
@@ -39,28 +39,6 @@ class ProductDetailPage extends StatelessWidget {
                     image: AssetImage('assets/gym_background.png'),
                     fit: BoxFit.cover,
                     opacity: 0.7,
-                  ),
-                ),
-                child: SafeArea(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 60), // Space for app bar
-                      // Category buttons
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: _buildCategoryButton('Productos', true),
-                            ),
-                            const SizedBox(width: 16),
-                            Expanded(
-                              child: _buildCategoryButton('Servicios', false),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ),
@@ -144,7 +122,7 @@ class ProductDetailPage extends StatelessWidget {
                           width: double.infinity,
                           height: 56,
                           child: ElevatedButton(
-                            onPressed: product.isAvailable
+                            onPressed: product.isActive
                                 ? () => _addToCart(context)
                                 : null,
                             style: ElevatedButton.styleFrom(
