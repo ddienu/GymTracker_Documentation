@@ -2,7 +2,7 @@ import 'package:gym_tracker/models/service.dart';
 import 'package:gym_tracker/services/service.dart';
 
 class ServiceRepository{
-  final Service service;
+  final ServiceService service;
 
   ServiceRepository(this.service);
 

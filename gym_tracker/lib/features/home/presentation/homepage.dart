@@ -5,6 +5,7 @@ import 'package:gym_tracker/features/meal_plan/presentation/meal_plan_page.dart'
 import 'package:gym_tracker/features/notification/presentation/notification.dart';
 import 'package:gym_tracker/features/payments/presentation/payments_history_page.dart';
 import 'package:gym_tracker/features/products/presentation/products_page.dart';
+import 'package:gym_tracker/features/service/presentation/service.dart';
 import 'package:gym_tracker/features/settings/presentation/settings.dart';
 
 class HomePage extends StatelessWidget {
@@ -67,7 +68,12 @@ class HomePage extends StatelessWidget {
       "cardTitle": "Servicios",
       "cardSubtitle": "Consulta los servicios disponibles",
       "onTap": () {
-        print("Entrando");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Service()
+            )
+        );
       },
     },
     {

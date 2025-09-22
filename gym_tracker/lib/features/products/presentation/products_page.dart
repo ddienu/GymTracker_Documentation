@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym_tracker/features/products/widgets/build_category_button.dart';
+import 'package:gym_tracker/features/service/presentation/service.dart';
 import 'package:gym_tracker/models/product.dart';
 import 'package:gym_tracker/repositories/product.dart';
 import 'package:gym_tracker/services/product_service.dart';
@@ -20,7 +21,8 @@ class _ProductsPageState extends State<ProductsPage> {
   late final ProductRepository _repository = ProductRepository(productService);
   List<Product> _products = [];
   bool _isLoading = true;
-  String _selectedCategory = 'productos';
+  final String _selectedCategory = 'productos';
+  String? _errorMessage;
 
   @override
   void initState() {
@@ -37,8 +39,12 @@ class _ProductsPageState extends State<ProductsPage> {
         _isLoading = false;
       });
     } catch (e) {
-      setState(() => _isLoading = false);
+      setState((){
+      _isLoading = false;
+      _errorMessage = "No se pudieron cargar los productos";
+      }
       // Handle error5
+      );
     }
   }
 
@@ -104,11 +110,7 @@ class _ProductsPageState extends State<ProductsPage> {
                             title: 'Productos',
                             category: 'productos',
                             selectedCategory: _selectedCategory,
-                            onCategorySelected: (category) {
-                              setState(() {
-                                _selectedCategory = category;
-                              });
-                            },
+                            onTap: () {},
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -117,10 +119,13 @@ class _ProductsPageState extends State<ProductsPage> {
                             title: 'Servicios',
                             category: 'servicios',
                             selectedCategory: _selectedCategory,
-                            onCategorySelected: (category) {
-                              setState(() {
-                                _selectedCategory = category;
-                              });
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Service(),
+                                ),
+                              );
                             },
                           ),
                         ),
@@ -137,9 +142,17 @@ class _ProductsPageState extends State<ProductsPage> {
               color: Colors.grey[100],
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
-                  : _selectedCategory == 'productos'
+                  : _errorMessage == null
                   ? _buildProductsGrid()
-                  : _buildServicesView(),
+                  : Center(
+                      child: Text(
+                        _errorMessage!,
+                        style: GoogleFonts.workSans(
+                          fontSize: 18,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ),
             ),
           ),
         ],
@@ -161,15 +174,6 @@ class _ProductsPageState extends State<ProductsPage> {
         itemBuilder: (context, index) {
           return ProductCard(product: _products[index]);
         },
-      ),
-    );
-  }
-
-  Widget _buildServicesView() {
-    return Center(
-      child: Text(
-        'Servicios próximamente',
-        style: GoogleFonts.workSans(fontSize: 18, color: Colors.grey),
       ),
     );
   }

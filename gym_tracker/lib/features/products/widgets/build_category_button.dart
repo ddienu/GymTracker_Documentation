@@ -5,14 +5,14 @@ class BuildCategoryButton extends StatefulWidget {
   final String title;
   final String category;
   final String selectedCategory;
-  final Function(String) onCategorySelected;
+  final VoidCallback onTap;
 
   const BuildCategoryButton({
     super.key,
     required this.title,
     required this.category,
     required this.selectedCategory,
-    required this.onCategorySelected,
+    required this.onTap,
   });
 
   @override
@@ -25,9 +25,7 @@ class _BuildCategoryButtonState extends State<BuildCategoryButton> {
     final bool isSelected = widget.selectedCategory == widget.category;
 
     return GestureDetector(
-      onTap: () {
-        widget.onCategorySelected(widget.category);
-      },
+      onTap: widget.onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 20),
         decoration: BoxDecoration(
