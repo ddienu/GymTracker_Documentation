@@ -39,7 +39,7 @@ class _ServicePageState extends State<Service> {
     } catch (e) {
       setState(() {
         _isLoading = false;
-        _errorMessage = "No se pudieron cargar los servicios";
+        _errorMessage = e.toString();
       });
     }
   }
