@@ -383,7 +383,7 @@ class MealDetailPage extends StatelessWidget {
             'name': 'Carbs',
             'value': '12g',
             'color': Colors.orange,
-            'progress': 0.4,
+            'progress': 0.9,
           },
           {
             'icon': '🫐',
@@ -434,7 +434,7 @@ class MealDetailPage extends StatelessWidget {
             'name': 'Carbs',
             'value': '1.8g',
             'color': Colors.orange,
-            'progress': 0.1,
+            'progress': 0.5,
           },
           {
             'icon': '🫐',

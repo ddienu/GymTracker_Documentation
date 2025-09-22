@@ -6,9 +6,11 @@ import 'package:gym_tracker/features/notification/presentation/notification.dart
 import 'package:gym_tracker/features/payments/presentation/payments_history_page.dart';
 import 'package:gym_tracker/features/products/presentation/products_page.dart';
 import 'package:gym_tracker/features/settings/presentation/settings.dart';
+import 'package:gym_tracker/progress/progress.dart';
+
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
   List<Map<String, dynamic>> _getItems(BuildContext context) => [
     {
@@ -19,9 +21,9 @@ class HomePage extends StatelessWidget {
       ),
       "cardTitle": "Mi progreso",
       "cardSubtitle": "Revisa tu progreso",
-      "onTap": () {
-        print("Entrando");
-      },
+      "onTap": () => {
+         Navigator.push(context, MaterialPageRoute(builder: (context)=>Progress())),
+        },
     },
     {
       "containerColor": const Color(0xFF2563EB), // blue

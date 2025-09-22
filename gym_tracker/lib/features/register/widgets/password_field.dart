@@ -64,7 +64,8 @@ class _PasswordFieldState extends State<PasswordField> {
           if (!RegExp(
                   r'^(?=.*[A-Z])(?=.*\d)(?=.*[!@#\$&*~.,;:?¿¡%\-_=+]).{8,}$')
               .hasMatch(value)) {
-            return 'Debe tener 8+ caracteres, una mayúscula, un número y un caracter especial';
+            return 'Debe tener 8-16 caracteres, con mayúscula, minúscula, número y símbolo.';
+                   
           }
         }
 

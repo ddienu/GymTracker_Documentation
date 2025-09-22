@@ -29,7 +29,7 @@ class DioClient {
       onRequest: (options, handler) {
         // Aquí podrías recuperar el token de almacenamiento seguro
         // String? token = SecureStorage.getToken();
-        String? token = null; 
+        String? token; 
         if (token != null) {
           options.headers["Authorization"] = "Bearer $token";
         }

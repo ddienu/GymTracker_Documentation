@@ -12,8 +12,8 @@ class RegistrationEmailPassword extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPasswordController = TextEditingController();
-  final _emailKey = GlobalKey<FormState>();
-  final _passwordKey = GlobalKey<FormState>();
+
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +29,7 @@ class RegistrationEmailPassword extends StatelessWidget {
       ),
       body: Column(
         children: [
+          // --- Encabezado con logo ---
           Container(
             height: MediaQuery.of(context).size.height * 0.32,
             width: double.infinity,
@@ -40,7 +41,6 @@ class RegistrationEmailPassword extends StatelessWidget {
                 opacity: 0.8,
               ),
             ),
-
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisSize: MainAxisSize.max,
@@ -76,69 +76,89 @@ class RegistrationEmailPassword extends StatelessWidget {
               ],
             ),
           ),
+
           SizedBox(height: MediaQuery.of(context).size.height * 0.05),
+
+          // --- Formulario completo ---
           Form(
-            key: _emailKey,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
-              child: EmailField(
-                controller: emailController, 
-                label: "Correo electrónico"
-                ),
-            ),
-          ),
-          SizedBox(height: MediaQuery.of(context).size.height * 0.03),
-          Form(
-            key: _passwordKey,
+            key: _formKey,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: Column(
                 children: [
+                  // Campo de correo
+                  EmailField(
+                    controller: emailController,
+                    label: "Correo electrónico",
+                  ),
+                  SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+
+                  // Campo de contraseña
                   PasswordField(
                     controller: passwordController,
                     label: "Contraseña",
                     validateStrength: true,
+                    validator: (value) {
+                      final regExp = RegExp(
+                        r'^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,16}$',
+                      );
+                      if (value == null || value.isEmpty) {
+                        return "La contraseña no puede estar vacía";
+                      }
+                      if (!regExp.hasMatch(value)) {
+                        return '* La contraseña debe tener entre 8 y 16 caracteres\n'
+                            '* Al menos un dígito\n'
+                            '* Al menos una minúscula\n'
+                            '* Al menos una mayúscula\n'
+                            '* Y al menos un carácter no alfanumérico.';
+                      }
+                      return null;
+                    },
                   ),
                   SizedBox(height: MediaQuery.of(context).size.height * 0.03),
+
+                  // Confirmar contraseña
                   PasswordField(
                     controller: confirmPasswordController,
                     label: "Confirmar contraseña",
                     validateStrength: false,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return "Por favor confirma tu contraseña";
+                      }
+                      if (value != passwordController.text) {
+                        return "Las contraseñas no coinciden";
+                      }
+                      return null;
+                    },
                   ),
                 ],
               ),
             ),
           ),
+
           SizedBox(height: MediaQuery.of(context).size.height * 0.08),
+
+          // --- Botón continuar ---
           CustomButton(
             text: 'Continuar',
             onPressed: () {
-              if(_emailKey.currentState!.validate() && _passwordKey.currentState!.validate()){
-                if(passwordController.text.trim() != confirmPasswordController.text.trim()){
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Las contraseñas no coinciden"),
-                      backgroundColor: Colors.red,
-                      duration: Duration(seconds: 3)
-                      ),
-                  );
-                      return; 
-                }
-
+              if (_formKey.currentState!.validate()) {
                 Navigator.push(
-                  context, 
+                  context,
                   MaterialPageRoute(
-                    builder: (context) => RegistrationPersonalInfo()
-                    )
-                  );
+                    builder: (context) => RegistrationPersonalInfo(),
+                  ),
+                );
               }
             },
             width: 0.9,
             icon: Icons.arrow_forward,
             color: Colors.black,
           ),
+
           SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-          HaveAnAccountAlready()
+          HaveAnAccountAlready(),
         ],
       ),
     );

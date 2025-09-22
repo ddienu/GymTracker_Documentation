@@ -3,7 +3,6 @@
 import 'package:flutter/material.dart';
 import 'data/models/product_model.dart';
 import 'data/repositories/products_repository.dart';
-import 'presentation/products_page.dart';
 import 'presentation/product_detail_page.dart';
 
 class ProductsExampleUsage {
