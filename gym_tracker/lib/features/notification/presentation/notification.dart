@@ -46,6 +46,9 @@ class Notifications extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
+        iconTheme: IconThemeData(
+          color: Colors.black
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
