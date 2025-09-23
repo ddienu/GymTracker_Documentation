@@ -1,0 +1,21 @@
+.gym-section {
+    background-image: url('/assets/MainBackground.jpg');
+    background-size: cover;
+    height: 100dvh;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.gym-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: inherit;
+    filter: blur(3px) brightness(0.6);
+    z-index: 0;
+}
+
+.gym-section>* {
+    position: relative;
+    z-index: 1;
+}

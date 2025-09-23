@@ -38,7 +38,7 @@ export default class AuthComponent implements OnInit{
     private clientService: ClientService
   ) {
     (this.loginForm = this.fb.group({
-      username: ['', Validators.required],
+      email: ['', Validators.required],
       password: ['', Validators.required],
     })),
       (this.registerForm = this.fb.group({

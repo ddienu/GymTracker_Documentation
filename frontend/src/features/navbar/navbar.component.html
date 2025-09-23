@@ -1,17 +1,19 @@
 <!-- navbar.component.html -->
-<nav *ngIf="!isAuthenticated" class="px-6 py-4 flex items-center justify-between">
-  <div class="flex items-center gap-4">
+<nav *ngIf="!isAuthenticated" class="bg-black px-6 py-4 flex items-center justify-between">
+  <div class="flex items-center gap-2 ml-6">
     <img src="../../assets/GymTrackerLogo.png" alt="Logo" class="h-12 w-auto" />
+    <h1 class="font-bold text-[#F88B39]">GYM TRACKER</h1>
   </div>
 
   <ul class="flex gap-12 font-bold text-lg uppercase tracking-wide">
     <li><a routerLink="">Inicio</a></li>
     <li><a routerLink="/services">Servicios</a></li>
+    <li><a>Productos</a></li>
     <li><a routerLink="/aboutUs">Sobre nosotros</a></li>
   </ul>
 
   <div class="flex gap-4">
-    <button class="border-2 border-white rounded-full px-4 py-1 bg-black text-yellow-400 font-bold hover:bg-white hover:text-black transition" routerLink="/auth">
+    <button class="rounded-full px-4 py-1 bg-primary text-black font-bold shadow-[0_0_15px_#F88B39] hover:shadow-[0_0_25px_#F88B39] hover:bg-white hover:text-black transition" routerLink="/auth">
       Iniciar sesión
     </button>
   </div>
@@ -20,6 +22,7 @@
   <!-- Logo -->
   <div class="flex items-center gap-4">
     <img src="../../assets/GymTrackerLogo.png" alt="Logo" class="h-12 w-auto" />
+    <h1 class="font-bold text-[#F88B39]">GYM TRACKER</h1>
   </div>
 
   <!-- Links -->

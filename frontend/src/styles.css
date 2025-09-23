@@ -8,11 +8,11 @@ body {
     display: grid;
     min-height: 100dvh;
     grid-template-rows: auto 1fr auto;
-    background-color: #181818
+    /* background-color: #181818 */
 }
 
 a {
-    color: #FAED27;
+    color: #f88b39
 }
 .menu {
     display: flex;
@@ -45,7 +45,7 @@ a {
 }
 
 #list a {
-    color: #E6ED07;
+    color: #F88B39;
     font-size: x-large;
     text-decoration: none;
     text-transform: uppercase;
@@ -68,12 +68,13 @@ a {
     border-radius: 15px;
     cursor: pointer;
     text-align: center;
+    background-color: #F88B39;
 }
 
 .DivSignInButton a {
     font-weight: bold;
     text-decoration: none;
-    background-color: black;
+    background-color: #f88b39;
     width: 100px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: small;
