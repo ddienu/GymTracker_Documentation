@@ -7,13 +7,17 @@ import 'package:gym_tracker/features/home/presentation/homepage.dart';
 import 'package:gym_tracker/features/login/widget/input_field.dart';
 import 'package:gym_tracker/features/password_recover/presentation/recover_password.dart';
 import 'package:gym_tracker/features/register/presentation/registration_email_password.dart';
+import 'package:gym_tracker/repositories/auth.dart';
+import 'package:gym_tracker/services/auth_service.dart';
 
 class Login extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final AuthService authService;
+  late final AuthRepository _authRepository = AuthRepository(authService);
 
-  Login({super.key});
+  Login({super.key, required this.authService});
 
   @override
   Widget build(BuildContext context) {
@@ -79,11 +83,11 @@ class Login extends StatelessWidget {
                               return "El correo electrónico no puede estar vacío";
                             }
 
-                            if (!RegExp(
-                              r'^[^@]+@[^@]+\.[^@]+',
-                            ).hasMatch(value)) {
-                              return 'Ingresa un correo válido';
-                            }
+                            // if (!RegExp(
+                            //   r'^[^@]+@[^@]+\.[^@]+',
+                            // ).hasMatch(value)) {
+                            //   return 'Ingresa un correo válido';
+                            // }
                             return null;
                           },
                         ),
@@ -107,10 +111,14 @@ class Login extends StatelessWidget {
                   SizedBox(height: MediaQuery.of(context).size.height * 0.04),
                   CustomButton(
                     text: "Iniciar sesión",
-                    onPressed: () => {
-                      if (_formKey.currentState!.validate())
-                        {
-                          showDialog(
+                    onPressed: () async {
+                      if (_formKey.currentState!.validate()) {
+                        try {
+                          final response = await _authRepository.login(
+                            emailController.text,
+                            passwordController.text,
+                          );
+                          return showDialog(
                             context: context,
                             barrierDismissible:
                                 false, // evita que lo cierren tocando afuera
@@ -128,11 +136,46 @@ class Login extends StatelessWidget {
 
                               return AlertDialog(
                                 backgroundColor: Colors.green,
-                                content: const Text("Iniciando sesión...", style: TextStyle(color: Colors.white),),
+                                content: const Text(
+                                  "Iniciando sesión...",
+                                  style: TextStyle(color: Colors.white),
+                                ),
                               );
                             },
-                          ),
-                        },
+                          );
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(e.toString()),
+                              backgroundColor: Colors.red,
+                            ),
+                          );
+                        }
+                        //    return showDialog(
+                        //       context: context,
+                        //       barrierDismissible:
+                        //           false, // evita que lo cierren tocando afuera
+                        //       builder: (context) {
+                        //         // disparar la acción después de que se construya el diálogo
+                        //         Future.delayed(const Duration(seconds: 3), () {
+                        //           Navigator.pop(context); // cierra el diálogo
+                        //           Navigator.push(
+                        //             context,
+                        //             MaterialPageRoute(
+                        //               builder: (context) => HomePage(),
+                        //             ),
+                        //           );
+                        //         });
+
+                        //         return AlertDialog(
+                        //           backgroundColor: Colors.green,
+                        //           content: const Text("Iniciando sesión...", style: TextStyle(color: Colors.white),),
+                        //         );
+                        //       },
+                        //     ),
+                        // }
+                        // {
+                      }
                     },
                     width: 0.4,
                     icon: Icons.arrow_forward,

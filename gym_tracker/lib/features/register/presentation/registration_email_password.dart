@@ -138,7 +138,7 @@ class RegistrationEmailPassword extends StatelessWidget {
             color: Colors.black,
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.1),
-          HaveAnAccountAlready()
+          // HaveAnAccountAlready()
         ],
       ),
     );

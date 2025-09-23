@@ -51,7 +51,7 @@ class AppTheme {
     brightness: Brightness.dark,
     useMaterial3: true,
     colorScheme: const ColorScheme.dark(
-      primary: Color(0xFFFF6B00), // naranja principal
+      primary: Color.fromARGB(255, 202, 15, 193), // naranja principal
       onPrimary: Colors.black,
       primaryContainer: Color(0xFF7C2D12), // naranja más oscuro
       onPrimaryContainer: Colors.white,
