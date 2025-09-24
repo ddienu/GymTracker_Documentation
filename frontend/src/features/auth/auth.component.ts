@@ -75,6 +75,7 @@ export default class AuthComponent implements OnInit{
 
   login() {
     const formValue = this.loginForm.value;
+    if(this.loginForm.valid){
     return this.authService.login(formValue).subscribe({
       next: (response) => {
         localStorage.setItem('token', response.token);
@@ -90,6 +91,9 @@ export default class AuthComponent implements OnInit{
         this.toastr.error('Credenciales incorrectas');
       },
     });
+    }else{
+      return;
+    }
   }
 
   register() {

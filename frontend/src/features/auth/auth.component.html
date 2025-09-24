@@ -1,47 +1,48 @@
+<div class="flex flex-col min-h-screen">
 <app-navbar></app-navbar>
-<body>
+<main class="flex-1 flex items-center justify-center bg-black">
 
     <!-- Formulario para login -->
-    <div *ngIf="isRegister==false&&editForm===false" class="min-h-screen flex items-center justify-center">
+    <div *ngIf="isRegister==false&&editForm===false" class="mt-10 flex items-center justify-center bg-[#1E1E1E] rounded-lg">
         <div class="max-w-md w-full rounded-lg shadow-md p-8">
             <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold text-gray-800">Bienvenido a GymTracker</h2>
-                <p class="text-gray-600">Inicia sesión para continuar</p>
+                <h2 class="text-3xl font-bold text-white">Bienvenido a <span class="text-primary">Gym Tracker</span></h2>
+                <p class="text-gray-500 mt-4">Inicia sesión para continuar</p>
             </div>
             <form [formGroup]="loginForm" (ngSubmit)="login()">
                 <div class="mb-4">
-                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Correo electrónico: </label>
-                    <input type="email" id="email" name="email" placeholder="email"
+                    <label for="email" class="block text-gray-400 text-sm font-bold mb-2">Correo electrónico: </label>
+                    <input type="email" id="email" name="email" placeholder="correo@correo.com"
                         formControlName="email"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-black leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-6">
-                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña</label>
+                    <label for="password" class="block text-gray-400 text-sm font-bold mb-2">Contraseña</label>
                     <input type="password" id="password" name="password" placeholder="******************"
                         formControlName="password"
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-black mb-3 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="flex items-center justify-between mb-6">
                     <div class="flex items-center">
                         <input id="remember_me" name="remember_me" type="checkbox"
                             class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded">
-                        <label for="remember_me" class="ml-2 block text-sm text-gray-900">Recuérdame</label>
+                        <label for="remember_me" class="ml-2 block text-sm text-gray-400">Recuérdame</label>
                     </div>
                     <div class="text-sm">
-                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">¿Olvidaste tu
+                        <a href="#" class="font-medium text-primary hover:text-orange-600">¿Olvidaste tu
                             contraseña?</a>
                     </div>
                 </div>
                 <div>
                     <button type="submit"
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-orange-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Iniciar Sesión
                     </button>
                 </div>
             </form>
-            <p class="text-center text-gray-500 text-xs mt-8">
+            <p class="text-center text-gray-400 text-xs mt-8">
                 ¿No tienes una cuenta?
-                <a class="text-indigo-600 hover:text-indigo-800 hover:cursor-pointer" (click)="changeState()">
+                <a class="text-primary hover:text-orange-700 hover:cursor-pointer" (click)="changeState()">
                     Regístrate aquí
                 </a>
             </p>
@@ -50,54 +51,54 @@
     <!-- Fin formulario login -->
 
     <!-- Formulario registro -->
-    <div *ngIf="isRegister==true&&registerFrom===''&&editForm===false" class="min-h-screen flex items-center justify-center">
-        <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8">
+    <div *ngIf="isRegister==true&&registerFrom===''&&editForm===false" class="m-8 flex items-center justify-center bg-[#1E1E1E] rounded-lg">
+        <div class="max-w-md w-full rounded-lg shadow-md p-8">
             <div class="text-center mb-8">
-                <h2 class="text-3xl font-bold text-gray-800">Bienvenido a GymTracker</h2>
-                <p class="text-gray-600">Registro de usuarios</p>
+                <h2 class="text-3xl font-bold text-white">Bienvenido a <span class="text-primary">Gym Tracker</span></h2>
+                <p class="text-gray-400 mt-4">Registro de usuarios</p>
             </div>
             <form [formGroup]="registerForm" (ngSubmit)="register()">
                 <div class="mb-4">
-                    <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Nombre de usuario: </label>
+                    <label for="username" class="block text-gray-400 text-sm font-bold mb-2">Nombre de usuario: </label>
                     <input type="username" id="username" name="username" placeholder="Usuario"
                         formControlName="username"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-6">
-                    <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Contraseña: </label>
+                    <label for="password" class="block text-gray-400 text-sm font-bold mb-2">Contraseña: </label>
                     <input type="password" id="password" name="password" placeholder="******************"
                         formControlName="password"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-6">
-                    <label for="document_number" class="block text-gray-700 text-sm font-bold mb-2">Numero de documento: </label>
+                    <label for="document_number" class="block text-gray-400 text-sm font-bold mb-2">Numero de documento: </label>
                     <input type="document_number" id="document_number" name="document_number" formControlName="document_number"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-6">
-                    <label for="first_name" class="block text-gray-700 text-sm font-bold mb-2">Nombre: </label>
+                    <label for="first_name" class="block text-gray-400 text-sm font-bold mb-2">Nombre: </label>
                     <input type="first_name" id="first_name" name="first_name" formControlName="first_name"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-6">
-                    <label for="last_name" class="block text-gray-700 text-sm font-bold mb-2">Apellido: </label>
+                    <label for="last_name" class="block text-gray-400 text-sm font-bold mb-2">Apellido: </label>
                     <input type="last_name" id="last_name" name="last_name" formControlName="last_name"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-6">
-                    <label for="email" class="block text-gray-700 text-sm font-bold mb-2">Correo electrónico: </label>
+                    <label for="email" class="block text-gray-400 text-sm font-bold mb-2">Correo electrónico: </label>
                     <input type="email" id="email" name="email" placeholder="correo@correo.com" formControlName="email"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-6">
-                    <label for="birth_date" class="block text-gray-700 text-sm font-bold mb-2">Fecha de nacimiento:
+                    <label for="birth_date" class="block text-gray-400 text-sm font-bold mb-2">Fecha de nacimiento:
                     </label>
                     <input type="date" id="birth_date" name="birth_date"
                         formControlName="birth_date"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                 </div>
                 <div class="mb-6">
-                    <label for="gender" class="block text-gray-700 text-sm font-bold mb-2">Género:</label>
+                    <label for="gender" class="block text-gray-400 text-sm font-bold mb-2">Género:</label>
                     <select id="gender" name="gender" formControlName="gender"
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
                         <option value="" disabled selected hidden>Clic aquí para seleccionar tu género </option>
@@ -109,14 +110,14 @@
                 </div>
                 <div>
                     <button type="submit"
-                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-orange-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                         Registro
                     </button>
                 </div>
             </form>
             <p class="text-center text-gray-500 text-xs mt-8">
                 ¿Ya tienes una cuenta?
-                <a class="text-indigo-600 hover:text-indigo-800 hover:cursor-pointer" (click)="changeState()">
+                <a class="text-primary hover:text-orange-600 hover:cursor-pointer" (click)="changeState()">
                     Ingresa aquí
                 </a>
             </p>
@@ -125,7 +126,7 @@
     <!-- Fin formulario registro -->
 
     <!-- Formulario registro nuevo cliente-->
-    <div *ngIf="isRegister==true && registerFrom ==='admin'" class="min-h-screen flex items-center justify-center">
+    <div *ngIf="isRegister==true && registerFrom ==='admin'" class="flex items-center justify-center">
         <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8">
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-800">Bienvenido a GymTracker</h2>
@@ -194,7 +195,7 @@
     <!-- Fin formulario registro nuevo cliente -->
 
     <!-- Formulario edición cliente-->
-    <div *ngIf="clientId !== 0 && editForm === true" class="min-h-screen flex items-center justify-center">
+    <div *ngIf="clientId !== 0 && editForm === true" class="flex items-center justify-center">
         <div class="max-w-md w-full bg-white rounded-lg shadow-md p-8">
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-800">Edición de clientes</h2>
@@ -260,5 +261,6 @@
         </div>
     </div>
     <!-- Fin formulario registro nuevo cliente -->
-</body>
+</main>
 <app-footer></app-footer>
+</div>

@@ -18,7 +18,7 @@
     </button>
   </div>
  </nav>
-<nav *ngIf="isAuthenticated" class="text-yellow-400 px-6 py-4 flex items-center justify-between">
+<nav *ngIf="isAuthenticated" class="bg-black px-6 py-4 flex items-center justify-between">
   <!-- Logo -->
   <div class="flex items-center gap-4">
     <img src="../../assets/GymTrackerLogo.png" alt="Logo" class="h-12 w-auto" />
@@ -33,11 +33,12 @@
     <li><a routerLink="/aboutUs" class="hover:text-orange-100">FISIOTERAPIA</a></li>
     <li><a routerLink="/aboutUs" class="hover:text-orange-100">NUTRICIÓN</a></li>
     <li><a routerLink="/services" class="hover:text-orange-100">SERVICIOS</a></li>
+    <li><a routerLink="/services" class="hover:text-orange-100">PRODUCTOS</a></li>
   </ul>
 
   <!-- Dropdown -->
   <div class="relative group">
-    <button class="flex items-center gap-2 px-4 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-white">
+    <button class="flex items-center gap-2 px-4 py-2 rounded-md bg-gray-800 hover:bg-gray-700 text-white shadow-[0_0_15px_#F88B39] hover:shadow-[0_0_25px_#F88B39]">
       <img src="assets/user-icon.svg" alt="User" class="w-8 h-8 rounded-full">
       <span>Bienvenido, {{ userLogged }}</span>
       <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
