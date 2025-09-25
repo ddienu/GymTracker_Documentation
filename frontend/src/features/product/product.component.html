@@ -1,0 +1,78 @@
+<div class="flex flex-col min-h-screen">
+    <app-navbar></app-navbar>
+    <main>
+        <div class="bg-main py-12 px-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-xl font-bold text-center text-primary mb-4 ">Nuestros Productos</h1>
+                <p class="text-xl text-white text-center">Encuentra todo lo que necesitas para tu entrenamiento</p>
+                <div class="max-w-xl mx-auto mt-4 mb-8">
+                    <p class="text-gray-400 text-center">Encuentra los productos ideales para tu entrenamiento: desde lo
+                        esencial para comenzar hasta lo más avanzado para desafiar tus límites.</p>
+                </div>
+
+                <!-- Botón agregar nuevo producto -->
+                <div *ngIf="role==='ADMINISTRATOR'" class="flex justify-center mt-10">
+                    <a
+                        class="bg-primary text-white p-4 mb-4 rounded-lg shadow hover:bg-orange-600 transition-colors cursor-pointer font-semibold"
+                        (click)="goToAdd()"
+                        >
+                        Nuevo producto
+                    </a>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <div *ngFor="let product of products"
+                        class="text-center bg-gray-800 shadow-lg rounded-lg p-6 hover:shadow-xl transition-shadow">
+                        <h3 class="text-xl font-semibold text-gray-200">{{ product.name }}</h3>
+                        <img class="mt-2" src="/assets/aboutUsImage.jpg" [alt]="product.name">
+
+                        <div class="mt-4 h-14">
+                            <p class="text-gray-300">{{ product.description }}</p>
+                        </div>
+                        <p class="text-primary font-semibold">Precio: {{ product.price |
+                            currency:'COP':'symbol-narrow':'1.0-0' }}</p>
+                        <!-- <p *ngIf="product.isActive && role==='ADMINISTRATOR' else inactive" class="text-green-600 mt-2">
+                            Activo</p>
+                        <ng-template #inactive>
+                            <p class="text-red-600 mt-2">Inactivo</p>
+                        </ng-template> -->
+
+                        <div class="mt-2" *ngIf="role === 'ADMINISTRATOR'">
+                            <p class="text-white">Stock: {{ product.stock }}</p>
+                        </div>
+
+                        <div *ngIf="role==='ADMINISTRATOR'" class="mt-4 flex gap-3 justify-center">
+                            <button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors"
+                                (click)="goToEdit(product.productId)">
+                                Editar
+                            </button>
+                            <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
+                                (click)="removeProduct(product.productId)">
+                                Eliminar
+                            </button>
+                        </div>
+
+                        <div *ngIf="isAuthenticated && role==='CLIENT'" class="mt-4 flex gap-3 justify-center">
+                            <button class="bg-blue-500 text-white px-4 py-2 rounded-full hover:bg-blue-600 transition-colors flex items-center gap-2">
+                                <span>Agregar al carrito</span>
+                                <span class="material-symbols-outlined text-primary">shopping_cart</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Botón agregar nuevo producto -->
+                <div *ngIf="role==='ADMINISTRATOR'" class="flex justify-center mt-10">
+                    <a
+                        class="bg-primary text-white p-4 mb-4 rounded-lg shadow hover:bg-orange-600 transition-colors cursor-pointer font-semibold">
+                        <!-- routerLink='add' (click)="goToAdd()" -->
+                        Nuevo producto
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+    <app-footer class="mt-auto"></app-footer>
+</div>

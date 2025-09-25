@@ -5,8 +5,9 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideRouter } from '@angular/router';
 import { routes } from './app/app.routes';
 import { ToastrModule } from 'ngx-toastr';
-import { importProvidersFrom } from '@angular/core';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { importProvidersFrom } from '@angular/core';
 
 
 
@@ -20,7 +21,6 @@ bootstrapApplication(AppComponent, {
         positionClass: 'toast-top-right',
         preventDuplicates: true
       })
-
      )
   ]
 });

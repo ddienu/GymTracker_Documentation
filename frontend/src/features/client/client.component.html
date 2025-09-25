@@ -1,40 +1,41 @@
 <app-navbar></app-navbar>
-<main>
-    <div class="mt-10">
-        <h2 class="text-3xl font-bold text-center text-gray-800 drop-shadow mt-10 mb-6">
-            Lista de Clientes
-        </h2>
+<main class="bg-main py-12">
+    <h2 class="text-4xl font-bold text-center text-white mb-4">Gestión de <span class="text-primary">Clientes</span></h2>
+    <p class="text-gray-400 text-lg text-center mb-4">Consulta la información de tus clientes</p>
 
-        <div class="bg-white shadow-md rounded-lg overflow-hidden max-w-4xl mx-auto border-2">
-            <ul class="divide-y divide-gray-200">
+    <div class="bg-[#242424] shadow-md rounded-lg overflow-hidden max-w-7xl mx-auto border-2">
+        <ul class="divide-y divide-gray-200">
 
-                <!-- Cliente -->
-                <li *ngFor="let client of clients.client" class="flex items-center p-4 hover:bg-gray-50 transition">
-                    <img src="../assets/male-client.svg" alt="icono-cliente" class="w-12 h-12 rounded-full">
-                    <div class="ml-4 flex-1">
-                        <h3 class="text-lg font-semibold text-gray-800">{{ client.first_name }} {{ client.last_name }}</h3>
-                        <p><span class="font-bold">Numero de documento:</span> {{ client.document_number }}</p>
-                        <p class="flex items-center gap-2">
-                            <span class="font-bold">Estado:</span> {{ client.user_status }}
-                            <img *ngIf="client.user_status === 'ACTIVE'" src="../assets/active-icon.svg" alt="activo" class="h-5 w-5">
-                            <img *ngIf="client.user_status === 'INACTIVE'" src="../assets/inactive-icon.svg" alt="inactivo" class="h-5 w-5">
-                        </p>
-                    </div>
-                    <button
-                        class="bg-blue-600 text-yellow-200 px-4 py-2 rounded-lg hover:bg-blue-700 hover:scale-105 transition font-semibold" [routerLink]="['more_info/', client.client_id]">
-                        Más información
-                    </button>
-                </li>
-            </ul>
-        </div>
+            <!-- Cliente -->
+            <li *ngFor="let client of clients.client" class="flex items-center p-4 hover:bg-[#2E2E2E] transition">
+                <img src="../assets/male-client.svg" alt="icono-cliente" class="w-12 h-12 rounded-full">
+                <div class="ml-4 flex-1">
+                    <h3 class="text-lg font-semibold text-white">{{ client.first_name }} {{ client.last_name }}</h3>
+                    <p class="text-white"><span class="text-primary font-bold">Numero de documento:</span> {{ client.document_number }}</p>
+                    <p class="flex items-center gap-2">
+                        <span class="font-bold text-primary">Estado:</span> {{ client.user_status }}
+                        <img *ngIf="client.user_status === 'ACTIVE'" src="../assets/active-icon.svg" alt="activo"
+                            class="h-5 w-5">
+                        <img *ngIf="client.user_status === 'INACTIVE'" src="../assets/inactive-icon.svg" alt="inactivo"
+                            class="h-5 w-5">
+                    </p>
+                </div>
+                <button
+                    class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-orange-600 hover:scale-105 transition font-semibold"
+                    [routerLink]="['more_info/', client.client_id]">
+                    Más información
+                </button>
+            </li>
+        </ul>
+    </div>
 
-        <div class="flex justify-center w-full my-8">
-            <button
-                class="bg-blue-600 text-yellow-200 font-bold border-2 px-6 py-2 rounded-lg hover:bg-blue-700 hover:scale-105 transition" (click)="goToRegister()">
-                Nuevo cliente
-            </button>
-            
-        </div>
+    <div class="flex justify-center w-full mt-10">
+        <button
+            class="bg-blue-600 text-yellow-200 font-bold border-2 px-6 py-2 rounded-lg hover:bg-blue-700 hover:scale-105 transition"
+            (click)="goToRegister()">
+            Nuevo cliente
+        </button>
+
     </div>
 </main>
 <app-footer></app-footer>

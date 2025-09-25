@@ -8,7 +8,7 @@
   <ul class="flex gap-12 font-bold text-lg uppercase tracking-wide">
     <li><a routerLink="" class="hover:text-orange-100">Inicio</a></li>
     <li><a routerLink="/services" class="hover:text-orange-100">Servicios</a></li>
-    <li><a class="hover:text-orange-100">Productos</a></li>
+    <li><a routerLink="/products" class="hover:text-orange-100">Productos</a></li>
     <li><a routerLink="/aboutUs" class="hover:text-orange-100">Sobre nosotros</a></li>
   </ul>
 
@@ -18,7 +18,7 @@
     </button>
   </div>
  </nav>
-<nav *ngIf="isAuthenticated" class="bg-black px-6 py-4 flex items-center justify-between">
+<nav *ngIf="isAuthenticated" class="bg-black px-6 py-4 flex items-center justify-between border-b border-white">
   <!-- Logo -->
   <div class="flex items-center gap-4">
     <img src="../../assets/GymTrackerLogo.png" alt="Logo" class="h-12 w-auto" />
@@ -33,7 +33,7 @@
     <li><a routerLink="/aboutUs" class="hover:text-orange-100">FISIOTERAPIA</a></li>
     <li><a routerLink="/aboutUs" class="hover:text-orange-100">NUTRICIÓN</a></li>
     <li><a routerLink="/services" class="hover:text-orange-100">SERVICIOS</a></li>
-    <li><a routerLink="/services" class="hover:text-orange-100">PRODUCTOS</a></li>
+    <li><a routerLink="/products" class="hover:text-orange-100">PRODUCTOS</a></li>
   </ul>
 
   <!-- Dropdown -->

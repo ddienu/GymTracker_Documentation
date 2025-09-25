@@ -14,6 +14,7 @@ body {
 a {
     color: #f88b39
 }
+
 .menu {
     display: flex;
     background-color: black;
@@ -34,7 +35,7 @@ a {
     align-self: center;
 }
 
-#logoGym{
+#logoGym {
     width: 70px;
     height: 70px;
     margin-left: 4em;
@@ -123,7 +124,7 @@ a {
     align-content: center;
 }
 
-.photoTitleContainer {
+/* .photoTitleContainer {
     display: flex;
     justify-content: center;
     margin: 7em 0 7em 0em;
@@ -132,7 +133,7 @@ a {
 #fotoGimnasio {
     width: 600px;
     height: 400px;
-}
+} */
 
 .gymDescription {
     align-self: center;
@@ -142,8 +143,8 @@ a {
 .footerContainer {
     display: flex;
     justify-content: center;
-    align-items: center; 
-    flex-wrap: wrap; 
+    align-items: center;
+    flex-wrap: wrap;
     font-family: 'BebasNeue';
     color: #E6ED07;
     background-color: black;
@@ -190,7 +191,9 @@ a {
     margin: 2em 10em 0 10em;
 }
 
-.plan1, .plan2, .plan3{
+.plan1,
+.plan2,
+.plan3 {
     border: solid black;
     display: grid;
     flex-grow: 1;
@@ -198,7 +201,9 @@ a {
     margin: 0 2em 0 2em;
 }
 
-.plan1 img, .plan2 img, .plan3 img {
+.plan1 img,
+.plan2 img,
+.plan3 img {
     height: 200px;
     align-items: center;
     width: 80%;
@@ -236,7 +241,7 @@ a {
     margin: 0.5em 0 0.5em 0;
 }
 
-#titlePrinciples{
+#titlePrinciples {
     font-weight: bold;
 }
 
@@ -257,7 +262,7 @@ a {
 .signInDiv {
     display: flex;
     flex-direction: column;
-    margin-bottom: 2em; 
+    margin-bottom: 2em;
     font-size: 20px;
 }
 
@@ -321,6 +326,20 @@ a {
     padding-top: 40px;
 }
 
+.toast {
+    background-color: #424242 !important; 
+    color: white
+}
 
+.confirm-btn {
+    background-color: #F88B39;
+}
 
-/* drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,1)] */
+.confirm-btn:hover {
+    background-color: #DB762F;
+}
+
+.color-icn {
+    border-color: #F88B39 !important;
+    color: #F88B39 !important;
+}

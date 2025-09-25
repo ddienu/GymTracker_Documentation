@@ -1,0 +1,66 @@
+<div class="flex flex-col min-h-screen bg-main">
+    <app-navbar></app-navbar>
+    <main class="my-auto my-8">
+        <h2 class="text-4xl font-bold text-center text-white mb-4">Nuevo <span class="text-primary">Producto</span></h2>
+        <p class="text-gray-400 text-lg text-center mb-4">Agrega un nuevo producto a la lista</p>
+
+
+        <form [formGroup]="productForm" class="max-w-xl mx-auto space-y-6 p-6 rounded-3xl mb-5">
+            <!-- Product name -->
+            <div>
+                <label class="block text-sm font-medium text-white mb-1">Nombre del producto</label>
+                <input type="text" formControlName="name" placeholder="Ej. Proteína Whey"
+                    class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <!-- Product description -->
+            <div>
+                <label class="block text-sm font-medium text-white mb-1">Descripción</label>
+                <textarea type="text" formControlName="description" placeholder="Detalles del producto"
+                    class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+            </div>
+            <!-- Product price -->
+            <div>
+                <label class="block text-sm font-medium text-white mb-1">Precio</label>
+                <input type="number" formControlName="price" placeholder="$30000"
+                    class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <!-- Product stock -->
+            <div>
+                <label class="block text-sm font-medium text-white mb-1">Stock</label>
+                <input type="number" formControlName="stock" placeholder="15"
+                    class="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+            </div>
+            <!-- Imagen del Producto -->
+             TODO:Implementar la subida del archivo y manejarlo en el formulario
+            <div>
+                <label class="block text-sm font-medium text-white mb-1">
+                    Imagen del Producto
+                </label>
+
+                <!-- Dropzone -->
+                <div
+                    class="flex flex-col items-center justify-center w-full h-40 border-2 border-dashed border-gray-500 rounded-lg cursor-pointer hover:border-orange-400 transition">
+                    <span class="material-symbols-outlined text-gray-400 text-4xl">
+                        cloud_upload
+                    </span>
+                    <p class="text-sm">
+                        <span class="text-orange-400 font-medium">Sube un archivo</span>
+                    </p>
+                    <p class="text-xs text-gray-400">PNG, JPG, GIF hasta 10MB</p>
+
+                    <!-- Input file oculto -->
+                    <input id="image" type="file" #fileInput accept="image/*" class="hidden"
+                        (change)="onFileSelected($event)" />
+                </div>
+            </div>
+
+        </form>
+        <!-- Action buttons -->
+        <div class="flex justify-center gap-3 mb-4">
+            <button type="submit" class="bg-primary text-white px-6 py-2 rounded hover:bg-orange-600" (click)="addProduct()">Guardar</button>
+            <button type="button" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+                (click)="goToProducts()">Volver</button>
+        </div>
+    </main>
+    <app-footer class=" mt-auto"></app-footer>
+</div>

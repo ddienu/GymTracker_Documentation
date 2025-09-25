@@ -32,6 +32,14 @@ export const routes: Routes = [
     {
         path: 'client/more_info/:id',
         loadComponent: () => import('../features/client/more-info/more-info.component')
+    },
+    {
+        path: 'products',
+        loadComponent: () => import('../features/product/product.component')
     },    
+    {
+        path: 'products/add',
+        loadComponent: () => import('../features/product/product_form/product-form.component')
+    }
     
 ];

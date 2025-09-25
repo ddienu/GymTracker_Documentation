@@ -1,5 +1,7 @@
+<div class="flex flex-col min-h-screen gym-section">
 <app-navbar></app-navbar>
 <!-- FORMULARIO DE CREACIÓN DE SERVICIO -->
+ <main >
 <form *ngIf="!isEditting" [formGroup]="serviceForm" (ngSubmit)="addService()" class="space-y-6 bg-white p-6 rounded shadow-md max-w-xl mx-auto">
   <h2 class="text-2xl font-bold text-gray-800 mb-4">Agregar servicio</h2>
 
@@ -52,9 +54,10 @@
     <button type="button" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500" routerLink="/services">Volver</button>
   </div>
 </form>
+</main>
 
 <!-- FORMULARIO DE EDICIÓN DE SERVICIO -->
-
+<main>
 <form *ngIf="isEditting" [formGroup]="editServiceForm" (ngSubmit)="editService()" class="space-y-6 bg-white p-6 rounded shadow-md max-w-xl mx-auto">
   <h2 class="text-2xl font-bold text-gray-800 mb-4">Editar servicio</h2>
 
@@ -107,5 +110,7 @@
       <button type="button" class="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500" routerLink="/services">Volver</button>
   </div>
 </form>
+</main>
 
-<app-footer></app-footer>
+<app-footer class="mt-auto"></app-footer>
+</div>
