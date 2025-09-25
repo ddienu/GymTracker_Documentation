@@ -6,14 +6,20 @@ import { BehaviorSubject } from "rxjs";
 export class AuthStateService {
     private registerMode = new BehaviorSubject<boolean>(false);
     private registerFrom = new BehaviorSubject<string>("");
+
     private editMode = new BehaviorSubject<boolean>(false);
     private clientId = new BehaviorSubject<number>(0);
+
     private userIdLogged = new BehaviorSubject<number>(0);
+
     registerMode$ = this.registerMode.asObservable();
     registerFrom$ = this.registerFrom.asObservable();
+
     editMode$ = this.editMode.asObservable();
     clientId$ = this.clientId.asObservable();
+
     userIdLogged$ = this.userIdLogged.asObservable();
+    
     setRegisterMode(isRegister : boolean, registerFrom : string){
         this.registerMode.next(isRegister);
         this.registerFrom.next(registerFrom);

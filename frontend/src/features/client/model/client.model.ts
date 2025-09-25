@@ -1,15 +1,14 @@
 export interface ClientModel {
-  username: string;
-  password_hash: string,
+  client_id: number;
   document_number: string;
-  first_name: string;
-  last_name: string;
   email: string;
-  birth_date: string;
-  gender: string;
-};
+  first_name: string;
+  goals: string;
+  last_name: string;
+  user_status: string;
+}
 
-export interface ClientResponse{
-    message:string,
-    client: ClientModel
-};
+export interface ClientResponse {
+  message: string;
+  client: ClientModel[];
+}

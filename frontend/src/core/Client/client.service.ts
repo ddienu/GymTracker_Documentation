@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ClientModel, ClientResponse } from '../../features/client/model/client.model';
 import { Observable } from 'rxjs';
+import { UserResponse } from '../../features/auth/model/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -15,12 +16,12 @@ export class ClientService {
 
   constructor(private http: HttpClient) { }
 
-  getClients(){
-    return this.http.get(`${this.apiUrl}/getAllClients`);
+  getClients() : Observable<ClientResponse>{
+    return this.http.get<ClientResponse>(`${this.apiUrl}/getAllClients`);
   }
 
-  getClientById(clientId : number) : Observable<ClientResponse>{
-    return this.http.get<ClientResponse>(`${this.apiUrl}/getClientById/${clientId}`);
+  getClientById(clientId : number) : Observable<UserResponse>{
+    return this.http.get<UserResponse>(`${this.apiUrl}/getClientById/${clientId}`);
   }
 
   softDelete(clientId: number){

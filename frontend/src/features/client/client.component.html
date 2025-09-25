@@ -1,13 +1,89 @@
 <app-navbar></app-navbar>
 <main class="bg-main py-12">
-    <h2 class="text-4xl font-bold text-center text-white mb-4">Gestión de <span class="text-primary">Clientes</span></h2>
+    <h2 class="text-4xl font-bold text-center text-white mb-4">Gestión de <span class="text-primary">Clientes</span>
+    </h2>
     <p class="text-gray-400 text-lg text-center mb-4">Consulta la información de tus clientes</p>
 
-    <div class="bg-[#242424] shadow-md rounded-lg overflow-hidden max-w-7xl mx-auto border-2">
-        <ul class="divide-y divide-gray-200">
+    <!-- Botón adición cliente -->
+    <div class="flex justify-center w-full my-5 justify-center">
+        <button
+            class="bg-primary text-white font-semibold px-6 py-2 rounded-lg hover:bg-orange-600 hover:scale-105 transition"
+            (click)="goToRegister()">
+            Nuevo cliente
+        </button>
+    </div>
+
+    <div class="bg-[#242424] shadow-md rounded-lg overflow-hidden max-w-7xl mx-auto shadow-xl">
+        <table class="w-full text-sm text-center">
+            <thead class="bg-black/20">
+                <tr>
+                    <th class="px-6 py-4 font-medium text-white" scope="col">Avatar</th>
+                    <th class="px-6 py-4 font-medium text-white" scope="col">Nombre</th>
+                    <th class="px-6 py-4 font-medium text-white" scope="col">Apellido</th>
+                    <th class="px-6 py-4 font-medium text-white" scope="col">Documento</th>
+                    <th class="px-6 py-4 font-medium text-white" scope="col">Estado</th>
+                    <th class="px-6 py-4 font-medium text-white" scope="col">Acción</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-primary/10 text-center">
+                <tr *ngFor="let client of clients" class="transition-colors hover:bg-gray-700">
+                    <td class="flex justify-center px-6 py-4">
+                        <img src="/assets/male-client.svg" class="h-10 w-10 rounded-full object-cover"
+                            alt="Avatar de la persona">
+                    </td>
+                    <td class="text-white">
+                        {{ client.first_name }}
+                    </td>
+                    <td class="text-white">
+                        {{ client.last_name }}
+                    </td>
+                    <td class="text-white">
+                        {{ client.document_number }}
+                    </td>
+
+                    <td class="px-6 py-4 whitespace-nowrap"  *ngIf="client.user_status === 'ACTIVE' else inactive">
+                        <span
+                            class="px-3 py-1 inline-flex leading-5 font-semibold rounded-full bg-green-900/60 text-green-300 border border-green-700/50">Activo</span>
+                    </td>
+
+                    <ng-template class="text-center" #inactive>
+                        <td class="justify-center">
+                            <span
+                                class="px-3 py-1 inline-flex leading-5 font-semibold rounded-full bg-red-900/60 text-red-300 border border-red-700/50">Inactivo</span>
+                        </td>
+                    </ng-template>
+                    <td>
+                        <button
+                            class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-orange-600 hover:scale-105 transition font-semibold"
+                            [routerLink]="['more_info/', client.client_id]">
+                            Más información
+                        </button>
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- Botón adición cliente -->
+    <div class="flex justify-center w-full mt-10">
+        <button
+            class="bg-primary text-white font-semibold px-6 py-2 rounded-lg hover:bg-orange-600 hover:scale-105 transition"
+            (click)="goToRegister()">
+            Nuevo cliente
+        </button>
+    </div>
+</main>
+<app-footer></app-footer>
+
+
+<!-- <ul class="divide-y divide-gray-200">
 
             <!-- Cliente -->
-            <li *ngFor="let client of clients.client" class="flex items-center p-4 hover:bg-[#2E2E2E] transition">
+<!-- <li *ngFor="let client of clients.client" class="flex items-center p-4 hover:bg-[#2E2E2E] transition">
                 <img src="../assets/male-client.svg" alt="icono-cliente" class="w-12 h-12 rounded-full">
                 <div class="ml-4 flex-1">
                     <h3 class="text-lg font-semibold text-white">{{ client.first_name }} {{ client.last_name }}</h3>
@@ -26,16 +102,4 @@
                     Más información
                 </button>
             </li>
-        </ul>
-    </div>
-
-    <div class="flex justify-center w-full mt-10">
-        <button
-            class="bg-blue-600 text-yellow-200 font-bold border-2 px-6 py-2 rounded-lg hover:bg-blue-700 hover:scale-105 transition"
-            (click)="goToRegister()">
-            Nuevo cliente
-        </button>
-
-    </div>
-</main>
-<app-footer></app-footer>
+        </ul> -->

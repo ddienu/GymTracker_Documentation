@@ -3,8 +3,7 @@ import { Injectable } from '@angular/core';
 import { AuthModel } from '../../features/auth/model/auth.model';
 import { Login } from '../../features/auth/model/login.model';
 import { Observable } from 'rxjs';
-import { RegisterModel } from '../../features/auth/model/register.model';
-import { RegisterResponse } from '../../features/auth/model/registerResponse.model';
+import { RegisterModel, RegisterResponse } from '../../features/auth/model/register.model';
 import { jwtDecode } from 'jwt-decode';
 
 @Injectable({

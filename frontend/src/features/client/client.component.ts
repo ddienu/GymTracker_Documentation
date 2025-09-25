@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import AuthComponent from '../auth/auth.component';
 import { Router, RouterModule } from '@angular/router';
 import { AuthStateService } from '../../core/Auth-state/auth-state.service';
+import { ClientModel, ClientResponse } from './model/client.model';
 
 @Component({
   selector: 'app-client',
@@ -16,7 +17,7 @@ import { AuthStateService } from '../../core/Auth-state/auth-state.service';
 })
 export default class ClientComponent implements OnInit{
 
-  clients : any = [];
+  clients : ClientModel[] = [];
 
   constructor(private clientService : ClientService, private authStateService : AuthStateService, private router : Router){}
 
@@ -28,8 +29,8 @@ export default class ClientComponent implements OnInit{
   getClients(){
     this.clientService.getClients().subscribe(
      (response) => {
-      this.clients = response;
-      console.log(this.clients.client);
+      console.log(response);
+      this.clients = response.client;
      } 
     )
   }
