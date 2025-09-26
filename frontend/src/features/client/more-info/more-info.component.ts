@@ -6,12 +6,14 @@ import NavbarComponent from '../../navbar/navbar.component';
 import { CommonModule, DatePipe } from '@angular/common';
 import { ToastrService } from 'ngx-toastr';
 import { AuthStateService } from '../../../core/Auth-state/auth-state.service';
+import { AlertUtil } from '../../../shared/alert.util';
+import { MeasuresChartComponent } from '../../measures-chart/measures-chart.component';
 
 
 @Component({
   selector: 'app-more-info',
   standalone: true,
-  imports: [FooterComponent, NavbarComponent, CommonModule],
+  imports: [FooterComponent, NavbarComponent, CommonModule, MeasuresChartComponent],
   providers: [DatePipe],
   templateUrl: './more-info.component.html',
   styleUrl: './more-info.component.css'
@@ -51,43 +53,59 @@ export default class MoreInfoComponent implements OnInit{
   }
 
   deleteClient(){
-    const deleteClientDecition = window.confirm("¿Está seguro que desea eliminar el cliente?");
-    if(deleteClientDecition){
-      this.clientService.deleteClient(this.clientId).subscribe(
-        (response) => {
-          this.toastr.success('Cliente eliminado correctamente','',{
-            timeOut:2500
+    AlertUtil.confirm("¿Desea eliminar el usuario completamente?").then(
+      (response) => {
+        if(response.isConfirmed){
+          this.clientService.deleteClient(this.clientId).subscribe({
+            next: () => {
+              AlertUtil.toast("Cliente eliminado satisfactoriamente", "success").then(
+                () => {
+                  this.router.navigate(['/client'])          
+                }
+              )
+            },
+            error: (error) => {
+              AlertUtil.error("Error eliminando al cliente");
+              console.error("Error erasing client", error);
+            }
           })
-          .onHidden.subscribe(() => {
-            this.router.navigate(['/client'])
-          }
-          )
         }
-      )
-    }
+      }
+    )
   }
 
   updateClientStatus(){
-    const updateStatusDecition = window.confirm("¿Está seguro que desea desactivar el cliente?");
-    if(updateStatusDecition){
-      this.clientService.softDelete(this.clientId).subscribe(
-        () => {
-            this.toastr.success('Cliente actualizado correctamente','',{
-            timeOut:2500
+    AlertUtil.confirm("¿Está seguro que desea desactivar el cliente?").then(
+      (response) => {
+        if(response.isConfirmed){
+          this.clientService.softDelete(this.clientId).subscribe({
+            next: () => {
+              AlertUtil.toast("Cliente desactivado satisfactoriamente", "success").then(
+                () => {
+                  this.getClientInfo(this.clientId);
+                }
+              )
+            },
+            error: (error) => {
+              AlertUtil.error("Error al desactivar el cliente");
+              console.error("Error deactivating client", error);
+            }
           })
-          .onHidden.subscribe(() => {
-            window.location.reload();
-          }
-          )
         }
-      )
-    }
+      }
+    )
   }
 
   goToEditForm(){
-    this.authStateService.setEditMode(true);
-    this.authStateService.setClientId(this.clientId);
-    this.authStateService.setRegisterMode(true, "");
-    this.router.navigate(['/auth'])
+    AlertUtil.confirm("¿Desea editar la información del cliente?").then(
+      (response) => {
+        if(response.isConfirmed){
+          this.authStateService.setEditMode(true);
+          this.authStateService.setClientId(this.clientId);
+          this.authStateService.setRegisterMode(true, "");
+          this.router.navigate(['/auth']);
+        }
+      }
+    )
   }
 }

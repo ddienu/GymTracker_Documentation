@@ -155,7 +155,7 @@ export default class AuthComponent implements OnInit {
               },
               error: (error) => {
                 if(error.error.status === 409){
-                  AlertUtil.error("Nombre de usuario o email ya existen");  
+                  AlertUtil.error("Nombre de usuario, email o numero de documento ya existen");  
                   return;
                 }
                 AlertUtil.error("Error completando el registro, comuníquese con un administrador");

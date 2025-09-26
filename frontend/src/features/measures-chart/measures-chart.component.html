@@ -1,0 +1,8 @@
+<div class="mb-4">
+  <label for="month" class="text-white mr-4">Selecciona un mes:</label>
+  <select id="month" (change)="onMonthChange($event)">
+    <option *ngFor="let month of months" [value]="month">{{ month }}</option>
+  </select>
+</div>
+
+<canvas #chart></canvas>
