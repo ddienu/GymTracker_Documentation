@@ -40,6 +40,10 @@ export const routes: Routes = [
     {
         path: 'products/add',
         loadComponent: () => import('../features/product/product_form/product-form.component')
-    }
+    },
+    {
+        path: 'products/edit/:productId',
+        loadComponent: () => import('../features/product/product_form/product-form.component')
+    },
     
 ];

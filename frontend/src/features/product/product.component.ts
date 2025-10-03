@@ -8,6 +8,7 @@ import { CommonModule } from '@angular/common';
 import { JwtService } from '../../core/jwt/jwt.service';
 import { AlertUtil } from '../../shared/alert.util';
 import { AuthService } from '../../core/Auth/auth.service';
+import { ProductFormStateService } from '../../core/ProductFormState/product-form-state.service';
 
 @Component({
   selector: 'app-product',
@@ -20,12 +21,14 @@ export default class ProductComponent implements OnInit {
   products: ProductModel[] = [];
   role: String = '';
   isAuthenticated : boolean = false;
+  isEditing: boolean = false;
 
   constructor(
     private productService: ProductService,
     private jwtService: JwtService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private productStateService : ProductFormStateService
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +54,11 @@ export default class ProductComponent implements OnInit {
     console.log(this.role);
   }
 
-  goToEdit(productId: number) {}
+  goToEdit(productId: number) {
+    this.productStateService.setEditMode(true);
+    // this.formStateService.setServiceIdToEdit(serviceId);
+    this.router.navigate([`/products/edit/${productId}`]);
+  }
 
   removeProduct(productId: number) {
     AlertUtil.confirm('¿Deseas eliminar el producto?').then((response) => {

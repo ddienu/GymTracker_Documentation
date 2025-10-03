@@ -95,8 +95,14 @@ export default class AuthComponent implements OnInit {
             });
         },
         error: (error) => {
-          console.error('Error en login', error);
-          this.toastr.error('Credenciales incorrectas');
+          if (error.error.status === 409) {
+            AlertUtil.error(
+              'Nombre de usuario, email o numero de documento ya existen'
+            );
+            return;
+          }
+          AlertUtil.error("Credenciales incorrectas");
+          console.error('Error en login', error.error)
         },
       });
     } else {
@@ -107,18 +113,19 @@ export default class AuthComponent implements OnInit {
   register() {
     const registerFormValue = this.registerForm.value;
     return this.authService.register(registerFormValue).subscribe({
-      next: (response) => {
-        this.toastr
-          .success('Cuenta creada con éxito', '', {
-            timeOut: 3000,
-          })
-          .onHidden.subscribe(() => {
-            console.log('Toast finished');
-            window.location.reload();
-          });
-        console.log(response);
+      next: () => {
+        AlertUtil.toast('Cuenta creada con éxito', 'success').then(() => {
+          this.router.navigate(['/client']);
+        });
       },
       error: (error) => {
+        if (error.error.status === 409) {
+          AlertUtil.error(
+            'Nombre de usuario, email o numero de documento ya existen'
+          );
+          return;
+        }
+        AlertUtil.error("Error al registrar la cuenta");
         console.error('Error en registro', error);
       },
     });
@@ -139,32 +146,32 @@ export default class AuthComponent implements OnInit {
   registerFromAdmin() {
     const registerFormValue = this.registerForm.value;
     if (this.registerForm.valid) {
-      AlertUtil.confirm('¿Desea guardar la información?').then(
-        (response) => {
-          if (response.isConfirmed) {
-            this.authService.register(registerFormValue).subscribe({
-              next: () => {
-                AlertUtil.success("Cuenta creada con éxito").then(
-                  () => {
-                    this.authStateService.setClientId(0);
-                    this.authStateService.setEditMode(false);
-                    this.authStateService.setRegisterMode(false, '');
-                    this.router.navigate(['/client']);
-                  }
-                )
-              },
-              error: (error) => {
-                if(error.error.status === 409){
-                  AlertUtil.error("Nombre de usuario, email o numero de documento ya existen");  
-                  return;
-                }
-                AlertUtil.error("Error completando el registro, comuníquese con un administrador");
-                console.error('Error en registro', error);
-              },
-            });
-          }
+      AlertUtil.confirm('¿Desea guardar la información?').then((response) => {
+        if (response.isConfirmed) {
+          this.authService.register(registerFormValue).subscribe({
+            next: () => {
+              AlertUtil.success('Cuenta creada con éxito').then(() => {
+                this.authStateService.setClientId(0);
+                this.authStateService.setEditMode(false);
+                this.authStateService.setRegisterMode(false, '');
+                this.router.navigate(['/client']);
+              });
+            },
+            error: (error) => {
+              if (error.error.status === 409) {
+                AlertUtil.error(
+                  'Nombre de usuario, email o numero de documento ya existen'
+                );
+                return;
+              }
+              AlertUtil.error(
+                'Error completando el registro, comuníquese con un administrador'
+              );
+              console.error('Error en registro', error);
+            },
+          });
         }
-      );
+      });
     } else {
       AlertUtil.toast('Faltan campos por diligenciar');
     }
@@ -172,36 +179,41 @@ export default class AuthComponent implements OnInit {
 
   editClientForm() {
     const editFormValue = this.registerForm.getRawValue();
-    if(this.registerForm.valid){
+    if (this.registerForm.valid) {
       AlertUtil.confirm('¿Desea actualizar la información?').then(
         (response) => {
-          if(response.isConfirmed){
+          if (response.isConfirmed) {
             const updatedClient = {
               ...editFormValue,
               password_hash: editFormValue.password,
             };
             delete updatedClient.password;
-            this.clientService.updateClient(this.clientId, updatedClient).subscribe({
-              next: (response) => {
-                AlertUtil.toast("Cliente actualizado con éxito", "success").then(
-                  () => {
+            this.clientService
+              .updateClient(this.clientId, updatedClient)
+              .subscribe({
+                next: (response) => {
+                  AlertUtil.toast(
+                    'Cliente actualizado con éxito',
+                    'success'
+                  ).then(() => {
                     this.authStateService.setClientId(0);
                     this.authStateService.setEditMode(false);
                     this.authStateService.setRegisterMode(false, '');
                     this.router.navigate(['/client']);
-                  }
-                )
-              },
-              error: (error)=> {
-                AlertUtil.error("Error actualizando los datos, comuníquese con el administrador");
-                console.error("Error en edicióin de cliente", error);
-              }
-            });
+                  });
+                },
+                error: (error) => {
+                  AlertUtil.error(
+                    'Error actualizando los datos, comuníquese con el administrador'
+                  );
+                  console.error('Error en edicióin de cliente', error);
+                },
+              });
           }
         }
-      )
-    }else{
-      AlertUtil.toast("Faltan campos por diligenciar", "info");
+      );
+    } else {
+      AlertUtil.toast('Faltan campos por diligenciar', 'info');
     }
   }
 

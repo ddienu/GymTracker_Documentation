@@ -83,6 +83,7 @@ export default class ServiceFormComponent implements OnInit{
   editService(){
     const serviceToUpdatePayload = this.editServiceForm.value;
     console.log(serviceToUpdatePayload);
+    console.log("Entrando a editar el servicio");
     this.servicesService.updateService(this.serviceId, serviceToUpdatePayload).subscribe({
       next: (response) => {
         this.toastr.success('Servicio actualizado satisfactoriamente', '', {
