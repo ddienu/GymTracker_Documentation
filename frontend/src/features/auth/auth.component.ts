@@ -86,13 +86,11 @@ export default class AuthComponent implements OnInit {
       return this.authService.login(formValue).subscribe({
         next: (response) => {
           localStorage.setItem('token', response.token);
-          this.toastr
-            .success('Iniciando sesión...', '', {
-              timeOut: 2500,
-            })
-            .onHidden.subscribe(() => {
+          AlertUtil.toast("Iniciando sesión...", 'success').then(
+            () => {
               this.router.navigate(['']);
-            });
+            }
+          );
         },
         error: (error) => {
           if (error.error.status === 409) {
@@ -106,16 +104,18 @@ export default class AuthComponent implements OnInit {
         },
       });
     } else {
+      AlertUtil.toast("Favor validar los valores ingresados", 'info');
       return;
     }
   }
 
   register() {
     const registerFormValue = this.registerForm.value;
+    if(this.registerForm.valid){
     return this.authService.register(registerFormValue).subscribe({
       next: () => {
         AlertUtil.toast('Cuenta creada con éxito', 'success').then(() => {
-          this.router.navigate(['/client']);
+          this.router.navigate(['/auth']);
         });
       },
       error: (error) => {
@@ -129,6 +129,10 @@ export default class AuthComponent implements OnInit {
         console.error('Error en registro', error);
       },
     });
+    }else{
+      AlertUtil.error("Campos incorrectos, favor validar");
+      return;
+    }
   }
 
   changeState() {
