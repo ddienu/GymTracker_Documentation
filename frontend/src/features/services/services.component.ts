@@ -8,25 +8,26 @@ import { JwtService } from '../../core/jwt/jwt.service';
 import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceFormStateService } from '../../core/ServiceFormState/service-form-state.service';
+import { AlertUtil } from '../../shared/alert.util';
 
 @Component({
   selector: 'app-services',
   standalone: true,
   imports: [NavbarComponent, FooterComponent, CommonModule, RouterModule],
   templateUrl: './services.component.html',
-  styleUrl: './services.component.css'
+  styleUrl: './services.component.css',
 })
-export default class ServicesComponent implements OnInit{
-
-  services : ServiceModel[] = [];
-  role: string = "";
+export default class ServicesComponent implements OnInit {
+  services: ServiceModel[] = [];
+  role: string = '';
 
   constructor(
-    private servicesService : ServicesService, 
-    private jwtService : JwtService, 
-    private toastr : ToastrService, 
-    private router : Router,
-    private formStateService : ServiceFormStateService){}
+    private servicesService: ServicesService,
+    private jwtService: JwtService,
+    private toastr: ToastrService,
+    private router: Router,
+    private formStateService: ServiceFormStateService
+  ) {}
 
   ngOnInit(): void {
     this.getAllServices();
@@ -34,73 +35,75 @@ export default class ServicesComponent implements OnInit{
     console.log(this.role);
   }
 
-  getAllServices(){
+  getAllServices() {
     return this.servicesService.getServices().subscribe({
       next: (response) => {
         this.services = response;
       },
       error: (error) => {
-        console.error("Error obteniendo los servicios", error);
+        console.error('Error obteniendo los servicios', error);
       },
       complete: () => {
-        console.log("Carga de servicios finalizada")
+        console.log('Carga de servicios finalizada');
+      },
+    });
+  }
+
+  removeService(serviceId: number) {
+    AlertUtil.confirm('¿Está seguro que desea eliminar el servicio?').then(
+      (response) => {
+        if (response.isConfirmed) {
+          this.servicesService.deleteService(serviceId).subscribe({
+            next: (response) => {
+              AlertUtil.toast('Servicio eliminado correctamente', "success").then(() => {
+                this.getAllServices();
+              });
+            },
+            error: (error) => {
+              AlertUtil.toast(error.error.message, 'error');
+              console.error(error);
+            },
+            complete: () => {
+              console.log('Eliminación del servicio finalizada');
+            },
+          });
+        }
       }
-    })
+    );
   }
 
-  removeService(serviceId : number){
-    const deleteDecition = window.confirm(`¿Está seguro de eliminar el servicio?`)
-    if(deleteDecition){
-      this.servicesService.deleteService(serviceId).subscribe({
-        next: (response) => {
-          this.toastr.success('Servicio eliminado correctamente', '', {
-            timeOut: 2000
-          }).onHidden.subscribe( () => {
-            window.location.reload();
-          })
-        },
-        error: (error) => {
-          this.toastr.error('Error eliminando el servicio');          
-          console.error(error);
-        },
-        complete: () => {
-          console.log("Eliminación del servicio finalizada");
-        }
-      })
-    }
+  deactivateService(serviceId: number) {
+    AlertUtil.confirm('¿Desea desactivar el servicio?').then((response) => {
+      if (response.isConfirmed) {
+        this.servicesService.deactivateService(serviceId).subscribe({
+          next: (response) => {
+            AlertUtil.toast(
+              'El servicio ha sido desactivado correctamente',
+              'success'
+            ).then(() => {
+              this.getAllServices();
+            });
+          },
+          error: (error) => {
+            AlertUtil.error(error.error.message);
+            console.error('Error al desactivar el servicio', error);
+          },
+          complete: () => {
+            console.log('Desactivación de servicio finalizada');
+          },
+        });
+      }
+    });
   }
 
-  deactivateService(serviceId:number){
-    const deactivateDecition = window.confirm("¿Desea desactivar el servicio?");
-    if(deactivateDecition){
-      this.servicesService.deactivateService(serviceId).subscribe({
-        next: (response) => {
-          this.toastr.success('El servicio ha sido desactivado correctamente','', {
-            timeOut: 2000
-          }).onHidden.subscribe( () => {
-            window.location.reload();
-          })
-        },
-        error: (error) => {
-          this.toastr.error(error.error.message);
-          console.error("Error al desactivar el servicio",error);
-        },
-        complete: () => {
-          console.log("Desactivación de servicio finalizada");
-        }
-      })
-    }
-  }
-
-  goToEdit(serviceId:number){
+  goToEdit(serviceId: number) {
     this.formStateService.setEditMode(true);
     // this.formStateService.setServiceIdToEdit(serviceId);
     this.router.navigate([`/services/edit/${serviceId}`]);
   }
 
-  goToAdd(){
+  goToAdd() {
     this.formStateService.setEditMode(false);
     this.router.navigate([`/services/add`]);
   }
-
 }

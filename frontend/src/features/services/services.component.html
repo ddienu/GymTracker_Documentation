@@ -8,6 +8,13 @@
         <p class="text-gray-400 text-center">Descubre nuestra gama de servicios diseñados para ayudarte a alcanzar tus
           metas de fitness, sin importar tu nivel de experiencia.</p>
       </div>
+            <!-- Botón agregar nuevo servicio -->
+      <div *ngIf="role==='ADMINISTRATOR'" class="flex justify-center mt-10">
+        <a class="bg-green-600 text-white px-6 py-3 rounded-lg shadow hover:bg-green-700 transition-colors mb-6"
+          routerLink='add' (click)="goToAdd()">
+          Nuevo servicio
+        </a>
+      </div>
 
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div *ngFor="let service of services"
