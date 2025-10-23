@@ -1,8 +1,8 @@
-<div class="flex flex-col min-h-screen gym-section">
-  <app-navbar></app-navbar>
+<div class="flex flex-col gym-section">
+  <app-navbar class="app-navbar"></app-navbar>
 
   <!-- Main centrado -->
-  <main class="flex flex-1 items-center justify-center">
+  <body class="flex flex-1 items-center justify-center overflow-hidden">
     <div class="text-center">
       <h1 class="text-white text-8xl font-bold">
         Eleva tu <span class="text-[#F88B39] blur-none">entrenamiento</span>
@@ -10,11 +10,11 @@
       <p class="text-white mt-4 text-lg">
         Descubre un nuevo nivel de fitness con nuestras instalaciones de vanguardia y entrenadores expertos.
       </p>
-      <button routerLink="/services" class="mt-6 px-6 py-3 bg-[#F88B39] text-white font-semibold rounded-lg hover:bg-orange-600">
+      <button routerLink="/services" class="mt-6 px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-orange-600">
         Explorar servicios
       </button>
     </div>
-  </main>
+  </body>
 
   <app-footer class="mt-auto"></app-footer>
 </div>

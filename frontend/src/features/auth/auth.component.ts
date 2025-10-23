@@ -86,11 +86,9 @@ export default class AuthComponent implements OnInit {
       return this.authService.login(formValue).subscribe({
         next: (response) => {
           localStorage.setItem('token', response.token);
-          AlertUtil.toast("Iniciando sesión...", 'success').then(
-            () => {
-              this.router.navigate(['']);
-            }
-          );
+          AlertUtil.toast('Iniciando sesión...', 'success').then(() => {
+            this.router.navigate(['']);
+          });
         },
         error: (error) => {
           if (error.error.status === 409) {
@@ -99,38 +97,42 @@ export default class AuthComponent implements OnInit {
             );
             return;
           }
-          AlertUtil.error("Credenciales incorrectas");
-          console.error('Error en login', error.error)
+          AlertUtil.error('Credenciales incorrectas');
+          console.error('Error en login', error.error);
         },
       });
     } else {
-      AlertUtil.toast("Favor validar los valores ingresados", 'info');
+      AlertUtil.toast('Favor validar los valores ingresados', 'info');
       return;
     }
   }
 
   register() {
     const registerFormValue = this.registerForm.value;
-    if(this.registerForm.valid){
-    return this.authService.register(registerFormValue).subscribe({
-      next: () => {
-        AlertUtil.toast('Cuenta creada con éxito', 'success').then(() => {
-          this.router.navigate(['/auth']);
-        });
-      },
-      error: (error) => {
-        if (error.error.status === 409) {
-          AlertUtil.error(
-            'Nombre de usuario, email o numero de documento ya existen'
-          );
-          return;
-        }
-        AlertUtil.error("Error al registrar la cuenta");
-        console.error('Error en registro', error);
-      },
-    });
-    }else{
-      AlertUtil.error("Campos incorrectos, favor validar");
+    if (this.registerForm.valid) {
+      return this.authService.register(registerFormValue).subscribe({
+        next: () => {
+          AlertUtil.toast('Cuenta creada con éxito', 'success').then(() => {
+            this.router
+              .navigateByUrl('/', { skipLocationChange: true })
+              .then(() => {
+                this.router.navigate(['/auth']);
+              });
+          });
+        },
+        error: (error) => {
+          if (error.error.status === 409) {
+            AlertUtil.error(
+              'Nombre de usuario, email o numero de documento ya existen'
+            );
+            return;
+          }
+          AlertUtil.error('Error al registrar la cuenta');
+          console.error('Error en registro', error);
+        },
+      });
+    } else {
+      AlertUtil.error('Campos incorrectos, favor validar');
       return;
     }
   }
