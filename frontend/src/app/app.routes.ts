@@ -49,4 +49,8 @@ export const routes: Routes = [
         path: 'professionals',
         loadComponent: () => import('../features/professionals/professionals.component')
     },
+    {
+        path: 'add/professional',
+        loadComponent: () => import('../features/professionals/professionals-form/professionals-form.component')
+    },
 ];

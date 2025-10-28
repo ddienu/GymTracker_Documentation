@@ -91,6 +91,12 @@ export default class AuthComponent implements OnInit {
           });
         },
         error: (error) => {
+          if(error.error.status === 403){
+            AlertUtil.error(
+              'Usuario desactivado, contáctese con un administrador'
+            );
+            return;
+          }
           if (error.error.status === 409) {
             AlertUtil.error(
               'Nombre de usuario, email o numero de documento ya existen'
