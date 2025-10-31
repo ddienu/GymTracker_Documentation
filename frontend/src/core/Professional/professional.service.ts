@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Professional } from '../../features/professionals/model/professional.model';
 import { Observable } from 'rxjs';
 import { ProfessionalRequest } from '../../features/professionals/model/dto/professional_request.dto';
+import { UpdateProfessional } from '../../features/professionals/model/dto/professional_update.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -17,10 +18,18 @@ export class ProfessionalService {
     return this.http.get<Professional[]>(`${this.apiUrl}`)
   };
 
+  deleteProfessional(professionalId : number) : Observable<any>{
+    return this.http.delete<any>(`${this.apiUrl}/${professionalId}`);
+  }
+
   createProfessional(email : string, professionalPayload : ProfessionalRequest) : Observable<any>{
     const params = new HttpParams().set('email', email);
     
     return this.http.post<any>(`${this.apiUrl}/email`, professionalPayload, { params} );
+  }
+
+  updateProfessionalAndProfile(professionalId : number, professionalPayload : UpdateProfessional) : Observable<{message : string}>{
+    return this.http.put<{message: string}>(`${this.apiUrl}/${professionalId}`, professionalPayload);
   }
 
   getProfileByEmail(email : string) : Observable<any>{
@@ -29,6 +38,10 @@ export class ProfessionalService {
 
   getRoleByEmail(email : string) : Observable<any>{
     return this.http.get<any>(`${this.apiUrl}/role/${email}`);
+  }
+
+  getProfessionalAndProfileData(professionalId : number) : Observable<{data : UpdateProfessional}>{
+    return this.http.get<{data : UpdateProfessional}>(`${this.apiUrl}/edit/${professionalId}`);
   }
 
   

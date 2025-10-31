@@ -1,5 +1,6 @@
-<div class="flex flex-col items-center bg-main min-h-screen py-10">
-    <form [formGroup]="professionalForm" class="bg-card-dark rounded-2xl p-6 w-[90%] sm:w-[500px] shadow-lg space-y-5">
+<div class="flex flex-col items-center bg-main rounded-2xl">
+    <form *ngIf="!isEditing" [formGroup]="professionalForm"
+        class="bg-card-dark rounded-2xl p-6 w-[90%] sm:w-[500px] shadow-lg space-y-5">
 
         <h2 class="text-xl font-semibold text-white text-center">Gestión de Profesionales</h2>
 
@@ -51,15 +52,14 @@
             </div>
 
             <div class="space-y-1">
-                <label class="text-gray-300 text-sm font-medium">Tarifa por hora (USD)</label>
+                <label class="text-gray-300 text-sm font-medium">Tarifa por hora (COP)</label>
                 <input type="number" formControlName="hourly_rate" placeholder="60.00" step="0.01"
                     class="w-full px-3 py-2 bg-gray-800 text-white rounded-lg focus:ring focus:ring-primary outline-none" />
             </div>
 
             <!-- Botones -->
             <div class="flex gap-3 pt-2">
-                <button type="submit"
-                    (click)="createProfessional()"
+                <button type="submit" (click)="createProfessional()"
                     class="flex-1 py-2 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 transition">
                     Crear
                 </button>
@@ -72,4 +72,109 @@
         </div>
 
     </form>
+
+    <!-- Formulario para edición de profesionales -->
+    <form *ngIf="isEditing" [formGroup]="editProfessionalForm"
+        class="bg-card-dark rounded-2xl p-6 w-[90%] sm:w-[500px] shadow-lg space-y-5">
+
+        <h2 class="text-xl font-semibold text-white text-center">
+            Edición de Profesional
+        </h2>
+
+        <!-- Información del Profesional -->
+        <div class="space-y-4">
+
+            <!-- Nombre -->
+            <div class="space-y-1">
+                <label class="text-gray-300 text-sm font-medium">Nombre</label>
+                <input type="text" formControlName="first_name" placeholder="Ej: Carlos"
+                    class="w-full px-3 py-2 bg-gray-800 text-white rounded-lg focus:ring focus:ring-primary outline-none" />
+            </div>
+
+            <!-- Apellido -->
+            <div class="space-y-1">
+                <label class="text-gray-300 text-sm font-medium">Apellido</label>
+                <input type="text" formControlName="last_name" placeholder="Ej: Martínez"
+                    class="w-full px-3 py-2 bg-gray-800 text-white rounded-lg focus:ring focus:ring-primary outline-none" />
+            </div>
+
+            <!-- Fecha de Nacimiento -->
+            <div class="space-y-1">
+                <label class="text-gray-300 text-sm font-medium">Fecha de nacimiento</label>
+                <input type="date" formControlName="birth_date"
+                    class="w-full px-3 py-2 bg-gray-800 text-white rounded-lg focus:ring focus:ring-primary outline-none" />
+            </div>
+
+            <!-- Género -->
+            <div class="space-y-1">
+                <label class="text-gray-300 text-sm font-medium">Género</label>
+                <select formControlName="gender"
+                    class="w-full px-3 py-2 bg-gray-800 text-white rounded-lg focus:ring focus:ring-primary outline-none cursor-pointer">
+                    <option value="" disabled selected>Seleccione un género</option>
+                    <option value="Male">Hombre</option>
+                    <option value="Female" selected>Mujer</option>
+                    <option value="Other">Otro</option>
+                    <option value="Prefer not to say">Prefiero no decirlo</option>
+                </select>
+            </div>
+
+            <!-- Especialidad -->
+            <div class="space-y-1">
+                <label class="text-gray-300 text-sm font-medium">Especialidad</label>
+                <select formControlName="specialty"
+                    class="w-full px-3 py-2 bg-gray-800 text-white rounded-lg focus:ring focus:ring-primary outline-none cursor-pointer">
+                    <option value="" disabled selected>Seleccione una especialidad</option>
+                    <option value="PHYSIOTHERAPY">Fisioterapia</option>
+                    <option value="TRAINING">Entrenamiento</option>
+                    <option value="NUTRITION">Nutrición</option>
+                </select>
+            </div>
+
+            <!-- Certificaciones -->
+            <div class="space-y-1">
+                <label class="text-gray-300 text-sm font-medium">Certificaciones</label>
+                <input type="text" formControlName="certifications" placeholder="Ej: SENA, ISSA"
+                    class="w-full px-3 py-2 bg-gray-800 text-white rounded-lg focus:ring focus:ring-primary outline-none" />
+            </div>
+
+            <!-- Años de experiencia -->
+            <div class="space-y-1">
+                <label class="text-gray-300 text-sm font-medium">Años de experiencia</label>
+                <input type="number" formControlName="years_of_experience" min="0" placeholder="Ej: 4"
+                    class="w-full px-3 py-2 bg-gray-800 text-white rounded-lg focus:ring focus:ring-primary outline-none" />
+            </div>
+
+            <!-- Disponibilidad -->
+            <div class="space-y-1">
+                <label class="text-gray-300 text-sm font-medium">Disponibilidad</label>
+                <select formControlName="is_available"
+                    class="w-full px-3 py-2 bg-gray-800 text-white rounded-lg focus:ring focus:ring-primary outline-none">
+                    <option [value]="1">Disponible</option>
+                    <option [value]="0">No disponible</option>
+                </select>
+            </div>
+
+            <!-- Tarifa por hora -->
+            <div class="space-y-1">
+                <label class="text-gray-300 text-sm font-medium">Tarifa por hora (COP)</label>
+                <input type="number" formControlName="hourly_rate" min="0" placeholder="20000"
+                    class="w-full px-3 py-2 bg-gray-800 text-white rounded-lg focus:ring focus:ring-primary outline-none" />
+            </div>
+
+            <!-- Botones -->
+            <div class="flex gap-3 pt-2">
+                <button type="submit" (click)="updateProfessional()"
+                    class="flex-1 py-2 rounded-lg bg-green-600 text-white font-semibold hover:bg-green-700 transition">
+                    Guardar cambios
+                </button>
+                <button type="button" (click)="cancelar()"
+                    class="flex-1 py-2 rounded-lg bg-red-600 text-white font-semibold hover:bg-red-700 transition">
+                    Cancelar
+                </button>
+            </div>
+
+        </div>
+
+    </form>
+
 </div>

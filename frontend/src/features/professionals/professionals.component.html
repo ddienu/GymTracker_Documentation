@@ -36,10 +36,12 @@
                 class="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
 
                 <div class="flex gap-3">
-                    <button class="bg-primary text-white px-4 py-2 rounded hover:bg-orange-600 flex items-center gap-1">
+                    <button class="bg-primary text-white px-4 py-2 rounded hover:bg-orange-600 flex items-center gap-1"
+                        (click)="editProfessional(professional.professional_id)">
                         <span class="material-symbols-outlined">edit</span> Editar
                     </button>
-                    <button class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 flex items-center gap-1">
+                    <button class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 flex items-center gap-1"
+                        (click)="deleteProfessional(professional.professional_id)">
                         <span class="material-symbols-outlined">delete</span> Eliminar
                     </button>
                 </div>
@@ -51,8 +53,13 @@
         (click)="changeModalState()">
 
         <div class="bg-card-dark rounded-2xl p-6 w-[90%] sm:w-[600px] relative" (click)="$event.stopPropagation()">
-            <button (click)="changeModalState()" class="absolute top-3 right-3 text-white">✕</button>
-            <app-professionals-form></app-professionals-form>
+            <button (click)="changeModalState()" class="absolute top-8 right-11 text-white">✕</button>
+            <app-professionals-form [isEditing]="isEditMode" [professionalId]="professionalId"
+                (onSuccess)="handleSuccess()"
+                (closed)="changeModalState()"
+                (loadProfessionals)="getProfessionals()">
+
+            </app-professionals-form>
         </div>
     </div>
 
