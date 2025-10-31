@@ -22,22 +22,21 @@ export default class MoreInfoComponent implements OnInit{
 
   clientFounded : any;
   clientId! : number;
+  userId : number | null = null;
   formattedRegistrationDate : any;
 
   constructor(
     private clientService : ClientService, 
     private route : ActivatedRoute, 
     private datePipe : DatePipe, 
-    private toastr : ToastrService, 
     private router: Router,
     private authStateService : AuthStateService){}
 
   ngOnInit(): void {
     this.clientId = +this.route.snapshot.paramMap.get('id')!;
     if(this.clientId){
-      
+      this.getClientInfo(this.clientId);  
     }
-    this.getClientInfo(this.clientId);  
   }
 
 
@@ -45,6 +44,7 @@ export default class MoreInfoComponent implements OnInit{
     this.clientService.getClientById(clientId).subscribe(
       (response: any) => {
         this.clientFounded = response;
+        this.userId = response.client.user_id;
         this.formattedRegistrationDate = this.datePipe.transform(this.clientFounded.client.registration_date, 'dd/MM/yyyy HH:mm');
         // console.log(this.formattedRegistrationDate);
         // console.log(response);
@@ -104,6 +104,28 @@ export default class MoreInfoComponent implements OnInit{
           this.authStateService.setClientId(this.clientId);
           this.authStateService.setRegisterMode(true, "");
           this.router.navigate(['/auth']);
+        }
+      }
+    )
+  }
+
+  reactivateUser(userId : number){
+    AlertUtil.confirm("¿Desea reactivar al usuario seleccionado?").then(
+      (response) => {
+        if(response.isConfirmed){
+          this.clientService.reactivateClient(userId).subscribe({
+            next: (response) => {
+              AlertUtil.toast("Cliente reactivado satisfactoriamente", "success").then(
+                () => {
+                 this.getClientInfo(this.clientId); 
+                }
+              )
+            },
+            error: (error) => {
+              AlertUtil.toast(error.error.message, "error");
+              console.error("Error reactivating user", error);
+            }
+          })
         }
       }
     )

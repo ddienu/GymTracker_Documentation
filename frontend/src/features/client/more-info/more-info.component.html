@@ -31,8 +31,14 @@
               class="flex-1 px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition-colors shadow-md">Editar
               Cliente</button>
             <button
+            *ngIf="clientFounded.client.user_status==='ACTIVE'"
             (click)="updateClientStatus()"
               class="flex-1 px-4 py-2 rounded-lg text-sm font-semibold bg-gray-700 hover:bg-gray-600 text-white transition-colors">Desactivar
+              Cliente</button>
+              <button
+            *ngIf="clientFounded.client.user_status==='INACTIVE'"
+            (click)="reactivateUser(userId!)"
+              class="flex-1 px-4 py-2 rounded-lg text-sm font-semibold bg-orange-700 hover:bg-orange-600 text-white transition-colors">Activar
               Cliente</button>
             <button
             (click)="deleteClient()"

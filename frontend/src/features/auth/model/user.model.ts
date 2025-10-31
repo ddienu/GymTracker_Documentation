@@ -11,6 +11,7 @@ export interface UserModel {
   user_status: string; 
   registration_date: string;
   gender: string;
+  user_id:number
 }
 
 export interface UserResponse {

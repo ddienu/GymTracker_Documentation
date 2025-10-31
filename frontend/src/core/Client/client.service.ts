@@ -28,6 +28,10 @@ export class ClientService {
     return this.http.patch(`${this.apiUrl}/${clientId}`, '');
   }
 
+  reactivateClient(userId : number){
+    return this.http.put(`http://localhost:3000/api/users/reactivate/${userId}`, {});
+  }
+
   updateClient(clientId:number, clientData: any){
     return this.http.put(`${this.apiUrl}/${clientId}`, clientData);
   }
