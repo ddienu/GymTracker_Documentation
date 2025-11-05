@@ -33,17 +33,81 @@
 
             <!-- Botones que aparecen al hacer hover -->
             <div *ngIf="role === 'ADMINISTRATOR'"
-                class="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                class="absolute inset-0 flex items-center justify-center bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-4">
 
-                <div class="flex gap-3">
+                <div class="grid grid-cols-2 gap-2">
                     <button class="bg-primary text-white px-4 py-2 rounded hover:bg-orange-600 flex items-center gap-1"
                         (click)="editProfessional(professional.professional_id)">
                         <span class="material-symbols-outlined">edit</span> Editar
+                    </button>
+                    <button class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 flex items-center gap-1"
+                        (click)="deleteProfessional(professional.professional_id)">
+                        <span class="material-symbols-outlined">event</span> Ver citas
+                    </button>
+                    <button class="bg-blue-600 text-white px-2 py-2 rounded hover:bg-blue-700 flex items-center gap-1"
+                        (click)="professionalAvailability(professional.professional_id)">
+                        <span class="material-symbols-outlined">check_circle</span> Disponibilidad
                     </button>
                     <button class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 flex items-center gap-1"
                         (click)="deleteProfessional(professional.professional_id)">
                         <span class="material-symbols-outlined">delete</span> Eliminar
                     </button>
+                </div>
+            </div>
+            <div *ngIf="isModalAvailabityOpen"
+                class="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50"
+                (click)="closeProfessionalAvailabilityModal()">
+                <div class="bg-gray-900 text-white rounded-2xl p-6 w-[90%] sm:w-[500px] relative shadow-lg shadow-black/40"
+                    (click)="$event.stopPropagation()">
+                    <!-- Botón de cierre -->
+                    <button (click)="closeProfessionalAvailabilityModal()"
+                        class="absolute top-4 right-6 text-gray-300 hover:text-red-400 text-2xl font-bold transition">
+                        ✕
+                    </button>
+
+                    <!-- Título -->
+                    <h2 class="text-2xl font-semibold mb-6 text-center">
+                        Selecciona una fecha
+                    </h2>
+
+                    <!-- Campo de fecha -->
+                    <label for="fecha" class="block text-sm mb-2 text-gray-300">
+                        Fecha
+                    </label>
+                    <input id="fecha" type="date"
+                        class="w-full bg-gray-800 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        [(ngModel)]="selectedDate" />
+
+                    <!-- Botón de cargar -->
+                    <button
+                        class="mt-6 w-full bg-primary hover:bg-orange-600 text-white font-semibold py-2 rounded-lg transition duration-200"
+                        (click)="professionalAvailability(professional.professional_id)">
+                        Ver disponibilidad
+                    </button>
+
+                    <div *ngIf="availableAppointments" class="mt-6">
+                        
+                        <div class="space-y-3 max-h-64 overflow-y-auto pr-1">
+                            <h2 *ngIf="availableAppointments.length !== 0" class="text-xl font-semibold mb-3 text-center text-white">
+                                Citas disponibles
+                            </h2>
+                            <div *ngFor="let ap of availableAppointments"
+                                class="flex items-center justify-between bg-gray-800 hover:bg-gray-700 transition rounded-lg px-4 py-3 shadow-sm">
+                                <div>
+                                    <p class="text-lg font-medium text-white">
+                                        {{ ap.start }} <span *ngIf="ap.end">– {{ ap.end }}</span>
+                                    </p>
+                                    <p class="text-sm text-gray-400">Horario disponible</p>
+                                </div>
+
+                                <!-- <button
+                                    class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-4 py-2 rounded-lg text-sm transition duration-200">
+                                    Agendar
+                                </button> -->
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -55,14 +119,11 @@
         <div class="bg-card-dark rounded-2xl p-6 w-[90%] sm:w-[600px] relative" (click)="$event.stopPropagation()">
             <button (click)="changeModalState()" class="absolute top-8 right-11 text-white">✕</button>
             <app-professionals-form [isEditing]="isEditMode" [professionalId]="professionalId"
-                (onSuccess)="handleSuccess()"
-                (closed)="changeModalState()"
-                (loadProfessionals)="getProfessionals()">
+                (onSuccess)="handleSuccess()" (closed)="changeModalState()" (loadProfessionals)="getProfessionals()">
 
             </app-professionals-form>
         </div>
     </div>
-
 
     <app-footer class="mt-auto"></app-footer>
 </div>

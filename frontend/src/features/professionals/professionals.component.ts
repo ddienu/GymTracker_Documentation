@@ -8,7 +8,8 @@ import { ProfessionalService } from '../../core/Professional/professional.servic
 import { Router } from '@angular/router';
 import ProfessionalsFormComponent from './professionals-form/professionals-form.component';
 import { AlertUtil } from '../../shared/alert.util';
-import { NonNullableFormBuilder } from '@angular/forms';
+import { FormsModule, NonNullableFormBuilder } from '@angular/forms';
+import { ProfessionalAvailability } from './model/dto/professional_availability.dto';
 
 @Component({
   selector: 'app-professionals',
@@ -18,6 +19,7 @@ import { NonNullableFormBuilder } from '@angular/forms';
     NavbarComponent,
     CommonModule,
     ProfessionalsFormComponent,
+    FormsModule
   ],
   templateUrl: './professionals.component.html',
   styleUrl: './professionals.component.css',
@@ -43,6 +45,9 @@ export default class ProfessionalsComponent implements OnInit {
   };
 
   isModalOpen: boolean = false;
+  isModalAvailabityOpen : boolean = false;
+  selectedDate : string | null = null;
+  availableAppointments : ProfessionalAvailability[] = [];
 
   constructor(
     private jwtService: JwtService,
@@ -122,5 +127,25 @@ export default class ProfessionalsComponent implements OnInit {
   handleSuccess() {
     this.changeModalState(); // Cierra modal
     this.getProfessionals(); // Reload de la tabla o lista
+  }
+
+  closeProfessionalAvailabilityModal(){
+    this.isModalAvailabityOpen = !this.isModalAvailabityOpen
+    this.selectedDate = null;
+    this.availableAppointments = [];
+  }
+
+  professionalAvailability(professionalId : number){
+    this.isModalAvailabityOpen = true;
+    if(this.selectedDate){
+      this.professionalService.getProfessionalAvailabity(professionalId, this.selectedDate).subscribe({
+        next: (response) => {
+          this.availableAppointments = response.data;
+        },
+        error: (error) => {
+          console.error("Error loading professional availabity", error);
+        }
+      })
+    }
   }
 }
