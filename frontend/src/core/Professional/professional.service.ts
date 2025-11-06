@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { ProfessionalRequest } from '../../features/professionals/model/dto/professional_request.dto';
 import { UpdateProfessional } from '../../features/professionals/model/dto/professional_update.dto';
 import { ProfessionalAvailability } from '../../features/professionals/model/dto/professional_availability.dto';
+import { ProfessionalAppointment } from '../../features/professionals/model/dto/professional_appointment.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,11 @@ export class ProfessionalService {
     const params = new HttpParams().set('date', date);
 
     return this.http.get<{data : ProfessionalAvailability[]}>(`${this.apiUrl}/${professionalId}/availability`, {params});
+  }
+
+  getProfessionalAppointments(professionalId : number, date : string) : Observable<{data : ProfessionalAppointment[]}>{
+    const params = new HttpParams().set('date', date);
+    return this.http.get<{data : ProfessionalAppointment[]}>(`${this.apiUrl}/appointments/${professionalId}`, {params});
   }
 
   
