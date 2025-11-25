@@ -9,6 +9,7 @@ import { AlertUtil } from '../../shared/alert.util';
 import { RouterLink } from '@angular/router';
 import { RemoveItem } from './dto/removeItemRequest.dto';
 import { CartResponse } from './model/cartResponse.model';
+import { JwtService } from '../../core/jwt/jwt.service';
 
 @Component({
   selector: 'app-cart',
@@ -26,12 +27,16 @@ import { CartResponse } from './model/cartResponse.model';
 export default class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
   cartResponse : CartResponse | null = null;
-  clientId: number = 3;
+  clientId: number | null = null;
 
-  constructor(private cartService: CartService) {}
+  constructor(
+    private cartService: CartService,
+    private jwtService : JwtService
+  ) {}
 
   ngOnInit() {
-    this.getCart(this.clientId);
+    this.clientId = this.jwtService.getProfileIdFromToken();
+    this.getCart(this.clientId!);
   }
 
   getCart(clientId: number) {
@@ -86,11 +91,11 @@ export default class CartComponent implements OnInit {
     AlertUtil.confirm('¿Desea eliminar el item del carrito').then(
       (response) => {
         if (response.isConfirmed) {
-          this.cartService.removeItemFromCart(this.clientId, itemPayload).subscribe({
+          this.cartService.removeItemFromCart(this.clientId!, itemPayload).subscribe({
             next: (response) => {
               AlertUtil.toast("Item eliminado correctamente", "success").then(
                 () => {
-                  this.getCart(this.clientId);
+                  this.getCart(this.clientId!);
                 }
               )
             }, 
