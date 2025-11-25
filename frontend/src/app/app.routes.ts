@@ -53,4 +53,8 @@ export const routes: Routes = [
         path: 'add/professional',
         loadComponent: () => import('../features/professionals/professionals-form/professionals-form.component')
     },
+    {
+        path: 'cart',
+        loadComponent: () => import('../features/cart/cart.component')
+    },
 ];

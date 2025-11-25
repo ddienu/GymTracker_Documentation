@@ -1,0 +1,129 @@
+<div class="flex flex-col min-h-screen bg-main">
+    <app-navbar></app-navbar>
+
+    <main *ngIf="cartItems.length !== 0 else emptyCart"
+        class="max-w-[80%] mx-auto w-full px-6 py-12 grid grid-cols-1 lg:grid-cols-3 gap-10">
+
+        <!-- Columna izquierda – Items del carrito -->
+        <section class="lg:col-span-2">
+            <h1 class="text-white text-4xl font-semibold mb-2">
+                Carrito de <span class="text-primary">Compras</span>
+            </h1>
+            <p class="text-gray-400 mb-8">
+                Revisa los artículos en tu carrito antes de finalizar la compra.
+            </p>
+
+            <div *ngFor="let item of cartItems" class="space-y-4 mb-4">
+
+                <!-- Item de carrito -->
+                <article class="flex items-center gap-4 bg-gray-700 p-5 rounded-xl">
+                    <img src="../../assets/food_plates.jpg" class="w-20 h-20 rounded-md object-cover" />
+
+                    <div class="flex-1">
+                        <p class="text-white font-semibold">{{ item.name }}</p>
+                        <p class="text-gray-400 text-sm">{{ item.description }}</p>
+                    </div>
+
+                    <!-- Cantidad -->
+                    <div class="flex items-center gap-3">
+                        <button class="flex h-8 w-8 items-center justify-center 
+              rounded-full bg-black/40 text-white hover:bg-black/60">-</button>
+
+                        <span class="text-white font-medium">{{ item.quantity }}</span>
+
+                        <button class="flex h-8 w-8 items-center justify-center 
+              rounded-full bg-black/40 text-white hover:bg-black/60">+</button>
+                    </div>
+
+                    <!-- Precio -->
+                    <p class="text-white font-semibold w-20 text-right">{{ item.price | copCurrency }}</p>
+
+                    <!-- Delete -->
+                    <button class="text-gray-400 hover:text-primary mt-1"
+                    (click)="deleteItem(item.type, item.item_id)">
+                        <span class="material-symbols-outlined">delete</span>
+                    </button>
+                </article>
+
+            </div>
+
+            <!-- Acciones inferiores -->
+            <div class="flex justify-between items-center mt-10">
+                <button class="flex items-center gap-2 text-gray-400 hover:text-primary"
+                routerLink="/products">
+                    <span class="material-symbols-outlined text-sm">arrow_back</span>
+                    Seguir Comprando
+                </button>
+
+                <button class="flex items-center gap-2 text-gray-400 hover:text-primary" (click)="clearCart(clientId)">
+                    <span class="material-symbols-outlined text-sm">delete</span>
+                    Vaciar Carrito
+                </button>
+            </div>
+        </section>
+
+        <!-- Columna derecha – Resumen -->
+        <aside class="bg-gray-800/70 rounded-xl p-6 h-fit">
+            <h2 class="text-white text-xl font-semibold mb-4">Resumen del Pedido</h2>
+
+            <div class="space-y-2 text-gray-300">
+                <div class="flex justify-between">
+                    <span>Subtotal</span>
+                    <span>{{ cartResponse!.total | copCurrency }}</span>
+                </div>
+                <div class="flex justify-between">
+                    <span>Envío</span>
+                    <span>0</span>
+                </div>
+                <div class="flex justify-between pb-3 border-b border-gray-600">
+                    <span>Impuestos</span>
+                    <span>0</span>
+                </div>
+            </div>
+
+            <div class="flex justify-between text-white font-semibold text-lg mt-4">
+                <span>Total</span>
+                <span class="text-primary">{{ cartResponse!.total | copCurrency }}</span>
+            </div>
+
+            <button class="mt-6 w-full bg-primary text-white font-semibold py-3 rounded-lg hover:bg-primary/80">
+                Finalizar Compra
+            </button>
+        </aside>
+
+    </main>
+
+    <ng-template #emptyCart>
+        <div class="flex-1 flex items-center justify-center bg-main">
+            <div class="text-center px-4">
+                <!-- Icono del carrito -->
+                <div class="flex items-center justify-center mb-8">
+                    <div class="flex w-20 items-center justify-center rounded-2xl bg-main">
+                        <span class="material-symbols-outlined text-5xl text-primary">
+                            shopping_cart
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Texto principal -->
+                <h1 class="text-white text-2xl sm:text-3xl font-semibold mb-3">
+                    Tu Carrito Está Vacío
+                </h1>
+
+                <p class="text-gray-400 max-w-md mx-auto text-sm sm:text-base mb-8">
+                    Parece que aún no has añadido nada. ¡Explora nuestros servicios y productos para empezar!
+                </p>
+
+                <!-- Botón -->
+                <button
+                    [routerLink]="['/products']"
+                    class="mt-2 inline-flex items-center justify-center rounded-lg bg-[#ff7a1b] px-8 py-3 text-sm sm:text-base font-semibold text-white shadow-[0_10px_0_rgba(0,0,0,0.35)] hover:shadow-[0_6px_0_rgba(0,0,0,0.35)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_3px_0_rgba(0,0,0,0.4)] transition-all duration-150">
+                    Explorar Productos
+                </button>
+            </div>
+        </div>
+
+    </ng-template>
+
+    <app-footer class="mt-auto"></app-footer>
+</div>
