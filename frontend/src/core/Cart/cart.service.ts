@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { CartItem } from '../../features/cart/model/cartItems.model';
 import { CartResponse } from '../../features/cart/model/cartResponse.model';
 import { RemoveItem } from '../../features/cart/dto/removeItemRequest.dto';
+import { RequestCartItem } from '../../features/cart/dto/requestCartItem.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,14 @@ export class CartService {
 
   getCart(clientId : number) : Observable<CartResponse>{
     return this.http.get<CartResponse>(`${this.apiUrl}/${clientId}`);
+  }
+
+  addItemToCart(clientId: number, itemPayload : RequestCartItem){
+    return this.http.post(`${this.apiUrl}/${clientId}`, itemPayload);
+  }
+
+  updateQuantityInCart(clientId : number, itemPayload : RequestCartItem ){
+    return this.http.put(`${this.apiUrl}/${clientId}`, itemPayload);
   }
 
   removeItemFromCart(clientId : number, itemPayload : RemoveItem) {

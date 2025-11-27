@@ -17,6 +17,7 @@ export default class NavbarComponent implements OnInit {
   isAuthenticated = false;
   userLogged? = '';
   menuOpen: boolean = false;
+  role : string | null = null;
 
   constructor(
     private authService: AuthService,
@@ -29,6 +30,7 @@ export default class NavbarComponent implements OnInit {
   ngOnInit(): void {
     this.isAuthenticated = this.authService.isAuthenticated();
     this.userLogged = this.jwtService.extractUsernameFromToken();
+    this.role = this.jwtService.extractRoleFromToken();
   }
 
   logout() {

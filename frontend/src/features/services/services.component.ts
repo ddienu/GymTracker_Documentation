@@ -9,6 +9,8 @@ import { Router, RouterModule } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ServiceFormStateService } from '../../core/ServiceFormState/service-form-state.service';
 import { AlertUtil } from '../../shared/alert.util';
+import { CartService } from '../../core/Cart/cart.service';
+import { RequestCartItem } from '../cart/dto/requestCartItem.dto';
 
 @Component({
   selector: 'app-services',
@@ -20,19 +22,21 @@ import { AlertUtil } from '../../shared/alert.util';
 export default class ServicesComponent implements OnInit {
   services: ServiceModel[] = [];
   role: string = '';
+  clientId : number | null = null;
 
   constructor(
     private servicesService: ServicesService,
     private jwtService: JwtService,
     private toastr: ToastrService,
     private router: Router,
-    private formStateService: ServiceFormStateService
+    private formStateService: ServiceFormStateService,
+    private cartService : CartService
   ) {}
 
   ngOnInit(): void {
     this.getAllServices();
     this.role = this.jwtService.extractRoleFromToken();
-    console.log(this.role);
+    this.clientId = this.jwtService.getProfileIdFromToken();
   }
 
   getAllServices() {
@@ -105,5 +109,29 @@ export default class ServicesComponent implements OnInit {
   goToAdd() {
     this.formStateService.setEditMode(false);
     this.router.navigate([`/services/add`]);
+  }
+
+  addServiceToCart(itemType:string, itemId:number, quantity:number){
+    const itemPayload : RequestCartItem = {
+      itemId: itemId,
+      itemType: itemType,
+      quantity: quantity
+    };
+
+    AlertUtil.confirm("¿Desea agregar el servicio al carrito?").then(
+      (response) => {
+        if(response.isConfirmed){
+          this.cartService.addItemToCart(this.clientId!, itemPayload).subscribe({
+            next : (response) => {
+              console.log(response);
+              AlertUtil.toast("Servicio agregado al carrito exitosamente", "success");
+            },
+            error: (error) => {
+              AlertUtil.toast("Error agregando servicio al carrito", "error");
+            }
+          })
+        }
+      }
+    )
   }
 }

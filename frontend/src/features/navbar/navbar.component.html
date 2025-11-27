@@ -30,7 +30,7 @@
   <!-- Links -->
   <ul class="flex gap-12 font-bold text-lg uppercase tracking-wide">
     <li><a routerLink="" class="hover:text-orange-100">INICIO</a></li>
-    <li><a routerLink="/client" class="hover:text-orange-100">CLIENTES</a></li>
+    <li *ngIf="role==='ADMINISTRATOR'"><a routerLink="/client" class="hover:text-orange-100">CLIENTES</a></li>
     <li><a routerLink="/professionals" class="hover:text-orange-100">PROFESIONALES</a></li>
     <li><a routerLink="/services" class="hover:text-orange-100">SERVICIOS</a></li>
     <li><a routerLink="/products" class="hover:text-orange-100">PRODUCTOS</a></li>
