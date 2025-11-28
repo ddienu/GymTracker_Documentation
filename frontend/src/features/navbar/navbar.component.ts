@@ -2,7 +2,6 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../core/Auth/auth.service';
 import { CommonModule } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
 import { JwtService } from '../../core/jwt/jwt.service';
 import { AlertUtil } from '../../shared/alert.util';
 
@@ -21,7 +20,6 @@ export default class NavbarComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private toastr: ToastrService,
     private router: Router,
     private route: ActivatedRoute,
     private jwtService: JwtService

@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import FooterComponent from '../../footer/footer.component';
 import NavbarComponent from '../../navbar/navbar.component';
 import { CommonModule, DatePipe } from '@angular/common';
-import { ToastrService } from 'ngx-toastr';
 import { AuthStateService } from '../../../core/Auth-state/auth-state.service';
 import { AlertUtil } from '../../../shared/alert.util';
 import { MeasuresChartComponent } from '../../measures-chart/measures-chart.component';

@@ -10,7 +10,6 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ServicesService } from '../../../core/Services/services.service';
-import { ToastrService } from 'ngx-toastr';
 import { ServiceFormStateService } from '../../../core/ServiceFormState/service-form-state.service';
 import { ServiceModel } from '../model/service.model';
 import { AlertUtil } from '../../../shared/alert.util';
@@ -38,7 +37,6 @@ export default class ServiceFormComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private servicesService: ServicesService,
-    private toastr: ToastrService,
     private router: Router,
     private serviceFormState: ServiceFormStateService,
     private route: ActivatedRoute

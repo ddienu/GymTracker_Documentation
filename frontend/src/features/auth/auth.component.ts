@@ -7,7 +7,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { Router, RouterModule } from '@angular/router';
 import NavbarComponent from '../navbar/navbar.component';
 import FooterComponent from '../footer/footer.component';
@@ -40,7 +39,6 @@ export default class AuthComponent implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: ToastrService,
     private authStateService: AuthStateService,
     private clientService: ClientService
   ) {
