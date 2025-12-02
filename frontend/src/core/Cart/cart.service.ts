@@ -5,13 +5,16 @@ import { CartItem } from '../../features/cart/model/cartItems.model';
 import { CartResponse } from '../../features/cart/model/cartResponse.model';
 import { RemoveItem } from '../../features/cart/dto/removeItemRequest.dto';
 import { RequestCartItem } from '../../features/cart/dto/requestCartItem.dto';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
 
-  private apiUrl = 'http://localhost:3000/api/cart';
+  private apiUrl = environment.apiUrl+"/api/cart";
+
+  // private apiUrl = 'http://localhost:3000/api/cart';
 
   constructor(private http : HttpClient) { }
 

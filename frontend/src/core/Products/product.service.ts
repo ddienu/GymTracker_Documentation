@@ -3,13 +3,15 @@ import { Injectable } from '@angular/core';
 import { mapProductDtoToProductModel, mapProductsDtoToProductModels, ProductModel } from '../../features/product/model/product.model';
 import { map, Observable } from 'rxjs';
 import { ProductDto } from '../../features/product/model/dto/product.dto';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
 
-  private apiUrl = "http://localhost:3000/api/products";
+  private apiUrl = environment.apiUrl+"/api/products";
+  // private apiUrl = "http://localhost:3000/api/products";
 
   constructor(private http : HttpClient) { }
 

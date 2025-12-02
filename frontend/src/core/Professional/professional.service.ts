@@ -6,13 +6,16 @@ import { ProfessionalRequest } from '../../features/professionals/model/dto/prof
 import { UpdateProfessional } from '../../features/professionals/model/dto/professional_update.dto';
 import { ProfessionalAvailability } from '../../features/professionals/model/dto/professional_availability.dto';
 import { ProfessionalAppointment } from '../../features/professionals/model/dto/professional_appointment.dto';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProfessionalService {
 
-  apiUrl = "http://localhost:3000/api/professionals";
+  private apiUrl = environment.apiUrl+"/api/professionals";
+
+  // apiUrl = "http://localhost:3000/api/professionals";
 
   constructor(private http : HttpClient) { }
 

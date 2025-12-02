@@ -4,15 +4,15 @@ import { Injectable } from '@angular/core';
 import { ClientModel, ClientResponse } from '../../features/client/model/client.model';
 import { Observable } from 'rxjs';
 import { UserResponse } from '../../features/auth/model/user.model';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClientService {
 
-  // http://localhost:3000/api/clients/getClientById/:clientId
-
-  private apiUrl = "http://localhost:3000/api/clients";
+  private apiUrl = environment.apiUrl+"/api/clients";
+  // private apiUrl = "http://localhost:3000/api/clients";
 
   constructor(private http: HttpClient) { }
 
