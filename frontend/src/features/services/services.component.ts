@@ -6,7 +6,6 @@ import { ServicesService } from '../../core/Services/services.service';
 import { CommonModule } from '@angular/common';
 import { JwtService } from '../../core/jwt/jwt.service';
 import { Router, RouterModule } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { ServiceFormStateService } from '../../core/ServiceFormState/service-form-state.service';
 import { AlertUtil } from '../../shared/alert.util';
 import { CartService } from '../../core/Cart/cart.service';
@@ -27,7 +26,6 @@ export default class ServicesComponent implements OnInit {
   constructor(
     private servicesService: ServicesService,
     private jwtService: JwtService,
-    private toastr: ToastrService,
     private router: Router,
     private formStateService: ServiceFormStateService,
     private cartService : CartService

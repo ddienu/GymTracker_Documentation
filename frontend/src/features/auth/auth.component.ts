@@ -7,7 +7,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
 import { Router, RouterModule } from '@angular/router';
 import NavbarComponent from '../navbar/navbar.component';
 import FooterComponent from '../footer/footer.component';
@@ -40,7 +39,6 @@ export default class AuthComponent implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private router: Router,
-    private toastr: ToastrService,
     private authStateService: AuthStateService,
     private clientService: ClientService
   ) {
@@ -91,7 +89,7 @@ export default class AuthComponent implements OnInit {
           });
         },
         error: (error) => {
-          if(error.error.status === 403){
+          if (error.error.status === 403) {
             AlertUtil.error(
               'Usuario desactivado, contáctese con un administrador'
             );
@@ -130,6 +128,12 @@ export default class AuthComponent implements OnInit {
           if (error.error.status === 409) {
             AlertUtil.error(
               'Nombre de usuario, email o numero de documento ya existen'
+            );
+            return;
+          }
+          if (error.error.status === 400) {
+            AlertUtil.error(
+              error.error.message
             );
             return;
           }
