@@ -10,7 +10,7 @@
       </div>
       <!-- Botón agregar nuevo servicio -->
       <div *ngIf="role==='ADMINISTRATOR'" class="flex justify-center mt-10">
-        <a class="bg-green-600 text-white px-6 py-3 rounded-lg shadow hover:bg-green-700 transition-colors mb-6"
+        <a class="bg-green-600 text-white px-6 py-3 rounded-lg shadow hover:bg-green-700 transition-colors mb-6 font-semibold"
           routerLink='add' (click)="goToAdd()">
           Nuevo servicio
         </a>
@@ -58,7 +58,7 @@
 
       <!-- Botón agregar nuevo servicio -->
       <div *ngIf="role==='ADMINISTRATOR'" class="flex justify-center mt-10">
-        <a class="bg-green-600 text-white px-6 py-3 rounded-lg shadow hover:bg-green-700 transition-colors"
+        <a class="bg-green-600 text-white px-6 py-3 rounded-lg shadow hover:bg-green-700 transition-colors font-semibold"
           routerLink='add' (click)="goToAdd()">
           Nuevo servicio
         </a>
@@ -67,4 +67,4 @@
   </div>
 </main>
 
-<app-footer></app-footer>
+<app-footer class="mt-auto"></app-footer>

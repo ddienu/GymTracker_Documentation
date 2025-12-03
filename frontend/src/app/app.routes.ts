@@ -57,4 +57,12 @@ export const routes: Routes = [
         path: 'cart',
         loadComponent: () => import('../features/cart/cart.component')
     },
+    {
+        path: 'appointment',
+        loadComponent: () => import('../features/appointment/appointment.component')
+    },
+    {
+        path: 'orders',
+        loadComponent: () => import('../features/order/order.component')
+    },
 ];

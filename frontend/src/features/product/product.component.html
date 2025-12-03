@@ -67,8 +67,8 @@
                 <!-- Botón agregar nuevo producto -->
                 <div *ngIf="role==='ADMINISTRATOR'" class="flex justify-center mt-10">
                     <a
-                        class="bg-primary text-white p-4 mb-4 rounded-lg shadow hover:bg-orange-600 transition-colors cursor-pointer font-semibold">
-                        <!-- routerLink='add' (click)="goToAdd()" -->
+                        class="bg-primary text-white p-4 mb-4 rounded-lg shadow hover:bg-orange-600 transition-colors cursor-pointer font-semibold"
+                        (click)="goToAdd()">
                         Nuevo producto
                     </a>
                 </div>

@@ -17,8 +17,10 @@
 
                 <!-- Item de carrito -->
                 <article class="flex items-center gap-4 bg-gray-700 p-5 rounded-xl">
-                    <img *ngIf="item.type === 'service'" src="../../assets/food_plates.jpg" class="w-20 h-20 rounded-md object-cover" />
-                    <img  *ngIf="item.type ==='product'" src="../../assets/ProductImage.png" class="w-20 h-20 rounded-md object-cover" />
+                    <img *ngIf="item.type === 'service'" src="../../assets/food_plates.jpg"
+                        class="w-20 h-20 rounded-md object-cover" />
+                    <img *ngIf="item.type ==='product'" src="../../assets/ProductImage.png"
+                        class="w-20 h-20 rounded-md object-cover" />
 
                     <div class="flex-1">
                         <p class="text-white font-semibold">{{ item.name }}</p>
@@ -27,25 +29,22 @@
 
                     <!-- Cantidad -->
                     <div class="flex items-center gap-3">
-                        <button 
-                        class="flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60"
-                        (click)="updateQuantityInCart(item.type, item.item_id, item.quantity - 1)"
-                        >-</button>
+                        <button
+                            class="flex h-8 w-8 items-center justify-center rounded-full bg-black/40 text-white hover:bg-black/60"
+                            (click)="updateQuantityInCart(item.type, item.item_id, item.quantity - 1)">-</button>
 
                         <span class="text-white font-medium">{{ item.quantity }}</span>
 
                         <button class="flex h-8 w-8 items-center justify-center 
               rounded-full bg-black/40 text-white hover:bg-black/60"
-              (click)="updateQuantityInCart(item.type, item.item_id, item.quantity + 1)"
-              >+</button>
+                            (click)="updateQuantityInCart(item.type, item.item_id, item.quantity + 1)">+</button>
                     </div>
 
                     <!-- Precio -->
                     <p class="text-white font-semibold w-20 text-right">{{ item.price | copCurrency }}</p>
 
                     <!-- Delete -->
-                    <button class="text-gray-400 hover:text-primary mt-1"
-                    (click)="deleteItem(item.type, item.item_id)">
+                    <button class="text-gray-400 hover:text-primary mt-1" (click)="deleteItem(item.type, item.item_id)">
                         <span class="material-symbols-outlined">delete</span>
                     </button>
                 </article>
@@ -54,8 +53,7 @@
 
             <!-- Acciones inferiores -->
             <div class="flex justify-between items-center mt-10">
-                <button class="flex items-center gap-2 text-gray-400 hover:text-primary"
-                routerLink="/products">
+                <button class="flex items-center gap-2 text-gray-400 hover:text-primary" routerLink="/products">
                     <span class="material-symbols-outlined text-sm">arrow_back</span>
                     Seguir Comprando
                 </button>
@@ -84,6 +82,14 @@
                     <span>Impuestos</span>
                     <span>0</span>
                 </div>
+                <div class="flex justify-between py-2 border-b border-gray-600">
+                    <span>Método de pago: </span>
+                    <select id="paymentMethod" name="paymentMethod" [(ngModel)]="selectedPaymentMethodId"
+                        class="shadow appearance-none border rounded w-[40%] py-1 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline text-center">
+                        <option [ngValue]="null" disabled selected hidden> Seleccione un método de pago</option>
+                        <option class="mr-2" *ngFor="let method of paymentMethods" [value]="method.payment_method_id"> {{ translations[method.name] || method.name }}</option>
+                    </select>
+                </div>
             </div>
 
             <div class="flex justify-between text-white font-semibold text-lg mt-4">
@@ -92,7 +98,7 @@
             </div>
 
             <button class="mt-6 w-full bg-primary text-white font-semibold py-3 rounded-lg hover:bg-primary/80"
-            (click)="showAlertPayment()">
+                (click)="generateOrderProcess()">
                 Finalizar Compra
             </button>
         </aside>
@@ -121,8 +127,7 @@
                 </p>
 
                 <!-- Botón -->
-                <button
-                    [routerLink]="['/products']"
+                <button [routerLink]="['/products']"
                     class="mt-2 inline-flex items-center justify-center rounded-lg bg-[#ff7a1b] px-8 py-3 text-sm sm:text-base font-semibold text-white shadow-[0_10px_0_rgba(0,0,0,0.35)] hover:shadow-[0_6px_0_rgba(0,0,0,0.35)] hover:translate-y-0.5 active:translate-y-1 active:shadow-[0_3px_0_rgba(0,0,0,0.4)] transition-all duration-150">
                     Explorar Productos
                 </button>

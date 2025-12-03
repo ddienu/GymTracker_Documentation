@@ -11,6 +11,10 @@ import { RemoveItem } from './dto/removeItemRequest.dto';
 import { CartResponse } from './model/cartResponse.model';
 import { JwtService } from '../../core/jwt/jwt.service';
 import { RequestCartItem } from './dto/requestCartItem.dto';
+import { OrderService } from '../../core/Order/order.service';
+import { PaymentMethodService } from '../../core/PaymentMethod/payment-method.service';
+import { PaymentMethodResponse } from '../payment-method/model/paymentMethodResponse.model';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
@@ -21,6 +25,7 @@ import { RequestCartItem } from './dto/requestCartItem.dto';
     CommonModule,
     CopCurrencyPipe,
     RouterLink,
+    FormsModule
   ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
@@ -29,15 +34,27 @@ export default class CartComponent implements OnInit {
   cartItems: CartItem[] = [];
   cartResponse: CartResponse | null = null;
   clientId: number | null = null;
+  paymentMethods: PaymentMethodResponse[] = [];
+  selectedPaymentMethodId: number | null = null;
+
+  translations: Record<string, string> = {
+    'Credit Card': 'Tarjeta de crédito',
+    'Debit Card': 'Tarjeta débito',
+    'PayPal': 'PayPal',
+    'Bank Transfer': 'Transferencia bancaria',
+  };
 
   constructor(
     private cartService: CartService,
-    private jwtService: JwtService
-  ) {}
+    private jwtService: JwtService,
+    private orderService: OrderService,
+    private paymentMethodsService: PaymentMethodService
+  ) { }
 
   ngOnInit() {
     this.clientId = this.jwtService.getProfileIdFromToken();
     this.getCart(this.clientId!);
+    this.getPaymentMethods();
   }
 
   getCart(clientId: number) {
@@ -134,13 +151,59 @@ export default class CartComponent implements OnInit {
     );
   }
 
-  showAlertPayment(){
+  generateOrderProcess() {
+    if(this.selectedPaymentMethodId !== null){
     AlertUtil.confirm("¿Deseas proceder al pago?").then(
       (response) => {
-        if(response.isConfirmed){
-          AlertUtil.success("Serás redirigido para completar tu pago...");
+        if (response.isConfirmed) {
+          this.orderService.generateOrder(this.clientId!, this.selectedPaymentMethodId!).subscribe({
+            next: (response) => {
+              console.log(response);
+              AlertUtil.toast("Order generada satisfactoriamente", "success").then(
+                () => {
+                  AlertUtil.success("Serás redirigido para completar tu pago...").then(
+                    () => {
+                      this.cartService.clearCart(this.clientId!).subscribe({
+                        next: (response) => {
+                          AlertUtil.success("Tu compra se está procesando, podrás ingresar a tus ordenes para obtener más información").then(
+                            () => {
+                              this.getCart(this.clientId!);
+                            }
+                          )
+                        },
+                        error: (error) => {
+                          console.error(
+                            'Error eliminando los items del carrrito',
+                            error
+                          );
+                        },
+                      });
+                    }
+                  )
+                }
+              )
+            },
+            error: (error) => {
+              AlertUtil.toast("Error generando la orden", "error");
+            }
+          })
         }
       }
     )
+    }else{
+      AlertUtil.toast("Favor seleccione un método de pago", "info");
+    }
+  }
+
+  getPaymentMethods() {
+    this.paymentMethodsService.getPaymentMethods().subscribe({
+      next: (response) => {
+        console.log(response);
+        this.paymentMethods = response;
+      },
+      error: (error) => {
+        AlertUtil.toast("Error obteniendo los métodos de pago", "error");
+      }
+    })
   }
 }
