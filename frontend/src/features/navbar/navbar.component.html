@@ -55,7 +55,7 @@
     <div *ngIf="menuOpen"
       class="absolute right-0 mt-12 mr-6 w-48 bg-gray-800 rounded-md shadow-lg transition-all duration-300 z-50">
       <a routerLink="/profile" class="block px-4 py-2 hover:bg-gray-700 text-white">Perfil</a>
-      <a *ngIf="role==='CLIENT'" [routerLink]="['/orders']" class="block px-4 py-2 hover:bg-gray-700 text-white">Tus ordenes</a>
+      <a *ngIf="role==='CLIENT'" [routerLink]="['/payments']" class="block px-4 py-2 hover:bg-gray-700 text-white">Tus pagos</a>
       <a (click)="logout()" class="block px-4 py-2 hover:bg-gray-700 text-white cursor-pointer">Cerrar sesión</a>
     </div>
 

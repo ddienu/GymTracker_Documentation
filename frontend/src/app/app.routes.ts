@@ -36,7 +36,7 @@ export const routes: Routes = [
     {
         path: 'products',
         loadComponent: () => import('../features/product/product.component')
-    },    
+    },
     {
         path: 'products/add',
         loadComponent: () => import('../features/product/product_form/product-form.component')
@@ -62,7 +62,7 @@ export const routes: Routes = [
         loadComponent: () => import('../features/appointment/appointment.component')
     },
     {
-        path: 'orders',
-        loadComponent: () => import('../features/order/order.component')
+        path: 'payments',
+        loadComponent: () => import('../features/payment/payment.component')
     },
 ];

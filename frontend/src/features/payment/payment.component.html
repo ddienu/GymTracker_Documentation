@@ -1,0 +1,165 @@
+<div class="flex flex-col min-h-screen bg-main">
+    <app-navbar></app-navbar>
+    <main class="flex-1 px-6 py-8 lg:px-12">
+        <div class="max-w-5xl mx-auto">
+
+
+            <header class="mb-6">
+                <h1 class="text-3xl font-bold text-white">Historial de <span class="text-primary">Pagos</span></h1>
+            </header>
+
+            <!-- Lista de órdenes -->
+            <section class="space-y-4">
+
+                <!-- Tarjeta de orden (ejemplo, duplícala luego) -->
+                <article *ngFor="let payment of payments"
+                    class="bg-main rounded-2xl px-6 py-4 flex items-center justify-between shadow-md border text-center">
+                    <!-- Info principal -->
+                    <div class="flex-1 flex justify-between text-sm">
+
+                        <!-- ID de orden -->
+                        <div class="flex flex-col">
+                            <span class="text-xs text-gray-400 uppercase tracking-wide">ID de Orden</span>
+                            <span class="mt-1 text-sm font-semibold text-orange-400 text-center">
+                                {{ payment.client_order_id }}
+                            </span>
+                        </div>
+
+                        <!-- Fecha -->
+                        <div class="flex flex-col">
+                            <span class="text-xs text-gray-400 uppercase tracking-wide text-center">Fecha</span>
+                            <span class="mt-1 text-sm text-white text-center">{{ payment.payment_date |
+                                date:'dd/MMM/YYYY, hh:mm a' }}</span>
+                        </div>
+
+                        <!-- Método de pago -->
+                        <div class="flex flex-col text-right">
+                            <span class="text-xs text-gray-400 uppercase tracking-wide">Método de pago</span>
+                            <span class="mt-1 text-sm font-semibold text-white text-center">{{
+                                translations[payment.name] || payment.name}}</span>
+                        </div>
+
+                        <!-- Total -->
+                        <div class="flex flex-col text-right">
+                            <span class="text-xs text-gray-400 uppercase tracking-wide">Total</span>
+                            <span class="mt-1 text-sm font-semibold text-white text-center">{{ payment.amount |
+                                currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Estado + botón ver -->
+                    <div class="flex items-center gap-3 ml-6">
+                        <span *ngIf="payment.payment_status === 'COMPLETED'"
+                            class="w-28 px-2 py-1 rounded-full bg-emerald-900/60 text-emerald-300 text-xs font-semibold">
+                            Completado
+                        </span>
+
+                        <span *ngIf="payment.payment_status === 'PENDING'"
+                            class="w-28 px-2 py-1 rounded-full bg-yellow-900/40 text-yellow-400 text-xs font-semibold">
+                            Pendiente
+                        </span>
+
+                        <span *ngIf="payment.payment_status === 'FAILED'"
+                            class="w-28 px-2 py-1 rounded-full bg-red-900/50 text-red-300 text-xs font-semibold">
+                            Rechazado
+                        </span>
+
+                        <button (click)="changeModalState()"
+                            class="flex items-center justify-center text-primary hover:text-orange-600 transition"
+                            aria-label="Ver detalles de la orden">
+                            <span class="text-sm font-bold">Ver detalles</span>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Aquí puedes ir copiando/pegando más tarjetas -->
+
+            </section>
+
+            <!-- Modal Overlay -->
+            <div *ngIf="isModalOpen" class="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4">
+
+                <!-- Modal Container -->
+                <div
+                    class="w-full max-w-3xl bg-[#191919] rounded-2xl shadow-xl border border-[#262626] p-6 text-gray-100">
+
+                    <!-- Título del modal -->
+                    <h3 class="text-lg font-bold mb-4">
+                        Productos y servicios de esta orden
+                    </h3>
+
+                    <!-- Lista de items -->
+                    <div class="bg-[#121212] rounded-xl border border-[#2b2b2b] overflow-hidden">
+
+                        <!-- Encabezados -->
+                        <div
+                            class="grid grid-cols-5 text-xs uppercase tracking-wide text-gray-400 bg-[#151515] px-4 py-2">
+                            <span>Tipo</span>
+                            <span class="col-span-2">Descripción</span>
+                            <span class="text-right">Cantidad</span>
+                            <span class="text-right">Subtotal</span>
+                        </div>
+
+                        <!-- Fila de ejemplo -->
+                        <div class="grid grid-cols-5 items-center px-4 py-3 text-sm border-t border-[#222]">
+                            <span class="text-xs px-2 py-1 rounded-full bg-orange-500/10 text-orange-300 w-fit">
+                                Producto
+                            </span>
+                            <div class="col-span-2">
+                                <p class="font-semibold">Membresía Pro</p>
+                                <p class="text-xs text-gray-400">Acceso a clases premium</p>
+                            </div>
+                            <span class="text-right">1</span>
+                            <span class="text-right font-semibold">$70,000</span>
+                        </div>
+
+                        <div class="grid grid-cols-5 items-center px-4 py-3 text-sm border-t border-[#222]">
+                            <span class="text-xs px-2 py-1 rounded-full bg-blue-500/10 text-blue-300 w-fit">
+                                Servicio
+                            </span>
+                            <div class="col-span-2">
+                                <p class="font-semibold">Sesión personalizada</p>
+                                <p class="text-xs text-gray-400">1 hora de asesoría</p>
+                            </div>
+                            <span class="text-right">1</span>
+                            <span class="text-right font-semibold">$20,000</span>
+                        </div>
+                    </div>
+
+                    <!-- Resumen -->
+                    <div class="mt-4 flex flex-col items-end gap-1 text-sm">
+                        <div class="flex justify-between w-full max-w-xs">
+                            <span class="text-gray-400">Subtotal productos</span>
+                            <span class="font-semibold">$70,000</span>
+                        </div>
+                        <div class="flex justify-between w-full max-w-xs">
+                            <span class="text-gray-400">Subtotal servicios</span>
+                            <span class="font-semibold">$20,000</span>
+                        </div>
+                        <div class="flex justify-between w-full max-w-xs">
+                            <span class="text-gray-400">Total pagado</span>
+                            <span class="font-bold text-orange-400">$90,000</span>
+                        </div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="mt-6 flex justify-end gap-3">
+                        <button
+                            class="px-4 py-2 rounded-lg border border-gray-600 text-sm text-gray-200 hover:bg-gray-700/40 transition">
+                            Descargar comprobante
+                        </button>
+                        <button (click)="changeModalState()"
+                            class="px-4 py-2 rounded-lg bg-orange-500 text-sm font-semibold text-black hover:bg-orange-400 transition">
+                            Cerrar
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </main>
+    <app-footer class="mt-auto"></app-footer>
+</div>
