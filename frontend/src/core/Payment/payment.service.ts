@@ -3,6 +3,7 @@ import { environment } from '../../environments/environments';
 import { HttpClient } from '@angular/common/http';
 import { PaymentOrderResponse } from '../../features/payment/model/paymentResponse.model';
 import { Observable } from 'rxjs';
+import { OrderItemDetail } from '../../features/payment/model/orderItemDetail.model';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +11,15 @@ import { Observable } from 'rxjs';
 export class PaymentService {
 
   private apiUrl = `${environment.apiUrl}/api/payments`;
+  private apiOrderUrl = `${environment.apiUrl}/api/client_order`;
 
   constructor(private http : HttpClient) { }
 
   getPaymentsByProfileId(profileId : number) : Observable<{message : string, data : PaymentOrderResponse[]}>{
     return this.http.get<{message : string, data: PaymentOrderResponse[]}>(`${this.apiUrl}/${profileId}`);
+  }
+
+  getOrderDetailById(orderId : number) : Observable<{data : OrderItemDetail[]}>{
+    return this.http.get<{data : OrderItemDetail[]}>(`${this.apiOrderUrl}/${orderId}`);
   }
 }

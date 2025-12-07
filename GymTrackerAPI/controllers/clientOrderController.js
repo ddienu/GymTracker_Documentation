@@ -40,8 +40,11 @@ class ClientOrderController {
         }
 
         const result = await clientOrderService.getClientOrderById(clientOrderId);
-        if(!result){
-            return res.status(204);
+        if(result.length === 0){
+            console.log("Entrando");
+            return res.status(204).json({
+                message: "Orden no encontrada"
+            });
         }
 
         return res.status(200).json({

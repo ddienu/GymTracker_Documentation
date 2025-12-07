@@ -68,7 +68,8 @@
                         <button (click)="changeModalState()"
                             class="flex items-center justify-center text-primary hover:text-orange-600 transition"
                             aria-label="Ver detalles de la orden">
-                            <span class="text-sm font-bold">Ver detalles</span>
+                            <span class="text-sm font-bold"
+                                (click)="getOrderDetailsByOrderId(payment.client_order_id)">Ver detalles</span>
                         </button>
                     </div>
                 </article>
@@ -86,7 +87,7 @@
 
                     <!-- Título del modal -->
                     <h3 class="text-lg font-bold mb-4">
-                        Productos y servicios de esta orden
+                        Detalle de la orden
                     </h3>
 
                     <!-- Lista de items -->
@@ -94,52 +95,69 @@
 
                         <!-- Encabezados -->
                         <div
-                            class="grid grid-cols-5 text-xs uppercase tracking-wide text-gray-400 bg-[#151515] px-4 py-2">
+                            class="grid grid-cols-5 text-xs uppercase tracking-wide text-gray-400 bg-[#151515] px-4 py-2 text-center">
                             <span>Tipo</span>
                             <span class="col-span-2">Descripción</span>
                             <span class="text-right">Cantidad</span>
                             <span class="text-right">Subtotal</span>
                         </div>
 
-                        <!-- Fila de ejemplo -->
-                        <div class="grid grid-cols-5 items-center px-4 py-3 text-sm border-t border-[#222]">
-                            <span class="text-xs px-2 py-1 rounded-full bg-orange-500/10 text-orange-300 w-fit">
-                                Producto
-                            </span>
-                            <div class="col-span-2">
-                                <p class="font-semibold">Membresía Pro</p>
-                                <p class="text-xs text-gray-400">Acceso a clases premium</p>
+                        <!-- Filas -->
+                        <div *ngFor="let order of orderDetail"
+                            class="grid grid-cols-5 px-4 py-3 text-sm border-t border-[#222]">
+
+                            <!-- Tipo -->
+                            <div class="flex items-center justify-center">
+                                <span *ngIf="order.item_type === 'PRODUCT'"
+                                    class="text-xs px-2 py-1 rounded-full bg-orange-500/10 text-orange-300">
+                                    Producto
+                                </span>
+                                <span *ngIf="order.item_type === 'SERVICE'"
+                                    class="text-xs px-2 py-1 rounded-full bg-blue-500/10 text-blue-300">
+                                    Servicio
+                                </span>
                             </div>
-                            <span class="text-right">1</span>
-                            <span class="text-right font-semibold">$70,000</span>
+
+                            <!-- Descripción -->
+                            <div class="col-span-2 text-center">
+                                <p class="font-semibold">
+                                    {{ order.item_type === 'SERVICE' ? order.service_name : order.product_name }}
+                                </p>
+                                <p class="text-xs text-gray-400">
+                                    {{ order.item_type === 'SERVICE' ? order.service_description :
+                                    order.product_description }}
+                                </p>
+                            </div>
+
+                            <!-- Cantidad -->
+                            <div class="text-right flex items-center justify-end">
+                                {{ order.quantity }}
+                            </div>
+
+                            <!-- Subtotal -->
+                            <div class="text-right font-semibold flex items-center justify-end">
+                                {{ order.unit_price | currency:'COP':'symbol-narrow':'1.0-0' }}
+                            </div>
                         </div>
 
-                        <div class="grid grid-cols-5 items-center px-4 py-3 text-sm border-t border-[#222]">
-                            <span class="text-xs px-2 py-1 rounded-full bg-blue-500/10 text-blue-300 w-fit">
-                                Servicio
-                            </span>
-                            <div class="col-span-2">
-                                <p class="font-semibold">Sesión personalizada</p>
-                                <p class="text-xs text-gray-400">1 hora de asesoría</p>
-                            </div>
-                            <span class="text-right">1</span>
-                            <span class="text-right font-semibold">$20,000</span>
-                        </div>
                     </div>
 
                     <!-- Resumen -->
                     <div class="mt-4 flex flex-col items-end gap-1 text-sm">
                         <div class="flex justify-between w-full max-w-xs">
                             <span class="text-gray-400">Subtotal productos</span>
-                            <span class="font-semibold">$70,000</span>
+                            <span class="font-semibold">{{ totalProducts | currency:'COP':'symbol-narrow':'1.0-0'
+                                }}</span>
                         </div>
                         <div class="flex justify-between w-full max-w-xs">
                             <span class="text-gray-400">Subtotal servicios</span>
-                            <span class="font-semibold">$20,000</span>
+                            <span class="font-semibold">{{ totalServices | currency:'COP':'symbol-narrow':'1.0-0'
+                                }}</span>
                         </div>
                         <div class="flex justify-between w-full max-w-xs">
                             <span class="text-gray-400">Total pagado</span>
-                            <span class="font-bold text-orange-400">$90,000</span>
+                            <span class="font-bold text-orange-400">{{ totalAmount |
+                                currency:'COP':'symbol-narrow':'1.0-0' }}</span>
                         </div>
                     </div>
 
