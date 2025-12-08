@@ -11,6 +11,8 @@ router.post('/:profileId', clientOrderController.createClientOrder);
 
 router.get('/:clientOrderId', clientOrderController.getClientOrderById);
 
+router.post('/generate/pdf', clientOrderController.generatePdf);
+
 // // Añadir un producto o un servicio al carrito
 // router.post('/:clientId', cartController.addItemToCart);
 

@@ -30,17 +30,17 @@ class ClientOrderController {
         }
     };
 
-    async getClientOrderById(req, res, next){
+    async getClientOrderById(req, res, next) {
         const clientOrderId = req.params.clientOrderId;
 
-        if(!clientOrderId){
+        if (!clientOrderId) {
             return res.status(400).json({
                 message: "El id de la orden es requerido"
             });
         }
 
         const result = await clientOrderService.getClientOrderById(clientOrderId);
-        if(result.length === 0){
+        if (result.length === 0) {
             return res.status(204).json({
                 message: "Orden no encontrada"
             });
@@ -50,6 +50,30 @@ class ClientOrderController {
             message: "Orden del cliente obtenida satisfactoriamente",
             data: result
         });
+    };
+
+    async generatePdf(req, res, next) {
+        try {
+            const {html} = req.body;
+
+            if (!html) {
+                return res.status(400).json({
+                    message: "El código HTML es requerido"
+                });
+            };
+
+            const result = await clientOrderService.generatePdf(html);
+
+            res.set({
+                "Content-Type": "application/pdf",
+                "Content-Disposition": "attachment; filename=recibo.pdf",
+                "Content-Length": result.length
+            });
+
+            res.send(result);
+        } catch (error) {
+            next(error);
+        }
     }
 }
 

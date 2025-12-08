@@ -6,6 +6,10 @@ import cartServiceRepository from '../repositories/cartServiceRepository.js'
 import orderItemRepository from "../repositories/orderItemRepository.js";
 import pool from '../config/db.js';
 import paymentRepository from "../repositories/paymentRepository.js";
+import puppeteer from 'puppeteer';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from "url";
 
 class ClientOrderService {
   //   /**
@@ -97,9 +101,9 @@ class ClientOrderService {
     const totalAmount = totalProducts + totalServices;
 
     return { products, services, totalAmount };
-  }; 
+  };
 
-  async getClientOrderById(clientOrderId){
+  async getClientOrderById(clientOrderId) {
     const connection = await pool.getConnection();
 
     try {
@@ -114,7 +118,55 @@ class ClientOrderService {
     } finally {
       connection.release();
     }
+  };
 
+  async generatePdf(html) {
+    try {
+
+      const __filename = fileURLToPath(import.meta.url);
+      const __dirname = path.dirname(__filename);
+
+
+      const logoPath = path.join(__dirname, "../uploads/GymTrackerLogo.png");
+      const logoBase64 = fs.readFileSync(logoPath, "base64");
+
+      const htmlWithLogo = html.replace("{{logoBase64}}", logoBase64);
+
+      const browser = await puppeteer.launch({
+        headless: "new"
+      });
+
+      const page = await browser.newPage();
+
+      await page.setContent(`
+        <html>
+          <head>
+            <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.1/dist/tailwind.min.css" rel="stylesheet">
+          </head>
+          <body class="bg-gray-900 text-white p-6">
+            ${htmlWithLogo}
+          </body>
+        </html>
+      `, { waitUntil: 'networkidle0' });
+
+      const pdf = await page.pdf({
+        format: "A4",
+        printBackground: true,
+        margin: {
+          top: "0px",
+          bottom: "0px",
+          left: "0px",
+          right: "0px",
+        }
+      });
+
+      await browser.close();
+      return pdf;
+
+    } catch (error) {
+      console.log("Error generando el pdf", error);
+      throw error;
+    }
   }
 }
 
