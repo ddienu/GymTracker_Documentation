@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import NavbarComponent from '../navbar/navbar.component';
 import FooterComponent from '../footer/footer.component';
 import { PaymentService } from '../../core/Payment/payment.service';
 import { JwtService } from '../../core/jwt/jwt.service';
 import { PaymentOrderResponse } from './model/paymentResponse.model';
 import { AlertUtil } from '../../shared/alert.util';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { OrderItemDetail } from './model/orderItemDetail.model';
 
@@ -25,6 +25,7 @@ export default class PaymentComponent implements OnInit {
   totalProducts: number | null = null;
   totalServices: number | null = null;
   totalAmount: number | null = null;
+  clientId? : number;
 
   translations: Record<string, string> = {
     'Credit Card': 'Tarjeta de crédito',
@@ -35,21 +36,44 @@ export default class PaymentComponent implements OnInit {
 
   constructor(
     private paymentService: PaymentService,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private route : ActivatedRoute
   ) { }
 
   ngOnInit(): void {
-    this.profileId = this.jwtService.getProfileIdFromToken();
-    if (this.profileId) {
-      this.getPaymentsByProfileId(this.profileId);
+
+    this.clientId = +this.route.snapshot.paramMap.get('clientId')!;
+    if (this.clientId) {
+      this.getPaymentsByClientId(this.clientId);
+    } else {
+      this.profileId = this.jwtService.getProfileIdFromToken();
+      if (this.profileId) {
+        this.getPaymentsByProfileId(this.profileId);
+      }
     }
   }
 
   getPaymentsByProfileId(profileId: number) {
-    this.paymentService.getPaymentsByProfileId(profileId!).subscribe({
+    this.paymentService.getPaymentsByProfileId(profileId).subscribe({
       next: (response) => {
         this.payments = response.data;
-        console.log(this.payments);
+        if(this.payments.length === 0){
+          AlertUtil.toast("No hay pagos asignados a este perfíl", "info");
+        }
+      },
+      error: (error) => {
+        AlertUtil.toast(`${error.error.message}`, "error");
+      }
+    })
+  }
+
+  getPaymentsByClientId(clientId: number) {
+    this.paymentService.getPaymentsByClientId(clientId).subscribe({
+      next: (response) => {
+        this.payments = response.data;
+        if(this.payments.length === 0){
+          AlertUtil.toast("No hay pagos asignados a este cliente", "info");
+        }
       },
       error: (error) => {
         AlertUtil.toast(`${error.error.message}`, "error");
@@ -90,7 +114,7 @@ export default class PaymentComponent implements OnInit {
   }
 
   generatePdf(orderDetail: any[], totals: any): string {
-    
+
     console.log(orderDetail[0].document_number);
     return `
   <!DOCTYPE html>

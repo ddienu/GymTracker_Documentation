@@ -8,14 +8,14 @@
             <img alt="Avatar del usuario" class="h-28 w-28 rounded-full border-4 border-primary shadow-lg mr-4<"
               src="/assets/male-client.svg" />
             <div class="text-center sm:text-left">
-              <h1 class="text-3xl font-bold text-white">{{ clientFounded.client.first_name }} {{
-                clientFounded.client.last_name }}</h1>
-              <p class="text-gray-400 mt-2">{{ clientFounded.client.document_number }} • {{ clientFounded.client.email
+              <h1 class="text-3xl font-bold text-white">{{ clientFounded.first_name }} {{
+                clientFounded.last_name }}</h1>
+              <p class="text-gray-400 mt-2">{{ clientFounded.document_number }} • {{ clientFounded.email
                 }}</p>
               <div class="flex items-center justify-center sm:justify-start gap-4 mt-2">
                 <p class="text-sm text-gray-400">Miembro desde: {{ formattedRegistrationDate }}</p>
 
-                <span *ngIf="clientFounded.client.user_status === 'ACTIVE'; else deactive"
+                <span *ngIf="clientFounded.user_status === 'ACTIVE'; else deactive"
                   class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-800/50 text-green-300">Activo</span>
 
                 <ng-template #deactive>
@@ -31,12 +31,12 @@
               class="flex-1 px-4 py-2 rounded-lg text-sm font-semibold bg-primary text-white hover:bg-primary/90 transition-colors shadow-md">Editar
               Cliente</button>
             <button
-            *ngIf="clientFounded.client.user_status==='ACTIVE'"
+            *ngIf="clientFounded.user_status==='ACTIVE'"
             (click)="updateClientStatus()"
               class="flex-1 px-4 py-2 rounded-lg text-sm font-semibold bg-gray-700 hover:bg-gray-600 text-white transition-colors">Desactivar
               Cliente</button>
               <button
-            *ngIf="clientFounded.client.user_status==='INACTIVE'"
+            *ngIf="clientFounded.user_status==='INACTIVE'"
             (click)="reactivateUser(userId!)"
               class="flex-1 px-4 py-2 rounded-lg text-sm font-semibold bg-orange-700 hover:bg-orange-600 text-white transition-colors">Activar
               Cliente</button>
@@ -69,6 +69,7 @@
           <p class="text-gray-400 mt-1 text-sm">Ver el calendario de citas y sesiones.</p>
         </button>
         <button
+          (click)="goToClientPayments(clientFounded.client_id)"
           class="bg-[#242424] rounded-xl shadow-lg p-6 text-left hover:bg-black/20 transition-colors duration-300">
           <h3 class="text-lg font-bold text-white">Historial de Pagos</h3>
           <p class="text-gray-400 mt-1 text-sm">Consultar el registro de transacciones y pagos.</p>

@@ -19,6 +19,10 @@ export class PaymentService {
     return this.http.get<{message : string, data: PaymentOrderResponse[]}>(`${this.apiUrl}/${profileId}`);
   }
 
+  getPaymentsByClientId(clientId : number) : Observable<{data : PaymentOrderResponse[]}>{
+    return this.http.get<{data : PaymentOrderResponse[]}>(`${this.apiUrl}/client/${clientId}`);
+  }
+
   getOrderDetailById(orderId : number) : Observable<{data : OrderItemDetail[]}>{
     return this.http.get<{data : OrderItemDetail[]}>(`${this.apiOrderUrl}/${orderId}`);
   }

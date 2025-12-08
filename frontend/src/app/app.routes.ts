@@ -65,4 +65,8 @@ export const routes: Routes = [
         path: 'payments',
         loadComponent: () => import('../features/payment/payment.component')
     },
+    {
+        path: 'client-payments/:clientId',
+        loadComponent: () => import('../features/payment/payment.component')
+    },
 ];

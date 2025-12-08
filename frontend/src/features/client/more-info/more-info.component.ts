@@ -7,6 +7,7 @@ import { CommonModule, DatePipe } from '@angular/common';
 import { AuthStateService } from '../../../core/Auth-state/auth-state.service';
 import { AlertUtil } from '../../../shared/alert.util';
 import { MeasuresChartComponent } from '../../measures-chart/measures-chart.component';
+import { PaymentService } from '../../../core/Payment/payment.service';
 
 
 @Component({
@@ -29,7 +30,9 @@ export default class MoreInfoComponent implements OnInit{
     private route : ActivatedRoute, 
     private datePipe : DatePipe, 
     private router: Router,
-    private authStateService : AuthStateService){}
+    private authStateService : AuthStateService,
+    private paymentService : PaymentService  
+  ){}
 
   ngOnInit(): void {
     this.clientId = +this.route.snapshot.paramMap.get('id')!;
@@ -42,11 +45,9 @@ export default class MoreInfoComponent implements OnInit{
   getClientInfo(clientId : number){
     this.clientService.getClientById(clientId).subscribe(
       (response: any) => {
-        this.clientFounded = response;
+        this.clientFounded = response.client;
         this.userId = response.client.user_id;
-        this.formattedRegistrationDate = this.datePipe.transform(this.clientFounded.client.registration_date, 'dd/MM/yyyy HH:mm');
-        // console.log(this.formattedRegistrationDate);
-        // console.log(response);
+        this.formattedRegistrationDate = this.datePipe.transform(this.clientFounded.registration_date, 'dd/MM/yyyy HH:mm');
       } 
     )
   }
@@ -128,5 +129,22 @@ export default class MoreInfoComponent implements OnInit{
         }
       }
     )
+  }
+
+  goToClientPayments(clientId : number){
+    this.paymentService.getPaymentsByClientId(clientId).subscribe({
+      next: (response) => {
+        const payments = response.data;
+
+        if(payments.length === 0){
+          AlertUtil.toast("El cliente no tiene pagos asignados");
+          return;
+        }
+        this.router.navigate(['/client-payments', clientId]);
+      },
+      error: (error) => {
+        AlertUtil.toast("No se pudo obtener el historial de pagos del cliente", "error");
+      }
+    })
   }
 }

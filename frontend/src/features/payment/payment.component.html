@@ -1,6 +1,6 @@
 <div class="flex flex-col min-h-screen bg-main">
     <app-navbar></app-navbar>
-    <main class="flex-1 px-6 py-8 lg:px-12">
+    <main *ngIf="payments.length !== 0 else emptyPayments" class="flex-1 px-6 py-8 lg:px-12">
         <div class="max-w-5xl mx-auto">
 
 
@@ -145,7 +145,7 @@
                         </div>
 
                         <!-- Resumen (incluido dentro del scroll) -->
-                        <div class="mt-4 flex flex-col items-end gap-1 text-sm">
+                        <div class="mt-4 flex flex-col items-end gap-1 text-sm px-4">
                             <div class="flex justify-between w-full max-w-xs">
                                 <span class="text-gray-400">Subtotal productos</span>
                                 <span class="font-semibold">{{ totalProducts | currency:'COP':'symbol-narrow':'1.0-0'
@@ -181,10 +181,13 @@
                 </div>
 
             </div>
-
-
-
         </div>
+
     </main>
+    <div>
+        <ng-template #emptyPayments>
+            <h1>No hay nada que mostrar</h1>
+        </ng-template>
+    </div>
     <app-footer class="mt-auto"></app-footer>
 </div>
