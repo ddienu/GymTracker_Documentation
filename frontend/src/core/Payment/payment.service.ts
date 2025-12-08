@@ -22,4 +22,8 @@ export class PaymentService {
   getOrderDetailById(orderId : number) : Observable<{data : OrderItemDetail[]}>{
     return this.http.get<{data : OrderItemDetail[]}>(`${this.apiOrderUrl}/${orderId}`);
   }
+
+  generatePdf(html : string){
+    return this.http.post(`${this.apiOrderUrl}/generate/pdf`,  {html}, {responseType: 'blob'});
+  }
 }
