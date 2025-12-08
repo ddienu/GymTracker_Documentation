@@ -2,7 +2,7 @@ import clientRepository from "../repositories/clientRepository.js";
 import paymentRepository from "../repositories/paymentRepository.js";
 
 class PaymentService {
-    async getPaymentsByClientId(profileId) {
+    async getPaymentsByProfileId(profileId) {
         //1. Se busca el cliente por profileId
         const clientFounded = await clientRepository.findByProfileId(profileId);
 
@@ -12,6 +12,11 @@ class PaymentService {
 
         //2. Se traen los pagos por el id del cliente
         const paymentsFounded = await paymentRepository.getPaymentsByClientId(clientFounded.client_id);
+        return paymentsFounded;
+    };
+
+    async getPaymentsByClientId(clientId){
+        const paymentsFounded = await paymentRepository.getPaymentsByClientId(clientId);
         return paymentsFounded;
     }
 }

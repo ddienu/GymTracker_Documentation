@@ -6,7 +6,8 @@ const router = express.Router();
 // --- Rutas de Métodos de Pago ---
 // Aquí definiremos las rutas para el CRUD de PaymentMethod
 
-router.get('/:profileId', paymentController.getPayments);
+router.get('/:profileId', paymentController.getPaymentsByProfileId);
+router.get('/client/:clientId', paymentController.getPaymentsByClientId)
 
 
 export default router; 
