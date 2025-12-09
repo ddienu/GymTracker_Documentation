@@ -197,7 +197,7 @@ CREATE TABLE IF NOT EXISTS Service (
     price DECIMAL(10, 2) NOT NULL,
     service_type ENUM('ACCESS', 'TRAINING', 'NUTRITION', 'PHYSIOTHERAPY'),
     duration_days INT,
-    is_active BOOLEAN DEFAULT TRUE
+    requires_appointment BOOLEAN DEFAULT FALSE
 );
 
 CREATE TABLE IF NOT EXISTS Cart (
@@ -320,6 +320,26 @@ CREATE TABLE IF NOT EXISTS professional_time_off (
     FOREIGN KEY (professional_id) REFERENCES Professional(professional_id) ON DELETE CASCADE
 );
 
+CREATE TABLE appointment_credits (
+    appointment_credit_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+
+    client_id INT NOT NULL,
+    service_id INT NOT NULL,
+    client_order_id INT NOT NULL,
+    order_item_id INT NOT NULL,
+
+    credit_status ENUM('AVAILABLE', 'USED', 'EXPIRED', 'CANCELLED') 
+        NOT NULL DEFAULT 'AVAILABLE',
+
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (client_id) REFERENCES Client(client_id),
+    FOREIGN KEY (service_id) REFERENCES Service(service_id),
+    FOREIGN KEY (client_order_id) REFERENCES ClientOrder(client_order_id),
+    FOREIGN KEY (order_item_id) REFERENCES OrderItem(order_item_id)
+);
+
 -- Tabla de citas actualizada (sin availability_id)
 DROP TABLE IF EXISTS Appointment;
 CREATE TABLE IF NOT EXISTS Appointment (
@@ -342,9 +362,12 @@ CREATE TABLE IF NOT EXISTS Appointment (
     cancel_reason VARCHAR(255) NULL,
     notes TEXT NULL,
     booked_by ENUM('admin', 'client', 'professional', 'system') DEFAULT 'client',
+    credit_id BIGINT NULL,
     FOREIGN KEY (client_id) REFERENCES Client(client_id),
     FOREIGN KEY (professional_id) REFERENCES Professional(professional_id),
     FOREIGN KEY (service_id) REFERENCES Service(service_id),
+    FOREIGN KEY (credit_id) REFERENCES appointment_credits(appointment_credit_id),
+
     CONSTRAINT chk_appointment_time CHECK (start_time < end_time)
 );
 

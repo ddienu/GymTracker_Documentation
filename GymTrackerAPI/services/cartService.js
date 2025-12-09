@@ -129,7 +129,7 @@ const cartService = {
     } else {
       // itemType === 'service'
       const service = await serviceRepository.findById(itemId);
-      if (!service || !service.is_active)
+      if (!service)
         throw new CustomError("Service not found or not available.", 404);
 
       const existingItem = await cartServiceRepository.findByCartAndService(
@@ -214,6 +214,7 @@ const cartService = {
     let cart = await cartRepository.findByClientId(clientId);
     if (!cart) {
       const result = await cartRepository.create(clientId);
+      console.log("Este es el result de createCart", result);
       cart = await cartRepository.findById(result.insertId);
     }
     return cart;

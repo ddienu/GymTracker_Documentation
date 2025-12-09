@@ -10,6 +10,8 @@ import puppeteer from 'puppeteer';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from "url";
+import appointmentCreditsRepository from "../repositories/appointmentCreditsRepository.js";
+import CustomError from "../utils/CustomError.js";
 
 class ClientOrderService {
   //   /**
@@ -48,26 +50,31 @@ class ClientOrderService {
       const calculateItemsAndAmount = this._calculateTotalAmount(clientCartProducts, clientCartServices);
 
       //5. Se crea la orden del cliente
-      const result = await clientOrderRepository.createClientOrder(clientFounded.client_id, calculateItemsAndAmount.totalAmount, connection);
+      const clientOrderCreated = await clientOrderRepository.createClientOrder(clientFounded.client_id, calculateItemsAndAmount.totalAmount, connection);
 
       //6. Se recorren la totalidad de los productos y servicios para poblar la tabla de orderItem.
       for (let i = 0; i < calculateItemsAndAmount.services.length; i++) {
-        await orderItemRepository.createOrderItems(result.orderCreatedId, "SERVICE", calculateItemsAndAmount.services[i].item_id, calculateItemsAndAmount.services[i].quantity, calculateItemsAndAmount.services[i].price, connection);
+        const orderItemCreated = await orderItemRepository.createOrderItems(clientOrderCreated.orderCreatedId, "SERVICE", calculateItemsAndAmount.services[i].item_id, calculateItemsAndAmount.services[i].quantity, calculateItemsAndAmount.services[i].price, connection);
+        if (calculateItemsAndAmount.services[i].requires_appointment === 1) {
+          for (let j = 0; j < calculateItemsAndAmount.services[i].quantity; j++) {
+            const createAppointmentCredit = await appointmentCreditsRepository.createAppointmentCredit(clientFounded.client_id, calculateItemsAndAmount.services[i].item_id, clientOrderCreated.orderCreatedId, orderItemCreated.insertId, connection);
+          }
+        };
       }
 
       for (let i = 0; i < calculateItemsAndAmount.products.length; i++) {
-        await orderItemRepository.createOrderItems(result.orderCreatedId, "PRODUCT", calculateItemsAndAmount.products[i].item_id, calculateItemsAndAmount.products[i].quantity, calculateItemsAndAmount.products[i].price, connection);
+        await orderItemRepository.createOrderItems(clientOrderCreated.orderCreatedId, "PRODUCT", calculateItemsAndAmount.products[i].item_id, calculateItemsAndAmount.products[i].quantity, calculateItemsAndAmount.products[i].price, connection);
       }
 
       //7. Se crea el pago
       const payment = await paymentRepository.create({
-        clientOrderId: result.orderCreatedId,
+        clientOrderId: clientOrderCreated.orderCreatedId,
         paymentMethodId: paymentMethodId,
         amount: calculateItemsAndAmount.totalAmount
       }, connection);
 
       await connection.commit();
-      return result;
+      return clientOrderCreated;
     } catch (error) {
       await connection.rollback();
     } finally {
@@ -164,8 +171,7 @@ class ClientOrderService {
       return pdf;
 
     } catch (error) {
-      console.log("Error generando el pdf", error);
-      throw error;
+      throw new CustomError("Error generando el pdf", 500);
     }
   }
 }

@@ -24,9 +24,9 @@ const cartServiceRepository = {
 
     async findByCartId(cartId, connection) {
         const query = `
-            SELECT cs.cart_id, cs.service_id as item_id, s.name, cs.quantity, s.price, s.description 
+            SELECT cs.cart_id, cs.service_id as item_id, s.name, cs.quantity, s.price, s.description, s.requires_appointment 
             FROM CartService cs
-            JOIN Service s ON cs.service_id = s.service_id
+            INNER JOIN Service s ON cs.service_id = s.service_id
             WHERE cs.cart_id = ?
         `;
         const conn = connection || db;
