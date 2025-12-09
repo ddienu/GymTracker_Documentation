@@ -173,7 +173,7 @@ export default class CartComponent implements OnInit {
                         },
                         error: (error) => {
                           console.error(
-                            'Error eliminando los items del carrrito',
+                            'Error eliminando los items del carrito',
                             error
                           );
                         },
