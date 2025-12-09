@@ -6,10 +6,10 @@ import pool from '../config/db.js';
  */
 class ServiceRepository {
   async create(serviceData) {
-    const { name, description, price, service_type, duration_days, is_active } = serviceData;
+    const { name, description, price, service_type, duration_days, requires_appointment } = serviceData;
     const [result] = await pool.execute(
-      'INSERT INTO Service (name, description, price, service_type, duration_days, is_active) VALUES (?, ?, ?, ?, ?, ?)',
-      [name, description, price, service_type, duration_days, is_active]
+      'INSERT INTO Service (name, description, price, service_type, duration_days, requires_appointment) VALUES (?, ?, ?, ?, ?, ?)',
+      [name, description, price, service_type, duration_days, requires_appointment]
     );
     return result;
   }
@@ -28,7 +28,7 @@ class ServiceRepository {
     const fields = [];
     const values = [];
     // Lista de campos permitidos para la actualización
-    const allowedFields = ['name', 'description', 'price', 'service_type', 'duration_days', 'is_active'];
+    const allowedFields = ['name', 'description', 'price', 'service_type', 'duration_days', 'requires_appointment'];
 
     for (const key of allowedFields) {
       const value = serviceData[key];
