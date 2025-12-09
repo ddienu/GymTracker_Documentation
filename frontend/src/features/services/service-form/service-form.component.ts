@@ -47,7 +47,7 @@ export default class ServiceFormComponent implements OnInit {
       price: ['', Validators.required],
       service_type: ['', Validators.required],
       duration_days: ['', Validators.required],
-      is_active: ['', Validators.required],
+      requires_appointment: [false],
     })),
       (this.editServiceForm = this.fb.group({
         name: ['', Validators.required],
@@ -55,7 +55,7 @@ export default class ServiceFormComponent implements OnInit {
         price: ['', Validators.required],
         service_type: ['', Validators.required],
         duration_days: ['', Validators.required],
-        is_active: ['', Validators.required],
+        requires_appointment: [false],
       }));
   }
   ngOnInit(): void {
@@ -136,7 +136,7 @@ export default class ServiceFormComponent implements OnInit {
           price: this.serviceFounded.price,
           service_type: this.serviceFounded.service_type,
           duration_days: this.serviceFounded.duration_days,
-          is_active: this.serviceFounded.is_active,
+          requires_appointment: this.serviceFounded.requires_appointment,
         });
       },
       error: (error) => {

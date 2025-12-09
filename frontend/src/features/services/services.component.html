@@ -25,8 +25,6 @@
             {{ service.price | currency:'COP':'symbol-narrow':'1.0-0' }} /mes
           </p>
           <p class="text-gray-200 mt-2">Duración: {{ service.duration_days }} días</p>
-          <p *ngIf="service.is_active === 0&&role==='ADMINISTRATOR'" class="text-red-600 mt-2">Desactivado</p>
-          <p *ngIf="service.is_active === 1&&role==='ADMINISTRATOR'" class="text-green-600 mt-2">Activo</p>
 
           <div *ngIf="role==='CLIENT'" class="mt-4 flex gap-3 justify-center">
             <button
@@ -44,10 +42,10 @@
               (click)="goToEdit(service.service_id)">
               Editar
             </button>
-            <button class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition-colors"
+            <!-- <button class="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition-colors"
               (click)="deactivateService(service.service_id)">
               Desactivar
-            </button>
+            </button> -->
             <button class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition-colors"
               (click)="removeService(service.service_id)">
               Eliminar
