@@ -184,6 +184,7 @@ export default class CartComponent implements OnInit {
               )
             },
             error: (error) => {
+              console.error(error);
               AlertUtil.toast("Error generando la orden", "error");
             }
           })

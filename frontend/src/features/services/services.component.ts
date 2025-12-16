@@ -125,6 +125,7 @@ export default class ServicesComponent implements OnInit {
               AlertUtil.toast("Servicio agregado al carrito exitosamente", "success");
             },
             error: (error) => {
+              console.log(error);
               AlertUtil.toast("Error agregando servicio al carrito", "error");
             }
           })

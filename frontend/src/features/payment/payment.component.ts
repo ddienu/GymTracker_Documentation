@@ -8,6 +8,7 @@ import { AlertUtil } from '../../shared/alert.util';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { OrderItemDetail } from './model/orderItemDetail.model';
+import { NonNullableFormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-payment',
@@ -83,7 +84,16 @@ export default class PaymentComponent implements OnInit {
 
   changeModalState() {
     this.isModalOpen = !this.isModalOpen;
-    console.log(this.isModalOpen);
+    if(this.isModalOpen === true){
+      this.cleanOrderDetailCache();
+    }
+  }
+
+  cleanOrderDetailCache(){
+    this.orderDetail = [];
+    this.totalProducts = 0;
+    this.totalServices = 0;
+    this.totalAmount = 0;
   }
 
   getProductsTotalPrice() {
@@ -101,6 +111,14 @@ export default class PaymentComponent implements OnInit {
   getOrderDetailsByOrderId(orderId: number) {
     this.paymentService.getOrderDetailById(orderId).subscribe({
       next: (response) => {
+        if(response === null){
+          AlertUtil.toast("Nada que mostrar").then(
+            () => {
+              this.changeModalState();
+              return;
+            }
+          )
+        }
         this.orderDetail = response.data;
         this.totalProducts = this.getProductsTotalPrice();
         this.totalServices = this.getServicesTotalPrice();
@@ -217,11 +235,19 @@ export default class PaymentComponent implements OnInit {
   }
 
   downloadPdf() {
+
+    if(this.orderDetail.length === 0){
+      AlertUtil.toast("No hay información para descargar", "info");
+      return;
+    }
+
     const html = this.generatePdf(this.orderDetail, {
       products: this.totalProducts,
       services: this.totalServices,
       total: this.totalAmount
     });
+
+    console.log(this.orderDetail);
 
     return this.paymentService.generatePdf(html).subscribe({
       next: (pdfBlob: Blob) => {
@@ -232,7 +258,7 @@ export default class PaymentComponent implements OnInit {
         // Crea un enlace invisible
         const a = document.createElement('a');
         a.href = blobUrl;
-        a.download = 'comprobante.pdf'; // nombre del archivo
+        a.download = `${this.orderDetail[0].document_number}_${this.orderDetail[0].order_date}.pdf`; // nombre del archivo
         a.click();
 
         // Limpia URL temporal

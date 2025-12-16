@@ -1,6 +1,8 @@
 export interface OrderItemDetail {
   client_order_id: number;
   client_id: number;
+  document_number: string,
+  email: string,
   order_date: string; 
   order_status: string;
 
