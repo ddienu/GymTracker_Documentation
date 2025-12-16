@@ -7,7 +7,7 @@ class AuthService {
   //static const String baseUrl = 'http://localhost:3000/api/auth';
   
   // Para Android Emulator usa:
-  static const String baseUrl = 'http://192.168.0.13:3000/api/auth';
+  static const String baseUrl = 'http://192.168.0.16:3000/api/auth';
   
   // Para dispositivo físico usa tu IP:
   // static const String baseUrl = 'http://192.168.1.XXX:3000/api/auth';

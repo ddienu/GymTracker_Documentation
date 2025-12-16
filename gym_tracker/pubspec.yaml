@@ -46,8 +46,7 @@ dependencies:
   sleek_circular_slider: ^2.1.0
   font_awesome_flutter: ^10.7.0 
   dio: ^5.9.0
-  font_awesome_flutter: ^10.7.0
-  
+    
   # HTTP dependencies for API integration
   http: ^1.1.0
   shared_preferences: ^2.2.2
@@ -98,16 +97,13 @@ flutter:
     - assets/meal_background/
     - assets/meal_details/
     - assets/productos/
-<<<<<<< HEAD
     - assets/progress/fitness_background.png
     - assets/confirmation/confirmation_one.png
     - assets/confirmation/confirmation_two.png
     - assets/confirmation/FisioterapiaConf.png
     - assets/appointment_info/gym.webp
     - assets/my_routines/ejercicio.webp
-=======
     - assets/cart/
->>>>>>> Sthiben_Movil_LoginStorage_Card_Pagos_Historial
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 

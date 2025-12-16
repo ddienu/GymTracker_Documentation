@@ -39,7 +39,7 @@ class _CleanProductsPageState extends State<CleanProductsPage> {
 
     // Try multiple endpoints for maximum compatibility
     final endpoints = [
-      'http://192.168.0.13:3000/api/products',  // Android emulator
+      'http://192.168.0.16:3000/api/products',  // Android emulator
       'http://localhost:3000/api/products',  // iOS simulator / Desktop
       'http://127.0.0.1:3000/api/products',  // Alternative localhost
     ];

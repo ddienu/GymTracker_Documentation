@@ -5,7 +5,7 @@ import 'dart:convert';
 
 class ApiService {
   // Para Android Emulator usa 192.168.0.13
-  final String _baseUrl = "http://192.168.0.13:3000/api";
+  final String _baseUrl = "http://192.168.0.16:3000/api";
   // Para Web usa: "http://localhost:3000/api"
   // Para dispositivo físico usa tu IP: "http://192.168.1.XXX:3000/api"
 
