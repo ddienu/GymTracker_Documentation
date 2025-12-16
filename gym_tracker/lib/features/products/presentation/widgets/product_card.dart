@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../data/models/product_model.dart';
-import '../product_detail_page.dart';
+import '../../../cart/data/services/cart_service.dart';
 
-class ProductCard extends StatelessWidget {
+class ProductCard extends StatefulWidget {
   final ProductModel product;
 
   const ProductCard({
@@ -12,13 +12,141 @@ class ProductCard extends StatelessWidget {
   });
 
   @override
+  State<ProductCard> createState() => _ProductCardState();
+}
+
+class _ProductCardState extends State<ProductCard> {
+  final CartService _cartService = CartService();
+  bool _isAdding = false;
+
+  Future<void> _addToCart() async {
+    if (_isAdding) return;
+
+    setState(() {
+      _isAdding = true;
+    });
+
+    try {
+      // TEMPORAL: Forzar siempre como producto para pruebas
+      final itemType = 'product';
+      final itemId = widget.product.productId ?? 0;
+
+      await _cartService.addToCart(
+        itemType: itemType,
+        itemId: itemId,
+        quantity: 1,
+      );
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Icon(
+                  Icons.check_circle,
+                  color: Colors.white,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    '${widget.product.name} agregado al carrito',
+                    style: GoogleFonts.workSans(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            backgroundColor: Colors.green,
+            duration: const Duration(seconds: 2),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            margin: const EdgeInsets.all(16),
+          ),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Icon(
+                  Icons.error_outline,
+                  color: Colors.white,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    'Error al agregar al carrito: ${e.toString()}',
+                    style: GoogleFonts.workSans(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            backgroundColor: Colors.red,
+            duration: const Duration(seconds: 3),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            margin: const EdgeInsets.all(16),
+          ),
+        );
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isAdding = false;
+        });
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ProductDetailPage(product: product),
+        // Mostrar información del producto
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Row(
+              children: [
+                const Icon(
+                  Icons.info_outline,
+                  color: Colors.white,
+                  size: 20,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    '${widget.product.name} - \$${_formatPrice(widget.product.price)}',
+                    style: GoogleFonts.workSans(
+                      fontSize: 14,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            backgroundColor: const Color(0xFFFF6B35),
+            duration: const Duration(seconds: 2),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            margin: const EdgeInsets.all(16),
           ),
         );
       },
@@ -50,7 +178,7 @@ class ProductCard extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
                   child: Image.asset(
-                    product.imageUrl,
+                    widget.product.imageUrl ?? 'assets/images/placeholder.png',
                     fit: BoxFit.cover,
                     errorBuilder: (context, error, stackTrace) {
                       return Container(
@@ -76,7 +204,7 @@ class ProductCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      product.name,
+                      widget.product.name,
                       style: GoogleFonts.workSans(
                         fontSize: 16,
                         fontWeight: FontWeight.w600,
@@ -89,24 +217,35 @@ class ProductCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          '\$${_formatPrice(product.price)}',
+                          '\$${_formatPrice(widget.product.price)}',
                           style: GoogleFonts.workSans(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
                           ),
                         ),
-                        Container(
-                          width: 32,
-                          height: 32,
-                          decoration: const BoxDecoration(
-                            color: Color(0xFFFF6B35),
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.shopping_cart,
-                            color: Colors.white,
-                            size: 18,
+                        GestureDetector(
+                          onTap: _isAdding ? null : _addToCart,
+                          child: Container(
+                            width: 32,
+                            height: 32,
+                            decoration: BoxDecoration(
+                              color: _isAdding ? Colors.grey : const Color(0xFFFF6B35),
+                              shape: BoxShape.circle,
+                            ),
+                            child: _isAdding
+                                ? const Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: CircularProgressIndicator(
+                                      strokeWidth: 2,
+                                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                                    ),
+                                  )
+                                : const Icon(
+                                    Icons.shopping_cart,
+                                    color: Colors.white,
+                                    size: 18,
+                                  ),
                           ),
                         ),
                       ],

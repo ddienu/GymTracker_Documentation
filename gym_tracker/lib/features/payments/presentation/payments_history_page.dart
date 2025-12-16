@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gym_tracker/features/payments/data/models/order_models.dart';
+import 'package:gym_tracker/features/payments/data/services/api_service.dart';
 import 'package:gym_tracker/features/payments/presentation/payment_detail_page.dart';
 
 class PaymentsHistoryPage extends StatelessWidget {
@@ -12,10 +14,7 @@ class PaymentsHistoryPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            // Header con imagen de fondo
             _buildHeader(context),
-
-            // Contenido principal
             Expanded(
               child: Container(
                 decoration: const BoxDecoration(
@@ -28,9 +27,7 @@ class PaymentsHistoryPage extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
-
-                    // Lista de pagos (sin título duplicado)
-                    Expanded(child: _buildPaymentsList()),
+                    Expanded(child: _buildPaymentsList(context)),
                   ],
                 ),
               ),
@@ -45,19 +42,18 @@ class PaymentsHistoryPage extends StatelessWidget {
     return Container(
       height: 200,
       width: double.infinity,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.only(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(20),
           bottomRight: Radius.circular(20),
         ),
-        image: const DecorationImage(
+        image: DecorationImage(
           image: AssetImage('assets/gym_background.png'),
           fit: BoxFit.cover,
         ),
       ),
       child: Stack(
         children: [
-          // Overlay semitransparente para mejorar legibilidad
           Container(
             decoration: BoxDecoration(
               borderRadius: const BorderRadius.only(
@@ -67,15 +63,12 @@ class PaymentsHistoryPage extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.3),
             ),
           ),
-
-          // Contenido del header
           Padding(
             padding: const EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20), // Espacio para la hora del celular
-                // Botón de regreso
+                const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
                   child: Container(
@@ -91,10 +84,7 @@ class PaymentsHistoryPage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 const Spacer(),
-
-                // Título del header centrado
                 Center(
                   child: Text(
                     'Historial de pagos',
@@ -105,7 +95,6 @@ class PaymentsHistoryPage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 const SizedBox(height: 20),
               ],
             ),
@@ -115,108 +104,200 @@ class PaymentsHistoryPage extends StatelessWidget {
     );
   }
 
-  Widget _buildPaymentsList() {
-    final payments = [
-      {'date': '04/08/2025', 'amount': '\$420.000', 'type': 'Pago'},
-      {'date': '20/08/2025', 'amount': '\$320.000', 'type': 'Pago'},
-      {'date': '23/08/2025', 'amount': '\$80.000', 'type': 'Pago'},
-    ];
-
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: ListView.builder(
-        itemCount: payments.length,
-        itemBuilder: (context, index) {
-          final payment = payments[index];
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PaymentDetailPage(
-                    date: payment['date']!,
-                    amount: payment['amount']!,
-                  ),
-                ),
-              );
-            },
-            child: Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(20),
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Row(
+  Widget _buildPaymentsList(BuildContext context) {
+    final apiService = ApiService();
+    
+    return FutureBuilder<List<OrderModels>>(
+      future: apiService.fetchOrders(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Color(0xFFFF6B35),
+            ),
+          );
+        }
+        
+        if (snapshot.hasError) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Icono de Bitcoin/Pago
-                Container(
-                  width: 50,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.orange,
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: const Icon(
-                    Icons.monetization_on,
-                    color: Colors.white,
-                    size: 30,
+                const Icon(Icons.error_outline, size: 64, color: Colors.grey),
+                const SizedBox(height: 16),
+                Text(
+                  'Error al cargar pagos',
+                  style: GoogleFonts.workSans(
+                    fontSize: 18,
+                    color: Colors.grey[600],
                   ),
                 ),
+                const SizedBox(height: 8),
+                Text(
+                  snapshot.error.toString(),
+                  style: GoogleFonts.workSans(
+                    fontSize: 14,
+                    color: Colors.grey[500],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          );
+        }
+        
+        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Icon(Icons.receipt_long, size: 64, color: Colors.grey),
+                const SizedBox(height: 16),
+                Text(
+                  'No hay pagos registrados',
+                  style: GoogleFonts.workSans(
+                    fontSize: 18,
+                    color: Colors.grey[600],
+                  ),
+                ),
+              ],
+            ),
+          );
+        }
+        
+        final orders = snapshot.data!;
+        
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: ListView.builder(
+            itemCount: orders.length,
+            itemBuilder: (context, index) {
+              final order = orders[index];
+              return GestureDetector(
+                onTap: () {
+                  // Mostrar SnackBar con el total
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Row(
+                        children: [
+                          const Icon(
+                            Icons.monetization_on,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            'Total del pago: \$${order.totalAmount ?? "0"}',
+                            style: GoogleFonts.workSans(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      backgroundColor: Colors.orange,
+                      duration: const Duration(seconds: 2),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      margin: const EdgeInsets.all(16),
+                    ),
+                  );
 
-                const SizedBox(width: 16),
-
-                // Información del pago
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  // Navegar al detalle
+                  Future.delayed(const Duration(milliseconds: 500), () {
+                    if (context.mounted) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => PaymentDetailPage(
+                            orderId: order.orderId ?? 0,
+                            date: order.orderDate ?? 'N/A',
+                            amount: '\$${order.totalAmount ?? "0"}',
+                          ),
+                        ),
+                      );
+                    }
+                  });
+                },
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    color: (order.totalAmount == "45.00") ? Colors.red : Colors.black,
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: Row(
                     children: [
-                      Text(
-                        payment['type']!,
-                        style: GoogleFonts.workSans(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
+                      // Icono
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.orange,
+                          borderRadius: BorderRadius.circular(25),
+                        ),
+                        child: const Icon(
+                          Icons.monetization_on,
                           color: Colors.white,
+                          size: 30,
                         ),
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        'Total : ${payment['amount']}',
-                        style: GoogleFonts.workSans(
-                          fontSize: 14,
-                          color: Colors.grey,
+                      const SizedBox(width: 16),
+                      // Información
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              order.orderStatus ?? 'Pago',
+                              style: GoogleFonts.workSans(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 4),
+                            Text(
+                              'Total: \$${order.totalAmount ?? "0"}',
+                              style: GoogleFonts.workSans(
+                                fontSize: 14,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ],
                         ),
+                      ),
+                      // Fecha y flecha
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            order.orderDate ?? 'N/A',
+                            style: GoogleFonts.workSans(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          const Icon(
+                            Icons.arrow_forward,
+                            color: Colors.white,
+                            size: 20,
+                          ),
+                        ],
                       ),
                     ],
                   ),
                 ),
-
-                // Fecha y flecha
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      payment['date']!,
-                      style: GoogleFonts.workSans(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    const Icon(
-                      Icons.arrow_forward,
-                      color: Colors.white,
-                      size: 20,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            ),
-          );
-        },
-      ),
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }

@@ -32,13 +32,29 @@ class NotificationCard extends StatelessWidget {
           child: Stack(
             children: [
               ClipRRect(
-                borderRadius: BorderRadiusGeometry.circular(10),
+                borderRadius: BorderRadius.circular(10),
                 child: SizedBox(
                   height: double.infinity,
                   width: double.infinity,
                   child: Opacity(
                     opacity: 0.9,
-                    child: Image(image: AssetImage(imagePath), fit: BoxFit.cover),
+                    child: Image(
+                      image: AssetImage(imagePath),
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) {
+                        // Fallback si la imagen no se encuentra
+                        return Container(
+                          color: const Color(0xFFFF6B35),
+                          child: const Center(
+                            child: Icon(
+                              Icons.notifications,
+                              size: 60,
+                              color: Colors.white,
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym_tracker/features/cart/presentation/cart_page.dart';
 import 'package:gym_tracker/features/home/widget/card_item.dart';
 import 'package:gym_tracker/features/home/widget/my_account.dart';
 import 'package:gym_tracker/features/meal_plan/presentation/meal_plan_page.dart';
@@ -6,7 +7,7 @@ import 'package:gym_tracker/features/my_appointments/appointments%20.dart';
 import 'package:gym_tracker/features/my_routines/presentation/my_routines.dart';
 import 'package:gym_tracker/features/notification/presentation/notification.dart';
 import 'package:gym_tracker/features/payments/presentation/payments_history_page.dart';
-import 'package:gym_tracker/features/products/presentation/products_page.dart';
+import 'package:gym_tracker/features/products/presentation/clean_products_page.dart';
 import 'package:gym_tracker/features/settings/presentation/settings.dart';
 import 'package:gym_tracker/features/progress/progress.dart';
 
@@ -17,9 +18,16 @@ class HomePage extends StatelessWidget {
   List<Map<String, dynamic>> _getItems(BuildContext context) => [
     {
       "containerColor": const Color(0xFFF97316),
-      "cardWidget": const Image(
-        image: AssetImage("profile/profile_image.png"),
+      "cardWidget": Image(
+        image: const AssetImage("assets/profile/profile_image.png"),
         fit: BoxFit.cover,
+        errorBuilder: (context, error, stackTrace) {
+          return const Icon(
+            Icons.person,
+            color: Colors.white,
+            size: 30,
+          );
+        },
       ),
       "cardTitle": "Mi progreso",
       "cardSubtitle": "Revisa tu progreso",
@@ -83,7 +91,7 @@ class HomePage extends StatelessWidget {
       ),
       "cardTitle": "Productos",
       "cardSubtitle": "Consulta los productos disponibles",
-      "onTap": () => Navigator.push(context, MaterialPageRoute(builder: (context)=>ProductsPage())),
+      "onTap": () => Navigator.push(context, MaterialPageRoute(builder: (context)=>CleanProductsPage())),
     },
     {
       "containerColor": const Color(0xFFEF4444), // red-ish
@@ -111,7 +119,7 @@ class HomePage extends StatelessWidget {
           backgroundColor: Colors.transparent,
           actions: [
             IconButton(
-              icon: Text("🔔", style: TextStyle(fontSize: 25)),
+              icon: Text("Notificaciones", style: TextStyle(fontSize: 25)),
               onPressed: () {
                 Navigator.push(
                   context,
@@ -134,7 +142,12 @@ class HomePage extends StatelessWidget {
             ),
             IconButton(
               icon: Text("🛒", style: TextStyle(fontSize: 25)),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const CartPage()),
+                );
+              },
             ),
           ],
         ),

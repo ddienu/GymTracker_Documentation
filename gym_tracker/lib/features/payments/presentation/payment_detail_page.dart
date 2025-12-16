@@ -1,18 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class PaymentDetailPage extends StatelessWidget {
+class PaymentDetailPage extends StatefulWidget {
+  final int orderId;
   final String date;
   final String amount;
 
   const PaymentDetailPage({
     super.key,
+    required this.orderId,
     required this.date,
     required this.amount,
   });
 
   @override
+  State<PaymentDetailPage> createState() => _PaymentDetailPageState();
+}
+
+class _PaymentDetailPageState extends State<PaymentDetailPage> {
+  bool _isLoading = true;
+  Map<String, dynamic>? _orderDetails;
+  String? _errorMessage;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadOrderDetails();
+  }
+
+  Future<void> _loadOrderDetails() async {
+    // Por ahora usamos datos mock, pero aquí deberías llamar al API
+    // final apiService = ApiService();
+    // final details = await apiService.fetchOrderDetails(widget.orderId);
+    
+    setState(() {
+      _isLoading = false;
+      // Simulamos datos del API
+      _orderDetails = {
+        'products': [],
+        'services': [],
+      };
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: const Color(0xFFF5F5F5),
+        body: const Center(
+          child: CircularProgressIndicator(),
+        ),
+      );
+    }
     return Scaffold(
       backgroundColor: const Color(0xFFF5F5F5),
       body: SafeArea(
@@ -20,7 +60,7 @@ class PaymentDetailPage extends StatelessWidget {
           children: [
             // Header con imagen de fondo
             _buildHeader(context),
-            
+
             // Contenido principal
             Expanded(
               child: Container(
@@ -38,14 +78,14 @@ class PaymentDetailPage extends StatelessWidget {
                     children: [
                       // Sección de Productos
                       _buildProductsSection(),
-                      
+
                       const SizedBox(height: 30),
-                      
+
                       // Sección de Servicios
                       _buildServicesSection(),
-                      
+
                       const SizedBox(height: 30),
-                      
+
                       // Precio total
                       _buildTotalSection(),
                     ],
@@ -85,7 +125,7 @@ class PaymentDetailPage extends StatelessWidget {
               color: Colors.white.withValues(alpha: 0.3),
             ),
           ),
-          
+
           // Contenido del header
           Padding(
             padding: const EdgeInsets.all(20),
@@ -93,7 +133,7 @@ class PaymentDetailPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 20),
-                
+
                 // Botón de regreso
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
@@ -110,9 +150,9 @@ class PaymentDetailPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                
+
                 const Spacer(),
-                
+
                 // Título y fecha centrados
                 Center(
                   child: Column(
@@ -127,7 +167,7 @@ class PaymentDetailPage extends StatelessWidget {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        date,
+                        widget.date,
                         style: GoogleFonts.workSans(
                           fontSize: 16,
                           color: Colors.black87,
@@ -136,7 +176,7 @@ class PaymentDetailPage extends StatelessWidget {
                     ],
                   ),
                 ),
-                
+
                 const SizedBox(height: 20),
               ],
             ),
@@ -174,61 +214,63 @@ class PaymentDetailPage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        
-        ...products.map((product) => Container(
-          margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.grey.shade100,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Row(
-            children: [
-              // Icono del producto
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: product['color'] as Color,
-                  borderRadius: BorderRadius.circular(8),
+
+        ...products.map(
+          (product) => Container(
+            margin: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade100,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
+              children: [
+                // Icono del producto
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: product['color'] as Color,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(
+                    Icons.local_drink,
+                    color: Colors.white,
+                    size: 30,
+                  ),
                 ),
-                child: const Icon(
-                  Icons.local_drink,
-                  color: Colors.white,
-                  size: 30,
-                ),
-              ),
-              
-              const SizedBox(width: 12),
-              
-              // Información del producto
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      product['name'] as String,
-                      style: GoogleFonts.workSans(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
+
+                const SizedBox(width: 12),
+
+                // Información del producto
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        product['name'] as String,
+                        style: GoogleFonts.workSans(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${product['price']} | ${product['quantity']}',
-                      style: GoogleFonts.workSans(
-                        fontSize: 14,
-                        color: Colors.grey.shade600,
+                      const SizedBox(height: 4),
+                      Text(
+                        '${product['price']} | ${product['quantity']}',
+                        style: GoogleFonts.workSans(
+                          fontSize: 14,
+                          color: Colors.grey.shade600,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        )),
-        
+        ),
+
         // Subtotal productos
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -288,61 +330,63 @@ class PaymentDetailPage extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        
-        ...services.map((service) => Container(
-          margin: const EdgeInsets.only(bottom: 12),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.grey.shade100,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Row(
-            children: [
-              // Icono del servicio
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.blue.shade400,
-                  borderRadius: BorderRadius.circular(25),
+
+        ...services.map(
+          (service) => Container(
+            margin: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.grey.shade100,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Row(
+              children: [
+                // Icono del servicio
+                Container(
+                  width: 50,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.blue.shade400,
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: Icon(
+                    service['icon'] as IconData,
+                    color: Colors.white,
+                    size: 25,
+                  ),
                 ),
-                child: Icon(
-                  service['icon'] as IconData,
-                  color: Colors.white,
-                  size: 25,
-                ),
-              ),
-              
-              const SizedBox(width: 12),
-              
-              // Información del servicio
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      service['name'] as String,
-                      style: GoogleFonts.workSans(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
+
+                const SizedBox(width: 12),
+
+                // Información del servicio
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        service['name'] as String,
+                        style: GoogleFonts.workSans(
+                          fontSize: 16,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 4),
-                    Text(
-                      '${service['price']} | ${service['quantity']}',
-                      style: GoogleFonts.workSans(
-                        fontSize: 14,
-                        color: Colors.grey.shade600,
+                      const SizedBox(height: 4),
+                      Text(
+                        '${service['price']} | ${service['quantity']}',
+                        style: GoogleFonts.workSans(
+                          fontSize: 14,
+                          color: Colors.grey.shade600,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        )),
-        
+        ),
+
         // Subtotal servicios
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -386,7 +430,7 @@ class PaymentDetailPage extends StatelessWidget {
             ),
           ),
           Text(
-            amount,
+            widget.amount,
             style: GoogleFonts.workSans(
               fontSize: 24,
               fontWeight: FontWeight.bold,
