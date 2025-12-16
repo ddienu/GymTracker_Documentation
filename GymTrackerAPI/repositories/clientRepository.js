@@ -77,8 +77,8 @@ class ClientRepository {
   async findByUserId(userId, connection) {
     const query = `
       SELECT c.* 
-      FROM client c
-      JOIN profile p ON c.profile_id = p.profile_id
+      FROM Client c
+      JOIN Profile p ON c.profile_id = p.profile_id
       WHERE p.user_id = ?
     `;
     const conn = connection || db;
