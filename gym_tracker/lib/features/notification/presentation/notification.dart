@@ -13,7 +13,7 @@ class Notifications extends StatelessWidget {
       "title": "Sesión con entrenador personal",
       "subtitle": "Valoración inicial",
       "color": Colors.white,
-      "imagePath": "notifications/training_appointment.png",
+      "imagePath": "assets/notifications/training_appointment.png",
     },
     {
       "onTap": () {
@@ -23,7 +23,7 @@ class Notifications extends StatelessWidget {
       "title": "Cita con nutrición + plan nutricional",
       "subtitle": "",
       "color": Colors.white,
-      "imagePath": "notifications/meet.jpg",
+      "imagePath": "assets/notifications/meet.jpg",
     },
     {
       "onTap": () {
@@ -31,9 +31,10 @@ class Notifications extends StatelessWidget {
       },
       "date": "17/Agosto/2025",
       "title": "Recordatorio de pago",
-      "subtitle": "Tu afilicación al gimnasio vence pronto, no olvides realizar tu pago.",
+      "subtitle":
+          "Tu afilicación al gimnasio vence pronto, no olvides realizar tu pago.",
       "color": Colors.white,
-      "imagePath": "notifications/payment_reminder.jpg",
+      "imagePath": "assets/notifications/payment_reminder.jpg",
     },
   ];
 
@@ -55,7 +56,7 @@ class Notifications extends StatelessWidget {
               width: double.infinity,
               decoration: const BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage('login/logo_background.png'),
+                  image: AssetImage('assets/login/logo_background.png'),
                   filterQuality: FilterQuality.high,
                   fit: BoxFit.cover,
                   opacity: 0.8,
@@ -67,42 +68,40 @@ class Notifications extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 70,
-                      backgroundImage: AssetImage("profile/profile_image.png"),
+                      backgroundImage: AssetImage("assets/profile/profile_image.png"),
                     ),
-                  Positioned(
-                    bottom: 0,
-                    right: 0,
-                    child: Container(
-                      width: 30,
-                      height: 30,
-                      decoration: BoxDecoration(
-                        color: Color(0xFFF97316),
-                        borderRadius: BorderRadius.circular(18),
-                        
-                      ),
-                      child: IconButton(
-                        padding: EdgeInsets.zero,
-                        icon: Icon(Icons.edit),
-                        color: Colors.white,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const EditAvatar()
-                              )
-                          );
-                        },
+                    Positioned(
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        width: 30,
+                        height: 30,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF97316),
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: IconButton(
+                          padding: EdgeInsets.zero,
+                          icon: Icon(Icons.edit),
+                          color: Colors.white,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const EditAvatar(),
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     ),
-                  )
                   ],
-                  
                 ),
               ),
             ),
             SizedBox(height: MediaQuery.of(context).size.height * 0.02),
             Text(
-              "🔔 Notificaciones",
+              "Notificaciones Notificaciones",
               style: GoogleFonts.workSans(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
