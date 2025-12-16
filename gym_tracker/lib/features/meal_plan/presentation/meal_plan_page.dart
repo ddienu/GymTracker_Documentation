@@ -66,7 +66,7 @@ class _MealPlanPageState extends State<MealPlanPage> {
                     Text(
                       'Mis planes alimentarios',
                       style: GoogleFonts.workSans(
-                        fontSize: 24,
+                        fontSize: 26,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),

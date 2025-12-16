@@ -12,11 +12,9 @@ class Progress extends StatefulWidget {
 class _ProgressState extends State<Progress> {
   String selectedMonth = "Enero";
 
-  // Variables dinámicas
-  double peso = 80.0; // 🔹 Aquí el peso
-  int edad = 30; // 🔹 Aquí la edad
+  double peso = 80.0;
+  int edad = 30;
 
-  // Datos de ejemplo por mes (brazo, pecho, pierna, cintura, grasa)
   final Map<String, List<Map<String, dynamic>>> monthData = {
     "Enero": [
       {"label": "Brazo", "value": 50.0, "color": Colors.red},
@@ -55,23 +53,36 @@ class _ProgressState extends State<Progress> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Fondo + Avatar sobrepuesto
+            // 🔹 Fondo + Avatar sobrepuesto (sin modificar estructura)
             Stack(
               alignment: Alignment.center,
               clipBehavior: Clip.none,
               children: [
+                // 🔸 Solo redondeamos la imagen superior
                 Container(
                   height: MediaQuery.of(context).size.height * 0.31,
                   width: double.infinity,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(30),
+                      bottomRight: Radius.circular(30),
+                    ),
+                    image: const DecorationImage(
                       image: AssetImage('progress/fitness_background.png'),
                       filterQuality: FilterQuality.high,
                       fit: BoxFit.cover,
                       opacity: 0.9,
                     ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.15),
+                        blurRadius: 12,
+                        offset: const Offset(0, 4),
+                      ),
+                    ],
                   ),
                 ),
+                // Avatar se mantiene igual
                 const Positioned(
                   bottom: -50,
                   child: CircleAvatar(
@@ -208,7 +219,8 @@ class _ProgressState extends State<Progress> {
                   padding: const EdgeInsets.all(16),
                   child: Column(
                     children: currentData.map((metric) {
-                      final isGrasa = metric["label"].toString().contains("Grasa");
+                      final isGrasa =
+                          metric["label"].toString().contains("Grasa");
                       final unit = isGrasa ? "%" : "cm";
                       return Padding(
                         padding: const EdgeInsets.symmetric(vertical: 6),
@@ -251,13 +263,12 @@ class _ProgressState extends State<Progress> {
 
             const SizedBox(height: 10),
 
-            // 🔹 Cards de Peso y Edad (responsivas)
+            // 🔹 Cards de Peso y Edad
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: LayoutBuilder(
                 builder: (context, constraints) {
                   if (constraints.maxWidth > 500) {
-                    // 📌 Si hay suficiente ancho → en fila
                     return Row(
                       children: [
                         Expanded(child: _buildInfoCard("Peso", "$peso kg")),
@@ -266,7 +277,6 @@ class _ProgressState extends State<Progress> {
                       ],
                     );
                   } else {
-                    // 📌 Pantalla pequeña → apiladas
                     return Column(
                       children: [
                         _buildInfoCard("Peso", "$peso kg"),
@@ -284,7 +294,6 @@ class _ProgressState extends State<Progress> {
     );
   }
 
-  // 🔹 Widget helper para las cards de info
   Widget _buildInfoCard(String title, String value) {
     return Card(
       elevation: 1,
@@ -292,7 +301,7 @@ class _ProgressState extends State<Progress> {
         borderRadius: BorderRadius.circular(16),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(12),
+        padding:  EdgeInsets.all(12),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -302,7 +311,6 @@ class _ProgressState extends State<Progress> {
                   fontWeight: FontWeight.w500,
                   color: Colors.grey.shade600,
                 )),
-            // const SizedBox(height: 6),
             Text(value,
                 style: GoogleFonts.workSans(
                   fontSize: 18,

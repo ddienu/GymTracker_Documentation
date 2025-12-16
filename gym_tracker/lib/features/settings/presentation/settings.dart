@@ -44,6 +44,7 @@ class _SettingsPageState extends State<SettingsPage> {
               style: GoogleFonts.workSans(
                 fontSize: 28,
                 fontWeight: FontWeight.bold,
+                color:Colors.black
               ),
               textAlign: TextAlign.center,
             ),

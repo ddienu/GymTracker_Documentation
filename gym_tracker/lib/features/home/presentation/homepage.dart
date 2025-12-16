@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:gym_tracker/features/home/widget/card_item.dart';
 import 'package:gym_tracker/features/home/widget/my_account.dart';
 import 'package:gym_tracker/features/meal_plan/presentation/meal_plan_page.dart';
+import 'package:gym_tracker/features/my_appointments/appointments%20.dart';
+import 'package:gym_tracker/features/my_routines/presentation/my_routines.dart';
 import 'package:gym_tracker/features/notification/presentation/notification.dart';
 import 'package:gym_tracker/features/payments/presentation/payments_history_page.dart';
 import 'package:gym_tracker/features/products/presentation/products_page.dart';
 import 'package:gym_tracker/features/settings/presentation/settings.dart';
-import 'package:gym_tracker/progress/progress.dart';
+import 'package:gym_tracker/features/progress/progress.dart';
 
 
 class HomePage extends StatelessWidget {
@@ -31,7 +33,7 @@ class HomePage extends StatelessWidget {
       "cardTitle": "Consulta tus citas",
       "cardSubtitle": "Consulta tus citas agendadas con especialistas",
       "onTap": () {
-        print("Entrando");
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>Appointments()));
       },
     },
     {
@@ -44,7 +46,7 @@ class HomePage extends StatelessWidget {
       "cardTitle": "Consulta tus rutinas",
       "cardSubtitle": "Consulta tus rutinas asignadas por el especialista",
       "onTap": () {
-        print("Entrando");
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>MyRoutine()));
       },
     },
     {
