@@ -62,22 +62,22 @@ const cartController = {
 
     async removeItemFromCart(req, res, next){
         try{    
-            const clientId = req.params.clientId;
+            const profileId = req.params.profileId;
             const { itemType, itemId } = req.body;
 
-            if(!clientId || !itemType || !itemId ){
+            if(!profileId || !itemType || !itemId ){
                 return res.status(400).json({
                     message: "Required fields are missing"
                 });
             };
 
             if(itemType == "product"){
-                const productRemoved = await cartService.removeProductFromCart(clientId, itemId);
+                const productRemoved = await cartService.removeProductFromCart(profileId, itemId);
                 return res.status(200).json({
                     message: "Product removed from cart successfully"
                 });
             }else if(itemType == "service"){
-                const serviceRemoved = await cartService.removeServiceFromCart(clientId, itemId);
+                const serviceRemoved = await cartService.removeServiceFromCart(profileId, itemId);
                 return res.status(200).json({
                     message: "Service removed from cart successfully"
                 });

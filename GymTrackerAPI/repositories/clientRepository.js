@@ -63,7 +63,12 @@ class ClientRepository {
    * @returns {Promise<object|null>} El cliente encontrado o null.
    */
   async findById(clientId, connection) {
-    const query = 'SELECT * FROM Client WHERE client_id = ?';
+      const query = `
+      SELECT c.* 
+      FROM client c
+      JOIN profile p ON c.profile_id = p.profile_id
+      WHERE c.client_id = ?
+    `;
     const conn = connection || db;
     const [rows] = await conn.execute(query, [clientId]);
     return rows[0] || null;

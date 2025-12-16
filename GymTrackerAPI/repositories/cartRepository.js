@@ -6,15 +6,14 @@ const cartRepository = {
       `SELECT * FROM Cart WHERE client_id = ?`;
     const conn = connection || db;
     const [rows] = await conn.query(query, [clientId]);
-    console.log(rows);
     return rows[0];
   },
 
   async findCartByProfileId(profileId, connection) {
     const query = `SELECT * FROM Cart t1
         INNER JOIN Client t2 ON t1.client_id = t2.client_id
-        INNER JOIN Profile t3 ON t3.profile_id = t3.profile_id
-        WHERE t3.profile_id = ?`;
+        INNER JOIN Profile t3 ON t3.profile_id = t2.profile_id
+        WHERE t2.profile_id = ?`;
     const conn = connection || db;
     const [rows] = await conn.query(query, [profileId]);
     return rows[0];
@@ -35,6 +34,14 @@ const cartRepository = {
     }
     return cart;
   },
+
+  async findById(cartId, connection){
+    const query = `SELECT * FROM Cart WHERE cart_id = ?`
+    const conn = connection || db;
+    const [result] = await conn.query(query, [cartId]);
+    console.log("Este es el result de findById:", result);
+    return result[0];
+  }
 };
 
 export default cartRepository;

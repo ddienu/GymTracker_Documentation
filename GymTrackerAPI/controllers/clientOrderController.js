@@ -6,7 +6,7 @@ class ClientOrderController {
         try {
             const profileId = req.params.profileId;
             const paymentMethodId = req.body.paymentMethodId;
-            console.log(paymentMethodId);
+            console.log(profileId);
 
             if (!profileId || !paymentMethodId) {
                 return res.status(400).json({

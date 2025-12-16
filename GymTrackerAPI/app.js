@@ -19,7 +19,8 @@ import cartRoutes from './routes/cartRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import clientRoutes from './routes/clientRoutes.js'
 import clientOrderRoutes from './routes/clientOrderRoutes.js';
-import paymentRoutes from './routes/paymentRoutes.js'
+import paymentRoutes from './routes/paymentRoutes.js';
+import appointmentCreditsRoutes from './routes/appointmentCreditsRoutes.js';
 import cors from 'cors';
 
 
@@ -83,11 +84,13 @@ app.use('/api/cart', cartRoutes);
 // Rutas para la gestión de órdenes
 app.use('/api/orders', orderRoutes);
 
-app.use('/api/clients', clientRoutes)
+app.use('/api/clients', clientRoutes);
 
-app.use('/api/client_order', clientOrderRoutes)
+app.use('/api/client_order', clientOrderRoutes);
 
-app.use('/api/payments', paymentRoutes)
+app.use('/api/payments', paymentRoutes);
+
+app.use('/api/appointment-credits', appointmentCreditsRoutes);
 
 // Middleware de Manejo de Errores
 // Debe ser el último middleware que se añade a la aplicación.

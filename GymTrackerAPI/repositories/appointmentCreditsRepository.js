@@ -7,6 +7,15 @@ const appointmentCreditsRepository = {
         const conn = connection || db;
         const [result] = await conn.query(query, [clientId, serviceId, clientOrderId, orderItemId]);
         return result;
+    },
+
+    async getAppointmentCreditsByClientId(clientId, connection){
+        const query = `SELECT * FROM appointment_credits t0
+        INNER JOIN Service t1 ON t0.service_id = t1.service_id
+        WHERE t0.client_id = ? AND t0.credit_status = 'AVAILABLE'`;
+        const conn = connection || db;
+        const [result] = await conn.query(query, [clientId]);
+        return result;
     }
 
 }

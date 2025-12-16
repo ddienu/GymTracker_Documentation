@@ -17,7 +17,7 @@ router.post('/:clientId', cartController.addItemToCart);
 router.put('/:clientId', cartController.updateQuantityInCart);
 
 //Eliminar un item del carrito, puede ser tanto servicios como productos
-router.delete("/item_remove/:clientId", cartController.removeItemFromCart);
+router.delete("/item_remove/:profileId", cartController.removeItemFromCart);
 
 // Eliminar un producto del carrito
 // router.delete('/:clientId', cartController.removeProductFromCart);

@@ -7,9 +7,12 @@ import db from "../config/db.js";
 import serviceRepository from "../repositories/serviceRepository.js";
 import cartServiceRepository from "../repositories/cartServiceRepository.js";
 
+//TODO: Validar en esta clase, la viabilidad de buscar por profileId y no por userId, aunque se debe validar si siempre el profileId es igual al userId
+
 const cartService = {
   async _getClientAndCart(userId, connection) {
     const client = await clientRepository.findByUserId(userId, connection);
+    console.log(client);
     if (!client) {
       throw new CustomError("Client profile not found for this user.", 404);
     }
@@ -67,6 +70,8 @@ const cartService = {
   async getCart(userId) {
     const connection = await db.getConnection();
     try {
+
+      //TODO: Validar aquí si buscar por profileId o userId
       const { cart } = await this._getClientAndCart(userId, connection);
 
       const { items, total } = await this._calculateCartTotal(
@@ -98,6 +103,7 @@ const cartService = {
     if (!client) throw new CustomError("Client not found", 404);
 
     const cart = await this._getOrCreateCart(client.client_id);
+    console.log("Este es el cart", cart);
 
     if (itemType === "product") {
       const product = await productRepository.findById(itemId);
@@ -215,8 +221,10 @@ const cartService = {
     if (!cart) {
       const result = await cartRepository.create(clientId);
       console.log("Este es el result de createCart", result);
-      cart = await cartRepository.findById(result.insertId);
+      cart = await cartRepository.findById(result.cart_id);
+      console.log(cart);
     }
+    console.log(cart);
     return cart;
   },
 
@@ -244,25 +252,35 @@ const cartService = {
     return this.getCart(userId);
   },
 
-  async removeServiceFromCart(clientId, serviceId) {
-    const client = await clientRepository.findByUserId(clientId);
+  async removeServiceFromCart(profileId, serviceId) {
+
+    const clientFounded = await clientRepository.findByProfileId(profileId);
+
+    if(!clientFounded){
+      throw new CustomError("Cliente no encontrado",404);
+    }
+    
+    const client = await clientRepository.findById(clientFounded.client_id);
     if (!client) throw new CustomError("Client not found", 404);
 
-    const cart = await cartRepository.findCartByProfileId(clientId);
+    const cart = await cartRepository.findCartByProfileId(profileId);
     if (!cart) throw new CustomError("Cart not found", 404);
+
+    console.log("cart", cart);
+    console.log("serviceId", serviceId);
 
     const existingService = await cartServiceRepository.findByCartAndService(
       cart.cart_id,
       serviceId
     );
 
-    console.log(existingService);
+    console.log("Existing Service:",existingService);
 
     if (!existingService) throw new CustomError("Service not in card", 404);
 
     await cartServiceRepository.remove(existingService.cart_service_id);
 
-    return this.getCart(clientId);
+    return this.getCart(profileId);
   },
 };
 

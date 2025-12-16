@@ -13,6 +13,7 @@ const cartServiceRepository = {
         const params = [cartId, serviceId, quantity, price];
         const conn = connection || db;
         const [result] = await conn.query(query, params);
+        console.log(result);
         return result.insertId;
     },
 

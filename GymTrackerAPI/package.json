@@ -26,6 +26,7 @@
     "multer": "^2.0.1",
     "mysql2": "^3.14.1",
     "path": "^0.12.7",
-    "puppeteer": "^24.32.0"
+    "puppeteer": "^24.32.0",
+    "supports-color": "^9.4.0"
   }
 }
