@@ -35,4 +35,13 @@ export class JwtService {
     }
     return "";
   }
+
+  getProfileIdFromToken(): number | null{
+    const token = localStorage.getItem('token');
+    if(token){
+      const decoded = jwtDecode<MyTokenPayload>(token);
+      return decoded.id;
+    }
+    return null;
+  }
 }

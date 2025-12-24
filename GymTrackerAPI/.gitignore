@@ -1,0 +1,78 @@
+# ---------------------------------------------------
+# Node.js
+# ---------------------------------------------------
+
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Opcional: ignora lockfiles si usas un gestor específico
+# (descomenta el que NO uses)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# ---------------------------------------------------
+# Entornos / Variables
+# ---------------------------------------------------
+
+.env
+.env.*        # .env.production, .env.local, etc.
+*.local
+
+# ---------------------------------------------------
+# Directorios de compilación / build
+# ---------------------------------------------------
+
+dist/
+build/
+coverage/
+out/
+tmp/
+temp/
+
+# ---------------------------------------------------
+# Logs
+# ---------------------------------------------------
+
+logs/
+*.log
+*.out
+*.txt
+*.pid
+*.seed
+
+# ---------------------------------------------------
+# Cache
+# ---------------------------------------------------
+
+.cache/
+.eslintcache
+.nodemon*
+.nyc_output/
+.babel_cache/
+
+# ---------------------------------------------------
+# IDE / Editor
+# ---------------------------------------------------
+
+.vscode/
+.idea/
+*.iml
+
+# ---------------------------------------------------
+# MacOS / Linux / Windows basura
+# ---------------------------------------------------
+
+.DS_Store
+Thumbs.db
+
+# ---------------------------------------------------
+#  Seeders
+# ---------------------------------------------------
+seeders/

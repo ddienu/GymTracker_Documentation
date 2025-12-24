@@ -1,0 +1,215 @@
+<div class="flex flex-col min-h-screen bg-main">
+    <app-navbar></app-navbar>
+    <main *ngIf="payments.length !== 0 else emptyPayments" class="flex-1 px-6 py-8 lg:px-12">
+        <div class="max-w-5xl mx-auto">
+
+
+            <header class="mb-6">
+                <h1 class="text-3xl font-bold text-white">Historial de <span class="text-primary">Pagos</span></h1>
+            </header>
+
+            <!-- Lista de órdenes -->
+            <section class="space-y-4">
+
+                <!-- Tarjeta de orden (ejemplo, duplícala luego) -->
+                <article *ngFor="let payment of payments"
+                    class="bg-main rounded-2xl px-6 py-4 flex items-center justify-between shadow-md border text-center">
+                    <!-- Info principal -->
+                    <div class="flex-1 flex justify-between text-sm">
+
+                        <!-- ID de orden -->
+                        <div class="flex flex-col">
+                            <span class="text-xs text-gray-400 uppercase tracking-wide">ID de Orden</span>
+                            <span class="mt-1 text-sm font-semibold text-orange-400 text-center">
+                                {{ payment.client_order_id }}
+                            </span>
+                        </div>
+
+                        <!-- Fecha -->
+                        <div class="flex flex-col">
+                            <span class="text-xs text-gray-400 uppercase tracking-wide text-center">Fecha</span>
+                            <span class="mt-1 text-sm text-white text-center">{{ payment.payment_date |
+                                date:'dd/MMM/YYYY, hh:mm a' }}</span>
+                        </div>
+
+                        <!-- Método de pago -->
+                        <div class="flex flex-col text-right">
+                            <span class="text-xs text-gray-400 uppercase tracking-wide">Método de pago</span>
+                            <span class="mt-1 text-sm font-semibold text-white text-center">{{
+                                translations[payment.name] || payment.name}}</span>
+                        </div>
+
+                        <!-- Total -->
+                        <div class="flex flex-col text-right">
+                            <span class="text-xs text-gray-400 uppercase tracking-wide">Total</span>
+                            <span class="mt-1 text-sm font-semibold text-white text-center">{{ payment.amount |
+                                currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+                        </div>
+
+                    </div>
+
+                    <!-- Estado + botón ver -->
+                    <div class="flex items-center gap-3 ml-6">
+                        <span *ngIf="payment.payment_status === 'COMPLETED'"
+                            class="w-28 px-2 py-1 rounded-full bg-emerald-900/60 text-emerald-300 text-xs font-semibold">
+                            Completado
+                        </span>
+
+                        <span *ngIf="payment.payment_status === 'PENDING'"
+                            class="w-28 px-2 py-1 rounded-full bg-yellow-900/40 text-yellow-400 text-xs font-semibold">
+                            Pendiente
+                        </span>
+
+                        <span *ngIf="payment.payment_status === 'FAILED'"
+                            class="w-28 px-2 py-1 rounded-full bg-red-900/50 text-red-300 text-xs font-semibold">
+                            Rechazado
+                        </span>
+
+                        <button (click)="changeModalState()"
+                            class="flex items-center justify-center text-primary hover:text-orange-600 transition"
+                            aria-label="Ver detalles de la orden">
+                            <span class="text-sm font-bold"
+                                (click)="getOrderDetailsByOrderId(payment.client_order_id)">Ver detalles</span>
+                        </button>
+                    </div>
+                </article>
+
+                <!-- Aquí puedes ir copiando/pegando más tarjetas -->
+
+            </section>
+
+            <!-- Modal Overlay -->
+            <div *ngIf="isModalOpen" class="fixed inset-0 z-50 bg-black/60 flex items-center justify-center px-4">
+
+                <!-- Modal Container -->
+                <div class="w-full max-w-3xl bg-[#191919] rounded-2xl shadow-xl border border-[#262626] p-6 text-gray-100 
+           max-h-[85vh] flex flex-col">
+
+                    <!-- Título del modal -->
+                    <h3 class="text-lg font-bold mb-4">
+                        Detalle de la orden
+                    </h3>
+
+                    <!-- CONTENIDO SCROLLEABLE -->
+                    <div class="flex-1 overflow-y-auto">
+
+                        <div class="bg-[#121212] rounded-xl border border-[#2b2b2b] overflow-hidden">
+
+                            <!-- Encabezados -->
+                            <div
+                                class="grid grid-cols-5 text-xs uppercase tracking-wide text-gray-400 bg-[#151515] px-4 py-2 text-center">
+                                <span>Tipo</span>
+                                <span class="col-span-2">Descripción</span>
+                                <span class="text-right">Cantidad</span>
+                                <span class="text-right">Subtotal</span>
+                            </div>
+
+                            <!-- Filas -->
+                            <div *ngFor="let order of orderDetail"
+                                class="grid grid-cols-5 px-4 py-3 text-sm border-t border-[#222]">
+
+                                <!-- Tipo -->
+                                <div class="flex items-center justify-center">
+                                    <span *ngIf="order.item_type === 'PRODUCT'"
+                                        class="text-xs px-2 py-1 rounded-full bg-orange-500/10 text-orange-300">
+                                        Producto
+                                    </span>
+                                    <span *ngIf="order.item_type === 'SERVICE'"
+                                        class="text-xs px-2 py-1 rounded-full bg-blue-500/10 text-blue-300">
+                                        Servicio
+                                    </span>
+                                </div>
+
+                                <!-- Descripción -->
+                                <div class="col-span-2 text-center">
+                                    <p class="font-semibold">
+                                        {{ order.item_type === 'SERVICE' ? order.service_name : order.product_name }}
+                                    </p>
+                                    <p class="text-xs text-gray-400">
+                                        {{ order.item_type === 'SERVICE' ? order.service_description :
+                                        order.product_description }}
+                                    </p>
+                                </div>
+
+                                <!-- Cantidad -->
+                                <div class="text-right flex items-center justify-end">
+                                    {{ order.quantity }}
+                                </div>
+
+                                <!-- Subtotal -->
+                                <div class="text-right font-semibold flex items-center justify-end">
+                                    {{ order.unit_price | currency:'COP':'symbol-narrow':'1.0-0' }}
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <!-- Resumen (incluido dentro del scroll) -->
+                        <div class="mt-4 flex flex-col items-end gap-1 text-sm px-4">
+                            <div class="flex justify-between w-full max-w-xs">
+                                <span class="text-gray-400">Subtotal productos</span>
+                                <span class="font-semibold">{{ totalProducts | currency:'COP':'symbol-narrow':'1.0-0'
+                                    }}</span>
+                            </div>
+                            <div class="flex justify-between w-full max-w-xs">
+                                <span class="text-gray-400">Subtotal servicios</span>
+                                <span class="font-semibold">{{ totalServices | currency:'COP':'symbol-narrow':'1.0-0'
+                                    }}</span>
+                            </div>
+                            <div class="flex justify-between w-full max-w-xs">
+                                <span class="text-gray-400">Total pagado</span>
+                                <span class="font-bold text-orange-400">{{ totalAmount |
+                                    currency:'COP':'symbol-narrow':'1.0-0' }}</span>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- FIN CONTENIDO SCROLLEABLE -->
+
+                    <!-- Botones (NO se mueven con el scroll) -->
+                    <div class="mt-6 flex justify-end gap-3">
+                        <button (click)="downloadPdf()"
+                            class="px-4 py-2 rounded-lg border border-gray-600 text-sm text-gray-200 hover:bg-gray-700/40 transition">
+                            Descargar comprobante
+                        </button>
+                        <button (click)="changeModalState()"
+                            class="px-4 py-2 rounded-lg bg-orange-500 text-sm font-semibold text-black hover:bg-orange-400 transition">
+                            Cerrar
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </main>
+
+    <div>
+        <ng-template #emptyPayments>
+            <div class="w-full min-h-[calc(100vh-150px)] flex items-center justify-center px-4">
+                <div
+                    class="text-center p-10 rounded-2xl shadow-[0_0_25px_rgba(255,122,0,0.25)] max-w-md w-full">
+                    <div class="text-6xl mb-6 text-primary">
+                        💳
+                    </div>
+
+                    <h2 class="text-3xl font-bold text-primary mb-3">
+                        Aún no tienes pagos registrados
+                    </h2>
+
+                    <p class="text-gray-300 text-base mb-6 px-4">
+                        Cuando realices tu primer pago, aparecerá aquí.
+                    </p>
+
+                    <button routerLink="/services"
+                        class="bg-primary hover:bg-orange-600 text-white font-semibold py-3 px-6 rounded-lg transition-all shadow-md hover:shadow-[0_0_15px_rgba(255,140,0,0.5)]">
+                        Ver servicios disponibles
+                    </button>
+                </div>
+            </div>
+        </ng-template>
+    </div>
+
+    <app-footer class="mt-auto"></app-footer>
+</div>

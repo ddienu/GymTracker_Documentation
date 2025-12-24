@@ -8,6 +8,7 @@ import 'package:gym_tracker/features/password_recover/presentation/recover_passw
 import 'package:gym_tracker/features/register/presentation/registration_email_password.dart';
 import 'package:gym_tracker/core/services/auth_service.dart';
 
+
 class Login extends StatefulWidget {
   const Login({super.key});
 
@@ -167,11 +168,11 @@ class _LoginState extends State<Login> {
                               return "El correo electrónico no puede estar vacío";
                             }
 
-                            if (!RegExp(
-                              r'^[^@]+@[^@]+\.[^@]+',
-                            ).hasMatch(value)) {
-                              return 'Ingresa un correo válido';
-                            }
+                            // if (!RegExp(
+                            //   r'^[^@]+@[^@]+\.[^@]+',
+                            // ).hasMatch(value)) {
+                            //   return 'Ingresa un correo válido';
+                            // }
                             return null;
                           },
                         ),

@@ -3,16 +3,17 @@ import { Injectable } from '@angular/core';
 import { AuthModel } from '../../features/auth/model/auth.model';
 import { Login } from '../../features/auth/model/login.model';
 import { Observable } from 'rxjs';
-import { RegisterModel } from '../../features/auth/model/register.model';
-import { RegisterResponse } from '../../features/auth/model/registerResponse.model';
+import { RegisterModel, RegisterResponse } from '../../features/auth/model/register.model';
 import { jwtDecode } from 'jwt-decode';
+import { environment } from '../../environments/environments';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  private apiUrl = "http://localhost:3000/api/auth";
+  private apiUrl = environment.apiUrl+"/api/auth";
+  // private apiUrl = "http://localhost:3000/api/auth";
   
 
   constructor(private http: HttpClient) { }

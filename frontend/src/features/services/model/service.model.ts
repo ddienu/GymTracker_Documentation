@@ -5,7 +5,7 @@ export interface ServiceModel{
         price: number,
         service_type: string,
         duration_days: number,
-        is_active: number
+        requires_appointment: number
 }
 
 export interface ServiceResponse{

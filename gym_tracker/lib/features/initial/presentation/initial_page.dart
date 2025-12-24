@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym_tracker/features/begin/presentation/begin.dart';
+import 'package:gym_tracker/services/auth_service.dart';
 
 class InitialPage extends StatefulWidget {
   const InitialPage({super.key});
@@ -13,6 +14,7 @@ class _InitialPageState extends State<InitialPage>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  late final AuthService authService;
 
   @override
   void initState() {
@@ -26,7 +28,7 @@ class _InitialPageState extends State<InitialPage>
     Future.delayed(const Duration(seconds: 5), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const Begin()),
+        MaterialPageRoute(builder: (context) => Begin()),
       );
     }); // Future.delayed
   }
@@ -47,7 +49,7 @@ class _InitialPageState extends State<InitialPage>
           // Cambia de vista al dar clic en cualquier parte
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const Begin()),
+            MaterialPageRoute(builder: (context) => Begin()),
           );
         },
         child: Center(

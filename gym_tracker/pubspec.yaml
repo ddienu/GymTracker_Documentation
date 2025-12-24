@@ -46,6 +46,7 @@ dependencies:
   sleek_circular_slider: ^2.1.0
   font_awesome_flutter: ^10.7.0 
   dio: ^5.9.0
+<<<<<<< HEAD
     
   # HTTP dependencies for API integration
   http: ^1.1.0

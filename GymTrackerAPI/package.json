@@ -1,0 +1,32 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "migrate": "node execute_migration.js",
+    "seed": "node execute_seeders.js",
+    "seed:test": "node seeders/test-data-seeder.js",
+    "seed:verify": "node seeders/verify-test-data.js",
+    "postman:setup": "npm run seed:test && npm run seed:verify"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "fs": "^0.0.1-security",
+    "jsonwebtoken": "^9.0.2",
+    "multer": "^2.0.1",
+    "mysql2": "^3.14.1",
+    "path": "^0.12.7",
+    "puppeteer": "^24.32.0",
+    "supports-color": "^9.4.0"
+  }
+}

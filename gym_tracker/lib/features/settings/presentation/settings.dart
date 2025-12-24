@@ -22,6 +22,9 @@ class _SettingsPageState extends State<SettingsPage> {
         elevation: 0,
         surfaceTintColor: Colors.transparent,
         centerTitle: true,
+        iconTheme: IconThemeData(
+          color: Colors.black
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

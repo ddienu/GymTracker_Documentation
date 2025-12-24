@@ -153,6 +153,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+<<<<<<< HEAD
   dart_style:
     dependency: transitive
     description:
@@ -177,6 +178,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+<<<<<<< HEAD
   equatable:
     dependency: transitive
     description:
@@ -185,6 +187,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.7"
+=======
+>>>>>>> Diego_Service
   fake_async:
     dependency: transitive
     description:
@@ -485,6 +489,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+<<<<<<< HEAD
   mockito:
     dependency: "direct dev"
     description:
@@ -493,6 +498,8 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.5.1"
+=======
+>>>>>>> Diego_Service
   numberpicker:
     dependency: "direct main"
     description:

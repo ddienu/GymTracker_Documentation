@@ -79,7 +79,12 @@ class HomePage extends StatelessWidget {
       "cardTitle": "Servicios",
       "cardSubtitle": "Consulta los servicios disponibles",
       "onTap": () {
-        print("Entrando");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const Service()
+            )
+        );
       },
     },
     {

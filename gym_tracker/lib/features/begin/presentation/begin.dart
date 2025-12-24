@@ -5,9 +5,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gym_tracker/features/begin/widgets/custombutton.dart';
 import 'package:gym_tracker/features/login/presentation/login.dart';
 import 'package:gym_tracker/features/register/presentation/registration_email_password.dart';
+import 'package:gym_tracker/services/auth_service.dart';
 
 class Begin extends StatelessWidget {
-  const Begin({super.key});
+  final AuthService authService = AuthService();
+  Begin({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class Begin extends StatelessWidget {
       text: "Inicia",
       onPressed: () => Navigator.push(
         context, 
-        MaterialPageRoute(builder: (context) => Login()),
+        MaterialPageRoute(builder: (context) => Login(authService: authService)),
         ), 
         width: 0.4, 
         icon: Icons.arrow_forward, 

@@ -6,37 +6,48 @@ import { CommonModule } from '@angular/common';
 import AuthComponent from '../auth/auth.component';
 import { Router, RouterModule } from '@angular/router';
 import { AuthStateService } from '../../core/Auth-state/auth-state.service';
+import { ClientModel, ClientResponse } from './model/client.model';
+import { AlertUtil } from '../../shared/alert.util';
 
 @Component({
   selector: 'app-client',
   standalone: true,
   templateUrl: './client.component.html',
-  imports: [NavbarComponent, FooterComponent, CommonModule, AuthComponent, RouterModule],
-  styleUrl: './client.component.css'
+  imports: [
+    NavbarComponent,
+    FooterComponent,
+    CommonModule,
+    AuthComponent,
+    RouterModule,
+  ],
+  styleUrl: './client.component.css',
 })
-export default class ClientComponent implements OnInit{
+export default class ClientComponent implements OnInit {
+  clients: ClientModel[] = [];
 
-  clients : any = [];
-
-  constructor(private clientService : ClientService, private authStateService : AuthStateService, private router : Router){}
-
+  constructor(
+    private clientService: ClientService,
+    private authStateService: AuthStateService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.getClients();
   }
 
-  getClients(){
-    this.clientService.getClients().subscribe(
-     (response) => {
-      this.clients = response;
-      console.log(this.clients.client);
-     } 
-    )
+  getClients() {
+    this.clientService.getClients().subscribe({
+      next: (response) => {
+        this.clients = response.client;
+      },
+      error: (error) => {
+        AlertUtil.error('Error cargando los clientes');
+      },
+    });
   }
 
-  goToRegister(){
-    this.authStateService.setRegisterMode(true, "admin");
-    this.router.navigate(['/auth'])
+  goToRegister() {
+    this.authStateService.setRegisterMode(true, 'admin');
+    this.router.navigate(['/auth']);
   }
-
 }

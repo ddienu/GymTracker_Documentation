@@ -35,7 +35,6 @@ class MyApp extends StatelessWidget {
       //   useMaterial3: true,
       // ),
       debugShowCheckedModeBanner: false,
-
       // 👇 Localizations necesarias para DatePicker, TimePicker, etc.
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
@@ -47,11 +46,10 @@ class MyApp extends StatelessWidget {
         Locale('es', ''), // español
       ],
 
-      home: Login(),
+      home: InitialPage(),
       initialRoute: '/',
       routes: {
-        'begin': (context) => const Begin(),
-        'login': (context) => Login(),
+        'begin': (context) => Begin(),
         'recover': (context) => RecoverPassword(),
       },
     );
